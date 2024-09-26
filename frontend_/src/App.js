@@ -8,7 +8,8 @@ import './components/app.css'
 function App() {
   return (
     <div className="App">
-      <NavBar/>
+                    <NavBar /> 
+
      <div> <AppRoutes /></div>
       <AppFooter/>
     </div>

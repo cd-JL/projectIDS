@@ -1,4 +1,5 @@
 import React from 'react'
+import NavControl from './Nav-Control'
 
 
 export default function NavBar() {
@@ -8,13 +9,7 @@ export default function NavBar() {
       <img src={require('../public/image-removebg-preview (1).png')} alt="LOGO" className='nav-logo' />
 
       </div>
-      <div className='nav-control'>
-        <list>
-            <li>Page1</li>
-            <li>Page2</li>
-            <li>Page3</li>
-        </list>
-      </div>
+      
     </div>
   )
 }
