@@ -4,7 +4,6 @@ import re
 from collections import defaultdict
 
 def get_installed_programs():
-    # Updated PowerShell command to extract main installed programs and avoid individual components
     command = '''
     Get-ItemProperty HKLM:\\Software\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*, 
     HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\* |
@@ -17,26 +16,22 @@ def get_installed_programs():
     Select-Object DisplayName, DisplayVersion |
     ConvertTo-Json
     '''
-
     try:
-        # Run the PowerShell command and capture the output as JSON
         output = subprocess.check_output(["powershell", "-Command", command], universal_newlines=True)
-        
-        # Parse the JSON output
         installed_programs = json.loads(output)
-
         return installed_programs
     except subprocess.CalledProcessError as e:
         print(f"Error executing PowerShell command: {e}")
         return []
 
-def condense_programs(installed_programs):
-    """
-    Condenses program names based on patterns, grouping by name and aggregating versions.
-    """
-    condensed = defaultdict(set)
+def strip_version_from_name(product_name):
+    cleaned_name = re.sub(r'\b(version\s*[0-9\.]+|[0-9\.]+.*)\b', '', product_name, flags=re.IGNORECASE)
+    cleaned_name = re.sub(r'\s*\(.*\)\s*', '', cleaned_name)  # Remove text inside parentheses
+    cleaned_name = re.sub(r'[\)\(\-\+]', '', cleaned_name)  # Remove extra symbols like parentheses, etc.
+    return cleaned_name.strip()
 
-    # Add relevant patterns to map different versions of the same program into one condensed name
+def condense_programs(installed_programs):
+    condensed = defaultdict(set)
     condense_map = {
         r'(catalyst control center.*)': 'Catalyst Control Center',
         r'(microsoft\s*.net.*)': 'Microsoft .NET',
@@ -47,12 +42,13 @@ def condense_programs(installed_programs):
         r'(windows software development kit.*)': 'Windows SDK',
         r'(audacity.*)': 'Audacity',
         r'(adobe.*)': 'Adobe',
-        # Add more patterns for condensing other programs as necessary
+        r'(asp\.net|asp)': 'ASP.NET',  # Handle ASP.NET products
     }
 
     for program in installed_programs:
         program_name = program['DisplayName'].lower()
         program_version = program['DisplayVersion']
+        stripped_name = strip_version_from_name(program['DisplayName'])
 
         matched = False
         for pattern, condensed_name in condense_map.items():
@@ -62,36 +58,62 @@ def condense_programs(installed_programs):
                 break
 
         if not matched:
-            condensed[program['DisplayName']].add(program_version)
+            condensed[stripped_name].add(program_version)
 
-    # Formatting the output
     return {name: ', '.join(sorted(versions)) for name, versions in condensed.items()}
 
+def determine_vendor(program_name):
+    vendor_map = {
+        'microsoft': 'Microsoft',
+        'adobe': 'Adobe',
+        'nvidia': 'NVIDIA',
+        'python': 'Python',
+        'intel': 'Intel',
+        'oracle': 'Oracle',
+        'google': 'Google',
+        'mozilla': 'Mozilla',
+        'apple': 'Apple',
+        'vmware': 'VMware',
+        'blender foundation': 'Blender',
+        'python software foundation': 'Python',
+        'windows': 'Microsoft',  # Mapping Windows to Microsoft
+    }
+    program_name_lower = program_name.lower().strip()
+    if not program_name_lower:
+        return "Unknown Vendor"
+    for keyword, vendor in vendor_map.items():
+        if keyword in program_name_lower:
+            return vendor
+    default_vendor = program_name.split()[0] if program_name.split() else "Unknown Vendor"
+    return default_vendor
+
+def generate_cpe_query(program, version):
+    vendor = determine_vendor(program)
+    product = program.lower().replace(' ', '_').replace('.', '_').replace('-', '_')
+
+    if program.lower().startswith(".net"):
+        product = ".net"  # Special handling for .NET
+
+    # Ensure product doesn't repeat the vendor (like nvidia:nvidia)
+    if vendor.lower() in product:
+        product = product.replace(vendor.lower(), "").strip('_')
+
+    cpe_name = f"cpe:2.3:a:{vendor.lower()}:{product}:{version}:*:*:*:*:*:*:*"
+    return cpe_name
+
 def query_vulnerabilities(condensed_programs):
-    """
-    Cross-references the condensed programs and generates a query link to search for vulnerabilities.
-    """
     for program, versions in condensed_programs.items():
-        print(f"Condensed Program: {program}, Versions: {versions}")
-        # Construct the CPE name and query NVD API (this is just a placeholder for actual querying logic)
-        # Example:
-        # print(f"Querying for {program}: https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:/a:{program}:{version}")
+        for version in versions.split(', '):
+            cpe_query = generate_cpe_query(program, version)
+            print(f"Querying for {program} (version {version}): {cpe_query}")
 
 def main():
-    # Get the list of installed programs
     installed_programs = get_installed_programs()
-
-    # Condense program names and versions
     condensed_programs = condense_programs(installed_programs)
-
-    # Print the condensed program details
     print("Condensed Application Details:")
     for name, versions in condensed_programs.items():
         print(f"{name}: Versions - {versions}")
-
-    # Query for vulnerabilities using the condensed program list
     query_vulnerabilities(condensed_programs)
 
-# Run the main function
 if __name__ == "__main__":
     main()
