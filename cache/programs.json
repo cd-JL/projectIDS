@@ -1,0 +1,2050 @@
+[
+    {
+        "Name": "Microsoft Teams Meeting Add-in for Microsoft Office",
+        "Version": "1.24.25503"
+    },
+    {
+        "Name": "blender",
+        "Version": "2.93.3"
+    },
+    {
+        "Name": "DaVinci Resolve",
+        "Version": "18.1.30008"
+    },
+    {
+        "Name": "Paradox Launcher v2",
+        "Version": "2.4.0"
+    },
+    {
+        "Name": "Office 16 Click-to-Run Extensibility Component",
+        "Version": "16.0.18025.20104"
+    },
+    {
+        "Name": "Office 16 Click-to-Run Localization Component",
+        "Version": "16.0.14131.20278"
+    },
+    {
+        "Name": "Office 16 Click-to-Run Extensibility Component 64-bit Registration",
+        "Version": "16.0.18025.20104"
+    },
+    {
+        "Name": "Office 16 Click-to-Run Licensing Component",
+        "Version": "16.0.18025.20104"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization CS",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "Microsoft .NET Framework 4.5.1 Multi-Targeting Pack",
+        "Version": "4.5.50932"
+    },
+    {
+        "Name": "ASUS Aura SDK",
+        "Version": "3.03.38"
+    },
+    {
+        "Name": "Python 3.7.8 pip Bootstrap (64-bit)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "Microsoft TestPlatform SDK Local Feed",
+        "Version": "16.11.0.4953698"
+    },
+    {
+        "Name": "Python 3.9.2 Add to Path (64-bit)",
+        "Version": "3.9.2150.0"
+    },
+    {
+        "Name": "MSI Development Tools",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps DirectX x86 Remote",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "WinRT Intellisense Mobile - en-us",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "VMware Player",
+        "Version": "16.2.1"
+    },
+    {
+        "Name": "Windows SDK EULA",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Microsoft ASP.NET Core 5.0.9 Shared Framework (x64)",
+        "Version": "5.0.9.21365"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps Metadata",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "windows_toolscorepkg",
+        "Version": "16.10.31306"
+    },
+    {
+        "Name": "Windows Desktop Extension SDK Contracts",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Microsoft .NET Core AppHost Pack - 3.1.18 (x64_arm64)",
+        "Version": "24.72.30314"
+    },
+    {
+        "Name": "Python 3.9.2 Utility Scripts (64-bit)",
+        "Version": "3.9.2150.0"
+    },
+    {
+        "Name": "ASUS AURA Extension Card HAL",
+        "Version": "1.0.15"
+    },
+    {
+        "Name": "Microsoft .NET Framework 4.7.1 Doc Redirected Targeting Pack (ENU)",
+        "Version": "4.7.02558"
+    },
+    {
+        "Name": "Microsoft .NET Host - 6.0.0 (x64)",
+        "Version": "48.3.31210"
+    },
+    {
+        "Name": "Python 3.7.8 Standard Library (64-bit debug)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "WinRT Intellisense PPI - en-us",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2022 X86 Minimum Runtime - 14.40.33810",
+        "Version": "14.40.33810"
+    },
+    {
+        "Name": "Patriot Viper RGB",
+        "Version": "1.00.06"
+    },
+    {
+        "Name": "MSI Development Tools",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Microsoft System CLR Types for SQL Server 2019 CTP2.2",
+        "Version": "15.0.1200.24"
+    },
+    {
+        "Name": "Microsoft ASP.NET Core Module V2 for IIS Express",
+        "Version": "13.1.20087.0"
+    },
+    {
+        "Name": "Python 3.7.8 Standard Library (64-bit)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization FI",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Windows SDK Desktop Headers x64",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "OpenVPN 2.6.4-I001 amd64",
+        "Version": "2.6.401"
+    },
+    {
+        "Name": "Microsoft Windows Desktop Runtime - 5.0.9 (x86)",
+        "Version": "40.36.30315"
+    },
+    {
+        "Name": "Microsoft .NET Framework 4.5 Multi-Targeting Pack",
+        "Version": "4.5.50710"
+    },
+    {
+        "Name": "VEGAS Pro 17.0",
+        "Version": "17.0.284"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization FI",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization FR",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "WinRT Intellisense UAP - en-us",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Windows SDK Desktop Headers arm",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Python 3.9.2 Core Interpreter (64-bit)",
+        "Version": "3.9.2150.0"
+    },
+    {
+        "Name": "AURA Service",
+        "Version": "3.03.40"
+    },
+    {
+        "Name": "ASUS MB Peripheral Products",
+        "Version": "1.0.29"
+    },
+    {
+        "Name": "WinRT Intellisense Desktop - Other Languages",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Microsoft .NET CoreRuntime For CoreCon",
+        "Version": "1.0.0.0"
+    },
+    {
+        "Name": "Windows SDK Desktop Tools x64",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Python 3.10.0 Tcl/Tk Support (64-bit symbols)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2010  x64 Redistributable - 10.0.40219",
+        "Version": "10.0.40219"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Managed Apps Libs",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Universal General MIDI DLS Extension SDK",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2005 Redistributable (x64)",
+        "Version": "8.0.61000"
+    },
+    {
+        "Name": "MSVCRT Redists",
+        "Version": "1.0"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2013 x86 Minimum Runtime - 12.0.40664",
+        "Version": "12.0.40664"
+    },
+    {
+        "Name": "Microsoft .NET AppHost Pack - 5.0.9 (x64)",
+        "Version": "40.36.30309"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2010  x86 Redistributable - 10.0.40219",
+        "Version": "10.0.40219"
+    },
+    {
+        "Name": "vs_BlendMsi",
+        "Version": "16.0.28329"
+    },
+    {
+        "Name": "vs_minshellmsires",
+        "Version": "16.10.31303"
+    },
+    {
+        "Name": "Seagate DiscWizard",
+        "Version": "24.0.28500"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization CHS",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "Python 3.9.2 Tcl/Tk Support (64-bit)",
+        "Version": "3.9.2150.0"
+    },
+    {
+        "Name": "Windows IoT Extension SDK",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "CMake",
+        "Version": "3.28.0"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization BR",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "Microsoft .NET Core AppHost Pack - 3.1.18 (x64)",
+        "Version": "24.72.30314"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps Libs",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Windows SDK Desktop Tools arm64",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "MySQL Installer - Community",
+        "Version": "1.4.36.0"
+    },
+    {
+        "Name": "vs_Graphics_Singletonx64",
+        "Version": "16.10.31213"
+    },
+    {
+        "Name": "Oracle VM VirtualBox 5.2.20",
+        "Version": "5.2.20"
+    },
+    {
+        "Name": "IntelliTraceProfilerProxy",
+        "Version": "15.0.18198.01"
+    },
+    {
+        "Name": "Microsoft Windows Desktop Runtime - 3.1.18 (x64)",
+        "Version": "24.72.30314"
+    },
+    {
+        "Name": "vs_communitymsi",
+        "Version": "16.11.31613"
+    },
+    {
+        "Name": "vs_clickoncebootstrappermsires",
+        "Version": "16.0.28329"
+    },
+    {
+        "Name": "Python 3.10.0 Standard Library (64-bit debug)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "DaVinci Resolve Control Panels",
+        "Version": "2.0.6.0"
+    },
+    {
+        "Name": "Microsoft System CLR Types for SQL Server 2019 CTP2.2",
+        "Version": "15.0.1200.24"
+    },
+    {
+        "Name": "ENE RGB HAL",
+        "Version": "1.00.09"
+    },
+    {
+        "Name": "Microsoft Azure Storage Emulator - v5.10",
+        "Version": "5.10.19227.2113"
+    },
+    {
+        "Name": "vs_tipsmsi",
+        "Version": "16.0.28329"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2019 X86 Debug Runtime - 14.29.30133",
+        "Version": "14.29.30133"
+    },
+    {
+        "Name": "Microsoft .NET Runtime - 7.0.9 (x64)",
+        "Version": "56.39.63170"
+    },
+    {
+        "Name": "AMD Settings",
+        "Version": "2019.0816.1152.21357"
+    },
+    {
+        "Name": "Python 3.10.0 Development Libraries (64-bit debug)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "Universal CRT Headers Libraries and Sources",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "MSI Development Tools",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Microsoft ASP.NET Core 5.0.9 Shared Framework (x86)",
+        "Version": "5.0.9.21365"
+    },
+    {
+        "Name": "Bonjour",
+        "Version": "3.0.0.10"
+    },
+    {
+        "Name": "Microsoft .NET Targeting Pack - 5.0.0 (x64)",
+        "Version": "40.0.29419"
+    },
+    {
+        "Name": "Windows SDK Modern Non-Versioned Developer Tools",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Microsoft Update Health Tools",
+        "Version": "3.74.0.0"
+    },
+    {
+        "Name": "vcpp_crt.redist.clickonce",
+        "Version": "14.29.30133"
+    },
+    {
+        "Name": "Python 3.8.1 Development Libraries (32-bit)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "Microsoft Visual Studio 2019 Tools for Unity",
+        "Version": "4.11.3.0"
+    },
+    {
+        "Name": "VS JIT Debugger",
+        "Version": "16.0.102.0"
+    },
+    {
+        "Name": "WinAppDeploy",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Visual C++ Library CRT Desktop Appx Package",
+        "Version": "14.29.30133"
+    },
+    {
+        "Name": "AURA DRAM Component",
+        "Version": "1.0.30"
+    },
+    {
+        "Name": "Python 3.7.8 Development Libraries (64-bit debug)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "Teams Machine-Wide Installer",
+        "Version": "1.2.0.34161"
+    },
+    {
+        "Name": "Visual C++ Library CRT Appx Package",
+        "Version": "14.29.30133"
+    },
+    {
+        "Name": "Open XML SDK 2.5 for Microsoft Office",
+        "Version": "2.5.5631"
+    },
+    {
+        "Name": "Universal CRT Extension SDK",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Hamachi",
+        "Version": "2.3.0.111"
+    },
+    {
+        "Name": "Python 3.9.2 Test Suite (64-bit)",
+        "Version": "3.9.2150.0"
+    },
+    {
+        "Name": "Windows SDK ARM Desktop Tools",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "vs_FileTracker_Singleton",
+        "Version": "16.10.31303"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps Contracts",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Microsoft .NET Host FX Resolver - 5.0.9 (x86)",
+        "Version": "40.36.30309"
+    },
+    {
+        "Name": "WinRT Intellisense IoT - en-us",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Python 3.8.1 Executables (32-bit debug)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization DE",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "Windows IoT Extension SDK Contracts",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Microsoft Workflow Diagnostic Pack for x64",
+        "Version": "16.0.28329"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps Contracts",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization TH",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "Microsoft Build of OpenJDK with Hotspot 11.0.20+8 (x64)",
+        "Version": "11.0.20.8"
+    },
+    {
+        "Name": "vcpp_crt.redist.clickonce",
+        "Version": "14.16.27033"
+    },
+    {
+        "Name": "Microsoft .NET Framework 4.7.2 Targeting Pack (ENU)",
+        "Version": "4.7.03062"
+    },
+    {
+        "Name": "Microsoft ASP.NET Core Module for IIS Express",
+        "Version": "12.2.18292.0"
+    },
+    {
+        "Name": "Microsoft System Center Management Pack for ADDS",
+        "Version": "1.0.0.0"
+    },
+    {
+        "Name": "Windows SDK Desktop Tools x86",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Smart Switch",
+        "Version": "4.3.22112.1"
+    },
+    {
+        "Name": "Python 3.7.8 Test Suite (64-bit)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2013 x64 Minimum Runtime - 12.0.40664",
+        "Version": "12.0.40664"
+    },
+    {
+        "Name": "Microsoft Web Deploy 4.0",
+        "Version": "10.0.3802"
+    },
+    {
+        "Name": "Xamarin Remoted iOS Simulator",
+        "Version": "16.10.0.380"
+    },
+    {
+        "Name": "Windows SDK Desktop Libs arm64",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Windows Mobile Extension SDK Contracts",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Universal CRT Extension SDK",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Microsoft Visual Studio Setup Configuration",
+        "Version": "2.7.3111.17308"
+    },
+    {
+        "Name": "WinRT Intellisense IoT - Other Languages",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Python Launcher",
+        "Version": "3.10.7581.0"
+    },
+    {
+        "Name": "Windows SDK",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Microsoft .NET CoreRuntime SDK",
+        "Version": "1.1.27004.0"
+    },
+    {
+        "Name": "Python 3.7.8 Core Interpreter (64-bit debug)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "WinRT Intellisense UAP - Other Languages",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "ASUS MousePad HAL",
+        "Version": "1.0.1.1"
+    },
+    {
+        "Name": "vs_devenvmsi",
+        "Version": "16.0.28329"
+    },
+    {
+        "Name": "Python 3.8.1 Tcl/Tk Support (32-bit symbols)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "Windows Desktop Extension SDK Contracts",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Microsoft .NET Runtime - 6.0.0 (x64)",
+        "Version": "48.3.31210"
+    },
+    {
+        "Name": "Windows SDK Desktop Headers x86",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Windows SDK Desktop Tools arm64",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization RU",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "Microsoft Visual Studio 2010 Tools for Office Runtime (x64)",
+        "Version": "10.0.50908"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization ES",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "Java 8 Update 261 (64-bit)",
+        "Version": "8.0.2610.12"
+    },
+    {
+        "Name": "Java SE Development Kit 8 Update 201 (64-bit)",
+        "Version": "8.0.2010.9"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization CHT",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "Windows IoT Extension SDK",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Visual C++ Library CRT Appx Resource Package",
+        "Version": "14.29.30133"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization PL",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "Microsoft ASP.NET Core 3.1.18 Shared Framework (x64)",
+        "Version": "3.1.18.21365"
+    },
+    {
+        "Name": "Microsoft .NET Framework 4.8 SDK",
+        "Version": "4.8.03928"
+    },
+    {
+        "Name": "Windows SDK Modern Versioned Developer Tools",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Workflow Manager Tools 1.0 for Visual Studio",
+        "Version": "2.1.50623.2"
+    },
+    {
+        "Name": "Microsoft Windows Desktop Runtime - 6.0.0 (x64)",
+        "Version": "48.3.31217"
+    },
+    {
+        "Name": "Microsoft ASP.NET Diagnostic Pack for Visual Studio",
+        "Version": "16.11.75.64347"
+    },
+    {
+        "Name": "Universal CRT Redistributable",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Python 3.10.0 Core Interpreter (64-bit debug)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "WinRT Intellisense UAP - Other Languages",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Python 3.8.1 Standard Library (32-bit symbols)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "Windows SDK Facade Windows WinMD Versioned",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "DB Browser for SQLite",
+        "Version": "3.12.2"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization JA",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "Python 3.7.8 Test Suite (64-bit symbols)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "Windows SDK Desktop Libs x86",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Python 3.8.1 Core Interpreter (32-bit debug)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "sptools_Microsoft.VisualStudio.Vsto.Msi",
+        "Version": "16.0.28030"
+    },
+    {
+        "Name": "Windows SDK Desktop Headers x86",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Python 3.7.8 Core Interpreter (64-bit symbols)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "VS Immersive Activate Helper",
+        "Version": "16.0.102.0"
+    },
+    {
+        "Name": "Windows Desktop Extension SDK Contracts",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Windows SDK Desktop Libs arm64",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Universal CRT Headers Libraries and Sources",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Windows SDK Desktop Tools x64",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Microsoft Portable Library Multi-Targeting Pack Language Pack - enu",
+        "Version": "16.0.28329.73"
+    },
+    {
+        "Name": "Python 3.9.2 pip Bootstrap (64-bit)",
+        "Version": "3.9.2150.0"
+    },
+    {
+        "Name": "Python 3.10.0 Tcl/Tk Support (64-bit debug)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization CHS",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "vs_minshellinteropmsi",
+        "Version": "16.10.31306"
+    },
+    {
+        "Name": "Windows Desktop Extension SDK",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Microsoft Workflow Debugger v1.0 for amd64",
+        "Version": "16.0.31306"
+    },
+    {
+        "Name": "Windows Team Extension SDK",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Windows SDK Redistributables",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Visual C++ Library CRT Desktop Appx Package",
+        "Version": "14.29.30133"
+    },
+    {
+        "Name": "Python 3.7.8 Documentation (64-bit)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "Python 3.9.2 Standard Library (64-bit)",
+        "Version": "3.9.2150.0"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization SV",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "ASUS AURA Motherboard HAL",
+        "Version": "1.0.40"
+    },
+    {
+        "Name": "WinRT Intellisense UAP - en-us",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Microsoft .NET Host - 5.0.9 (x64)",
+        "Version": "40.36.30309"
+    },
+    {
+        "Name": " Tools for .Net 3.5",
+        "Version": "3.11.50727"
+    },
+    {
+        "Name": "Windows SDK Desktop Headers arm",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Python 3.10.0 Standard Library (64-bit)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2008 Redistributable - x64 9.0.30729.6161",
+        "Version": "9.0.30729.6161"
+    },
+    {
+        "Name": "Microsoft .NET AppHost Pack - 5.0.9 (x64_arm64)",
+        "Version": "40.36.30309"
+    },
+    {
+        "Name": "Universal CRT Extension SDK",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Microsoft .NET Core 5.0 Templates 5.0.400 (x64)",
+        "Version": "20.3.57386"
+    },
+    {
+        "Name": "Adobe Acrobat (64-bit)",
+        "Version": "24.003.20112"
+    },
+    {
+        "Name": "Adobe Refresh Manager",
+        "Version": "1.8.0"
+    },
+    {
+        "Name": "WinRT Intellisense Mobile - en-us",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Python 3.7.8 Development Libraries (64-bit)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "Python 3.8.1 Core Interpreter (32-bit symbols)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "Windows SDK Desktop Tools x86",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Universal CRT Redistributable",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "ASUS AURA VGA Component",
+        "Version": "0.0.2.0"
+    },
+    {
+        "Name": "Microsoft Azure Libraries for .NET - v2.9",
+        "Version": "3.0.0127.060"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps Libs",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Microsoft Windows Desktop Targeting Pack - 5.0.0 (x64)",
+        "Version": "40.0.29420"
+    },
+    {
+        "Name": "Python 3.10.0 Test Suite (64-bit)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "NordVPN network TAP",
+        "Version": "1.0.1"
+    },
+    {
+        "Name": "SDK ARM Redistributables",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Python 3.10.0 Core Interpreter (64-bit symbols)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2008 Redistributable - x86 9.0.30729.6161",
+        "Version": "9.0.30729.6161"
+    },
+    {
+        "Name": "Python 3.8.1 Standard Library (32-bit)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "Windows SDK DirectX x64 Remote",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "ENE IO Driver",
+        "Version": "1.0.0"
+    },
+    {
+        "Name": "Windows SDK Desktop Headers arm",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization RU",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "Windows App Certification Kit SupportedApiList x86",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Windows SDK ARM Desktop Tools",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "WinRT Intellisense Desktop - Other Languages",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Python 3.7.8 Utility Scripts (64-bit)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "Python 3.8.1 Test Suite (32-bit symbols)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization TR",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "Universal General MIDI DLS Extension SDK",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "WinRT Intellisense IoT - Other Languages",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Canon Laser Printer/Scanner/Fax Extended Survey Program",
+        "Version": "3.0.4"
+    },
+    {
+        "Name": "Universal CRT Tools x86",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Microsoft ASP.NET Core 3.1.10 Targeting Pack (x64)",
+        "Version": "3.1.10.20520"
+    },
+    {
+        "Name": "Microsoft Visual Studio Setup WMI Provider",
+        "Version": "2.7.3111.17308"
+    },
+    {
+        "Name": "Microsoft .NET Toolset 5.0.400 (x64)",
+        "Version": "20.3.41002"
+    },
+    {
+        "Name": "GameFirst IV",
+        "Version": "1.7.2.0"
+    },
+    {
+        "Name": "Microsoft .NET Core 2.1 Templates 5.0.400 (x64)",
+        "Version": "8.23.57386"
+    },
+    {
+        "Name": "IntelliTraceProfilerProxy",
+        "Version": "15.0.18198.01"
+    },
+    {
+        "Name": "WinAppDeploy",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "WinRT Intellisense Desktop - en-us",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "TypeScript SDK",
+        "Version": "4.3.5.0"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Managed Apps Libs",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Python 3.10.0 Utility Scripts (64-bit)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "Python 3.7.8 Tcl/Tk Support (64-bit symbols)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "Update for Windows 10 for x64-based Systems (KB5001716)",
+        "Version": "8.94.0.0"
+    },
+    {
+        "Name": "Python 3.8.1 Tcl/Tk Support (32-bit debug)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "Microsoft .NET Framework 4.6 Targeting Pack",
+        "Version": "4.6.00081"
+    },
+    {
+        "Name": "Microsoft NetStandard SDK",
+        "Version": "15.0.51105"
+    },
+    {
+        "Name": "Windows SDK AddOn",
+        "Version": "10.1.0.0"
+    },
+    {
+        "Name": "Windows IoT Extension SDK Contracts",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Microsoft UniversalWindowsPlatform SDK",
+        "Version": "15.9.14"
+    },
+    {
+        "Name": "WinRT Intellisense PPI - Other Languages",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Microsoft Windows Desktop Runtime - 3.1.18 (x86)",
+        "Version": "24.72.30314"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2012 x64 Additional Runtime - 11.0.61030",
+        "Version": "11.0.61030"
+    },
+    {
+        "Name": "Microsoft .NET SDK 5.0.400 (x64) from Visual Studio",
+        "Version": "5.4.21.37610"
+    },
+    {
+        "Name": "Python 3.9.2 Documentation (64-bit)",
+        "Version": "3.9.2150.0"
+    },
+    {
+        "Name": "Microsoft .NET Core Targeting Pack - 3.1.0 (x64)",
+        "Version": "24.64.28315"
+    },
+    {
+        "Name": "Windows SDK Desktop Libs x86",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Windows PC Health Check",
+        "Version": "3.6.2204.08001"
+    },
+    {
+        "Name": "VS Script Debugging Common",
+        "Version": "16.0.102.0"
+    },
+    {
+        "Name": "Windows Team Extension SDK Contracts",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Microsoft Command Line Utilities 15 for SQL Server",
+        "Version": "15.0.1300.359"
+    },
+    {
+        "Name": "sptools_Microsoft.VisualStudio.OfficeDeveloperTools.Msi",
+        "Version": "16.0.29931"
+    },
+    {
+        "Name": "Python 3.8.1 pip Bootstrap (32-bit)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2019 X64 Debug Runtime - 14.29.30133",
+        "Version": "14.29.30133"
+    },
+    {
+        "Name": "Application Verifier x64 External Package",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Python 3.10.0 Executables (64-bit debug)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "Windows IP Over USB",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Microsoft Windows Communication Foundation Diagnostic Pack for x86",
+        "Version": "16.0.28329"
+    },
+    {
+        "Name": "Microsoft .NET Core Runtime - 3.1.18 (x86)",
+        "Version": "24.72.30314"
+    },
+    {
+        "Name": "Python 3.8.1 Core Interpreter (32-bit)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2022 X86 Additional Runtime - 14.40.33810",
+        "Version": "14.40.33810"
+    },
+    {
+        "Name": "Windows SDK Desktop Libs arm",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "ASUS AURA Display Component",
+        "Version": "1.1.22"
+    },
+    {
+        "Name": "Windows SDK Desktop Libs arm",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Windows SDK Desktop Libs arm64",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Microsoft .NET Framework 4 Multi-Targeting Pack",
+        "Version": "4.0.30319"
+    },
+    {
+        "Name": "GALAX GAMER RGB",
+        "Version": "1.00.02"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization CHT",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "Windows Mobile Extension SDK Contracts",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Windows Phone SDK 8.0 Assemblies for Visual Studio 2019",
+        "Version": "16.0.31404"
+    },
+    {
+        "Name": "Windows Simulator - ENU",
+        "Version": "16.0.28522"
+    },
+    {
+        "Name": "Visual C++ Library CRT Desktop Appx Package",
+        "Version": "14.29.30133"
+    },
+    {
+        "Name": "UE4 Prerequisites (x64)",
+        "Version": "1.0.14.0"
+    },
+    {
+        "Name": "Microsoft .NET Runtime - 5.0.9 (x64)",
+        "Version": "40.36.30309"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization TR",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "Windows Desktop Extension SDK",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Windows SDK Desktop Libs x86",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Windows SDK Modern Versioned Developer Tools",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Python 3.8.1 Utility Scripts (32-bit)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Managed Apps Libs",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Microsoft Azure Authoring Tools - v2.9.6",
+        "Version": "2.9.8899.26"
+    },
+    {
+        "Name": "Python 3.10.0 Test Suite (64-bit debug)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps Libs",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "WinRT Intellisense IoT - Other Languages",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization DE",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "Windows SDK Desktop Headers arm64",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Windows SDK Facade Windows WinMD Versioned",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Windows IoT Extension SDK Contracts",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "AMD Settings",
+        "Version": "2019.0816.1152.21357"
+    },
+    {
+        "Name": "Microsoft .NET Framework 4.5.2 Multi-Targeting Pack",
+        "Version": "4.5.51651"
+    },
+    {
+        "Name": "Windows SDK Desktop Headers arm64",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Corsair AURA DRAM Component",
+        "Version": "1.0.12"
+    },
+    {
+        "Name": "vs_clickoncesigntoolmsi",
+        "Version": "16.0.28329"
+    },
+    {
+        "Name": "Microsoft Windows Desktop Runtime - 7.0.9 (x64)",
+        "Version": "56.39.63195"
+    },
+    {
+        "Name": "Microsoft .NET Runtime - 5.0.9 (x86)",
+        "Version": "40.36.30309"
+    },
+    {
+        "Name": "Windows Mobile Extension SDK",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": null,
+        "Version": null
+    },
+    {
+        "Name": "Microsoft Azure PowerShell - April 2018",
+        "Version": "5.7.0.18831"
+    },
+    {
+        "Name": "Windows SDK Desktop Tools x64",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Python 3.8.1 Test Suite (32-bit debug)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "Python 3.10.0 pip Bootstrap (64-bit)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "Microsoft .NET Core AppHost Pack - 3.1.18 (x64_x86)",
+        "Version": "24.72.30314"
+    },
+    {
+        "Name": "Microsoft .NET Core AppHost Pack - 3.1.18 (x64_arm)",
+        "Version": "24.72.30314"
+    },
+    {
+        "Name": "Microsoft .NET Framework 4.6.1 Targeting Pack",
+        "Version": "4.6.01055"
+    },
+    {
+        "Name": "Python 3.8.1 Test Suite (32-bit)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "Python 3.10.0 Executables (64-bit symbols)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "Microsoft .NET Framework 4.7.1 Targeting Pack",
+        "Version": "4.7.02558"
+    },
+    {
+        "Name": "Python 3.10.0 Core Interpreter (64-bit)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "Windows SDK Desktop Headers arm64",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "vs_clickoncebootstrappermsi",
+        "Version": "16.10.31206"
+    },
+    {
+        "Name": "WinRT Intellisense Desktop - en-us",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Windows Team Extension SDK",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Windows SDK Modern Versioned Developer Tools",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Dual Monitor Tools",
+        "Version": "2.7.0.0"
+    },
+    {
+        "Name": "NBTExplorer",
+        "Version": "2.8.0.0"
+    },
+    {
+        "Name": "Microsoft SQL Server 2016 LocalDB ",
+        "Version": "13.1.4001.0"
+    },
+    {
+        "Name": "Microsoft ASP.NET Core 2.1.29 Shared Framework (x64)",
+        "Version": "2.1.29.56467"
+    },
+    {
+        "Name": "Python 3.7.8 Tcl/Tk Support (64-bit)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "Windows SDK Desktop Headers x86",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2022 X64 Minimum Runtime - 14.40.33810",
+        "Version": "14.40.33810"
+    },
+    {
+        "Name": "Windows SDK Desktop Headers x64",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "WinRT Intellisense UAP - en-us",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Universal CRT Headers Libraries and Sources",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "ClickOnce Bootstrapper Package for Microsoft .NET Framework",
+        "Version": "4.8.04162"
+    },
+    {
+        "Name": "Windows SDK DirectX x86 Remote",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "vs_minshellmsi",
+        "Version": "16.11.31503"
+    },
+    {
+        "Name": "Entity Framework 6.2.0 Tools  for Visual Studio 2019",
+        "Version": "6.2.0.0"
+    },
+    {
+        "Name": "Windows SDK Desktop Tools x86",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Windows Team Extension SDK",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization TH",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "Python 3.8.1 Tcl/Tk Support (32-bit)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization FR",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "ASUS Aac_NBDT HAL",
+        "Version": "2.2.17.0"
+    },
+    {
+        "Name": "Windows Desktop Extension SDK",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2013 x64 Additional Runtime - 12.0.40664",
+        "Version": "12.0.40664"
+    },
+    {
+        "Name": "Xamarin Offline Packages",
+        "Version": "16.10.5"
+    },
+    {
+        "Name": "VS WCF Debugging",
+        "Version": "16.0.102.0"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps Headers",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Minecraft",
+        "Version": "1.0.4.0"
+    },
+    {
+        "Name": "Windows SDK Desktop Tools arm64",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Python 3.10.0 Add to Path (64-bit)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "Windows App Certification Kit Native Components",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "ASUS Mouse HAL",
+        "Version": "1.0.31"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps DirectX x86 Remote",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization ES",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "Node.js",
+        "Version": "20.9.0"
+    },
+    {
+        "Name": "Windows SDK Desktop Libs arm",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Visual C++ Library CRT ARM64 Appx Package",
+        "Version": "14.29.30133"
+    },
+    {
+        "Name": "Universal CRT Tools x64",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization DA",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps Headers",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Xamarin PCL Profiles v1.0.9",
+        "Version": "1.0.9.0"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization SV",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "Windows SDK Desktop Libs x64",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization HU",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "Windows SDK Signing Tools",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Microsoft .NET Host - 7.0.9 (x64)",
+        "Version": "56.39.63170"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization HU",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "Windows Mobile Extension SDK",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Microsoft .NET Host FX Resolver - 6.0.0 (x64)",
+        "Version": "48.3.31210"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization IT",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "ASUS AURA Odd Component",
+        "Version": "1.0.8"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps Tools",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Python 3.10.0 Tcl/Tk Support (64-bit)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "Microsoft .NET Standard Targeting Pack - 2.1.0 (x64)",
+        "Version": "24.0.28113"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2012 x86 Additional Runtime - 11.0.61030",
+        "Version": "11.0.61030"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization NO",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "WinAppDeploy",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Microsoft Windows Desktop Runtime - 5.0.9 (x64)",
+        "Version": "40.36.30315"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2005 Redistributable",
+        "Version": "8.0.61001"
+    },
+    {
+        "Name": "PuTTY release 0.73 (64-bit)",
+        "Version": "0.73.0.0"
+    },
+    {
+        "Name": "Universal CRT Redistributable",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Microsoft ODBC Driver 17 for SQL Server",
+        "Version": "17.2.0.1"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps Tools",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Microsoft Windows Desktop Targeting Pack - 3.1.0 (x64)",
+        "Version": "24.64.28315"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2012 x64 Minimum Runtime - 11.0.61030",
+        "Version": "11.0.61030"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps Tools",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "WinRT Intellisense IoT - en-us",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Python 3.7.8 Standard Library (64-bit symbols)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "Windows Team Extension SDK Contracts",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization KO",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization BR",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "WinRT Intellisense Desktop - Other Languages",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "icecap_collectionresources",
+        "Version": "16.10.31306"
+    },
+    {
+        "Name": "Python 3.7.8 Executables (64-bit)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "Windows SDK Facade Windows WinMD Versioned",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Python 3.8.1 Executables (32-bit)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "Windows SDK Signing Tools",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "DiagnosticsHub_CollectionService",
+        "Version": "16.1.28901"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization NO",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "Python 3.7.8 Test Suite (64-bit debug)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "Microsoft ASP.NET Core 5.0.0 Targeting Pack (x64)",
+        "Version": "5.0.0.20526"
+    },
+    {
+        "Name": "Application Verifier x64 External Package",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Python 3.7.8 Tcl/Tk Support (64-bit debug)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "Python 3.8.1 Documentation (32-bit)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "Microsoft Workflow Debugger v1.0 for x86",
+        "Version": "16.0.31306"
+    },
+    {
+        "Name": "ASUS AURA Headset Component",
+        "Version": "1.2.2"
+    },
+    {
+        "Name": "Blackmagic RAW Common Components",
+        "Version": "2.8"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2013 x86 Additional Runtime - 12.0.40664",
+        "Version": "12.0.40664"
+    },
+    {
+        "Name": "icecap_collectionresourcesx64",
+        "Version": "16.10.31306"
+    },
+    {
+        "Name": "Microsoft .NET Native SDK",
+        "Version": "15.0.24211.07"
+    },
+    {
+        "Name": "Workflow Manager Client 1.0",
+        "Version": "2.1.10525.2"
+    },
+    {
+        "Name": "Windows SDK Desktop Libs x64",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Microsoft Exchange Web Services Managed API 2.1",
+        "Version": "15.0.847.30"
+    },
+    {
+        "Name": "icecap_collection_neutral",
+        "Version": "16.10.31306"
+    },
+    {
+        "Name": "Windows SDK EULA",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Microsoft .NET AppHost Pack - 5.0.9 (x64_x86)",
+        "Version": "40.36.30309"
+    },
+    {
+        "Name": "Windows Mobile Extension SDK Contracts",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Microsoft Portable Library Multi-Targeting Pack",
+        "Version": "16.0.28329.73"
+    },
+    {
+        "Name": "Windows SDK EULA",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Windows SDK Desktop Headers x64",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Python 3.7.8 Add to Path (64-bit)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps Metadata",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps Contracts",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Universal General MIDI DLS Extension SDK",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "vs_filehandler_amd64",
+        "Version": "16.11.31503"
+    },
+    {
+        "Name": "Microsoft .NET Host FX Resolver - 7.0.9 (x64)",
+        "Version": "56.39.63170"
+    },
+    {
+        "Name": "Microsoft .NET Core Runtime - 3.1.18 (x64)",
+        "Version": "24.72.30314"
+    },
+    {
+        "Name": "Microsoft .NET Framework 4.7.2 Targeting Pack",
+        "Version": "4.7.03062"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2012 x86 Minimum Runtime - 11.0.61030",
+        "Version": "11.0.61030"
+    },
+    {
+        "Name": "Python 3.8.1 Development Libraries (32-bit debug)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "Python 3.7.8 Executables (64-bit debug)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "Windows SDK ARM Desktop Tools",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "WinRT Intellisense UAP - Other Languages",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Application Verifier x64 External Package",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Python 3.10.0 Test Suite (64-bit symbols)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "Oracle Database 21c Express Edition",
+        "Version": "21.0.0.0"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization DA",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "Microsoft .NET AppHost Pack - 5.0.9 (x64_arm)",
+        "Version": "40.36.30309"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization EL",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps DirectX x64 Remote",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "WinRT Intellisense Mobile - en-us",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Microsoft ASP.NET Web Tools Packages 16.0 - ENU",
+        "Version": "1.0.21125.0"
+    },
+    {
+        "Name": "Python 3.8.1 Add to Path (32-bit)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "WinRT Intellisense PPI - Other Languages",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization NL",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "Microsoft ASP.NET Core 3.1.18 Shared Framework (x86)",
+        "Version": "3.1.18.21365"
+    },
+    {
+        "Name": "Microsoft .NET Core 3.1 Templates 5.0.400 (x64)",
+        "Version": "12.23.41002"
+    },
+    {
+        "Name": "Windows Simulator",
+        "Version": "16.0.28522"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization KO",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "vs_SQLClickOnceBootstrappermsi",
+        "Version": "16.10.31205"
+    },
+    {
+        "Name": "SDK ARM Additions",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Python 3.8.1 Standard Library (32-bit debug)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "vs_filehandler_x86",
+        "Version": "16.11.31503"
+    },
+    {
+        "Name": "WinRT Intellisense PPI - en-us",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps DirectX x86 Remote",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps Metadata",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Active Directory Authentication Library for SQL Server",
+        "Version": "15.0.1300.359"
+    },
+    {
+        "Name": "Microsoft XNA Framework Redistributable 4.0 Refresh",
+        "Version": "4.0.30901.0"
+    },
+    {
+        "Name": "Python 3.9.2 Executables (64-bit)",
+        "Version": "3.9.2150.0"
+    },
+    {
+        "Name": "Microsoft Azure Compute Emulator - v2.9.6",
+        "Version": "2.9.8899.26"
+    },
+    {
+        "Name": "ASUS Keyboard HAL",
+        "Version": "1.0.34"
+    },
+    {
+        "Name": "Microsoft .NET Host FX Resolver - 5.0.9 (x64)",
+        "Version": "40.36.30309"
+    },
+    {
+        "Name": "Windows SDK for Windows Store Apps Headers",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "IIS 10.0 Express",
+        "Version": "10.0.05512"
+    },
+    {
+        "Name": "Python 3.7.8 Executables (64-bit symbols)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "Windows SDK Desktop Libs x64",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "WinRT Intellisense Desktop - en-us",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Java(TM) SE Development Kit 11.0.1 (64-bit)",
+        "Version": "11.0.1.0"
+    },
+    {
+        "Name": "ASUS GLCKIO2 Driver",
+        "Version": "1.0.20"
+    },
+    {
+        "Name": "Python 3.10.0 Documentation (64-bit)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "Python 3.10.0 Executables (64-bit)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization PL",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "Microsoft .NET Framework Cumulative Intellisense Pack for Visual Studio (ENU)",
+        "Version": "4.8.03761"
+    },
+    {
+        "Name": "Python 3.7.8 Core Interpreter (64-bit)",
+        "Version": "3.7.8150.0"
+    },
+    {
+        "Name": "sptools_Microsoft.VisualStudio.Vsto.Msi.x64",
+        "Version": "16.0.28030"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization CS",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "Microsoft .NET Framework 3.5 Targeting Pack (enu)",
+        "Version": "3.5.28329"
+    },
+    {
+        "Name": "Microsoft .NET Core Runtime - 2.1.29 (x64)",
+        "Version": "16.116.30323"
+    },
+    {
+        "Name": "Java Auto Updater",
+        "Version": "2.8.261.12"
+    },
+    {
+        "Name": "Python 3.9.2 Development Libraries (64-bit)",
+        "Version": "3.9.2150.0"
+    },
+    {
+        "Name": "Windows SDK Signing Tools",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Microsoft Visual C++ 2022 X64 Additional Runtime - 14.40.33810",
+        "Version": "14.40.33810"
+    },
+    {
+        "Name": "Kits Configuration Installer",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "WinRT Intellisense IoT - en-us",
+        "Version": "10.1.16299.15"
+    },
+    {
+        "Name": "Python 3.8.1 Executables (32-bit symbols)",
+        "Version": "3.8.1150.0"
+    },
+    {
+        "Name": "Python 3.10.0 Development Libraries (64-bit)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "AMD WVR64",
+        "Version": "2019.0816.1152.21357"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization NL",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "Kingston AURA DRAM Component",
+        "Version": "1.0.15"
+    },
+    {
+        "Name": "sptools_Microsoft.VisualStudio.Vsto.Msi.Resources",
+        "Version": "16.0.28030"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization IT",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "Windows Team Extension SDK Contracts",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "vs_communitymsires",
+        "Version": "16.10.31213"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization EL",
+        "Version": "2017.0424.2119.36535"
+    },
+    {
+        "Name": "icecap_collection_x64",
+        "Version": "16.10.31306"
+    },
+    {
+        "Name": "Visual C++ Library CRT Appx Package",
+        "Version": "14.29.30133"
+    },
+    {
+        "Name": "Windows App Certification Kit x64",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "Windows IoT Extension SDK",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "WinRT Intellisense PPI - Other Languages",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Python 3.10.0 Standard Library (64-bit symbols)",
+        "Version": "3.10.150.0"
+    },
+    {
+        "Name": "Windows Mobile Extension SDK",
+        "Version": "10.1.17763.132"
+    },
+    {
+        "Name": "Catalyst Control Center Next Localization JA",
+        "Version": "2017.0922.1659.28737"
+    },
+    {
+        "Name": "WinRT Intellisense PPI - en-us",
+        "Version": "10.1.19041.685"
+    },
+    {
+        "Name": "vs_Graphics_Singletonx86",
+        "Version": "16.10.31213"
+    },
+    {
+        "Name": "Windows 10 10.0.19041",
+        "Version": "10.0.19041"
+    }
+]

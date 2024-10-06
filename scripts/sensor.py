@@ -10,23 +10,20 @@ import os
 
 # Define your NVD API key here
 API_KEY = 'b7803c2d-9a86-44b9-8c01-66074d62fbb4'
+CACHE_FOLDER = "cache"
+PROGRAMS_FILE = os.path.join(CACHE_FOLDER, "programs.json")
+VULNERABILITIES_FOLDER = os.path.join(CACHE_FOLDER, "vulnerabilities")
 
+# Create cache directory if it doesn't exist
+os.makedirs(CACHE_FOLDER, exist_ok=True)
+os.makedirs(VULNERABILITIES_FOLDER, exist_ok=True)
 
 def get_installed_programs():
     """
     Extracts installed programs using PowerShell.
     """
     command = '''
-    Get-ItemProperty HKLM:\\Software\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*, 
-    HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\* |
-    Where-Object {
-        $_.DisplayName -ne $null -and
-        $_.DisplayVersion -ne $null -and
-        $_.DisplayName -notmatch 'Update|Service|Component|Package|SDK|Driver|Symbols|Bootstrap|Redistributable'
-    } |
-    Sort-Object DisplayName -Unique |
-    Select-Object DisplayName, DisplayVersion |
-    ConvertTo-Json
+    Get-WmiObject -Class Win32_Product | Select-Object -Property Name, Version | ConvertTo-Json
     '''
     try:
         output = subprocess.check_output(["powershell", "-Command", command], universal_newlines=True)
@@ -43,7 +40,7 @@ def get_windows_version():
     """
     win_version = platform.win32_ver()
     os_name = f"Windows {win_version[0]} {win_version[1]}"
-    return {"DisplayName": os_name, "DisplayVersion": win_version[1]}
+    return {"Name": os_name, "Version": win_version[1]}
 
 
 def determine_vendor(program_name):
@@ -101,15 +98,20 @@ def condense_programs(installed_programs):
     }
 
     for program in installed_programs:
-        program_name = program['DisplayName'].lower()
-        program_version = program['DisplayVersion']
-        stripped_name = strip_version_from_name(program['DisplayName'])
+        if not program or not isinstance(program, dict) or not program.get('Name') or not program.get('Version'):
+            continue
+
+        program_name = program['Name'].lower()
+        program_version = program['Version']
+        stripped_name = strip_version_from_name(program['Name'])
+
         matched = False
         for pattern, condensed_name in condense_map.items():
             if re.search(pattern, program_name):
                 condensed[condensed_name].add(program_version)
                 matched = True
                 break
+
         if not matched:
             condensed[stripped_name].add(program_version)
 
@@ -201,7 +203,7 @@ def save_vulnerability_to_file(vulnerability_data, vendor, product, version):
     """
     Saves the vulnerability data as a JSON file in the vulnerabilities folder using the custom format.
     """
-    folder_path = "vulnerabilities"
+    folder_path = VULNERABILITIES_FOLDER
     os.makedirs(folder_path, exist_ok=True)
     product_name = product.lower().replace(" ", "_").replace("-", "_")
     file_name = f"{vendor}_{product_name}_{version}.json"
@@ -216,17 +218,52 @@ def save_vulnerability_to_file(vulnerability_data, vendor, product, version):
         print(f"File already exists: {file_path}")
 
 
+def save_program_list(programs):
+    """
+    Saves the list of installed programs to a JSON file.
+    """
+    with open(PROGRAMS_FILE, 'w') as file:
+        json.dump(programs, file, indent=4)
+    print(f"Saved current program list to {PROGRAMS_FILE}")
+
+
+def load_program_list():
+    """
+    Loads the list of installed programs from the saved JSON file.
+    """
+    if os.path.exists(PROGRAMS_FILE):
+        with open(PROGRAMS_FILE, 'r') as file:
+            return json.load(file)
+    return []
+
+
+def check_for_changes(current_programs):
+    """
+    Checks if the current programs differ from the previously saved list.
+    """
+    previous_programs = load_program_list()
+    return current_programs != previous_programs
+
+
 def main():
+    print("Starting a new scan...")
+    
+    # Step 1: Retrieve currently installed programs and save them
     installed_programs = get_installed_programs()
     windows_version = get_windows_version()
     installed_programs.append(windows_version)
-    condensed_programs = condense_programs(installed_programs)
 
-    print("Condensed Application Details:")
-    for name, versions in condensed_programs.items():
-        print(f"{name}: Versions - {versions}")
+    # Step 2: Check if there are any changes compared to the previous scan
+    if check_for_changes(installed_programs):
+        print("Detected changes in installed programs or a new scan required.")
+        save_program_list(installed_programs)  # Update stored program list
+        print("Performing a scan based on updated program list...")
+        condensed_programs = condense_programs(installed_programs)
+        query_vulnerabilities(condensed_programs)
+    else:
+        print("No changes detected in installed programs. Skipping scan.")
 
-    query_vulnerabilities(condensed_programs)
+    print("Scan completed.")
 
 
 if __name__ == "__main__":
