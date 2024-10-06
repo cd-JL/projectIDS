@@ -30,7 +30,7 @@ export default function Home() {
 
             {/* BRAND PARTNERS SECTION */}
             <section className="mt-20">
-                <h2 className=" font-bold text-2xl mb-12 ml-20">TRUSTED  BY  TOP  COMPANIES</h2>
+                <h2 className=" font-bold text-2xl mb-12 ml-20">TRUSTED COMPANIES</h2>
                 <div className=" flex justify-between px-24">
                     <div>LOGO 1</div>
                     <div>LOGO 2</div>
@@ -39,7 +39,7 @@ export default function Home() {
             </section>
 
             {/* ABOUT SECTION */}
-            <section className=" flex mt-20">
+            {/* <section className=" flex mt-20">
                 <div className=" basis-1/2 flex-col pl-24">
                     <h2 className="font-black text-3xl text-black mb-4">A FRESH APPROACH TO VIDEO PRODUCTION</h2>
                     <p className=" mt-7">Elevate your brand with OnTheGoProduction – the trusted video production partner for SaaS companies.
@@ -58,6 +58,24 @@ export default function Home() {
                         src=""
                     />
                 </div>
+            </section> */}
+               <section className=" flex mt-20">
+                <div className=" basis-1/2 flex-col pl-24">
+                    <h2 className="font-black text-3xl text-black mb-4">Project IDS Info</h2>
+                    <p className=" mt-7">dejskndsfcmkdf  dfnvjkdfnmx dnjf xcnvf d jkndf vj dfv dnjkfv kdnjdjf kdfjvnjkddf vjkdfnv</p>
+                    <Link href="/get-quote">
+                        <button type="button" className="bg-orange-500 hover:bg-orange-400 text-white py-4 px-3 rounded-md block w-2/5 border border-black mt-16">
+                            GOT A PROJECT? LET’S TALK
+                        </button>
+                    </Link>
+                </div>
+                {/* <div className=" basis-1/2">
+                    <video className=" w-full h-full px-10"
+                        controls
+                        muted
+                        src=""
+                    />
+                </div> */}
             </section>
 
             {/* 3 REASONS TO WORK WITH US */}

@@ -1,5 +1,5 @@
 import Footer from "@/app/_components/footer";
-import Quote from "@/app/_components/get-quote";
+import Fetch_json from "@/app/_components/get-json";
 import NavBar from "@/app/_components/nav-bar";
 
 
@@ -7,7 +7,7 @@ export default function GetQuote() {
   return (
     <main>
       <NavBar />
-      <Quote />
+      <Fetch_json />
       <Footer />
     </main>
   )
