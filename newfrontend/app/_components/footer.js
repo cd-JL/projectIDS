@@ -7,18 +7,18 @@ export default function Footer() {
         <div className="">
           <p>Logo</p>
           <p className="text-2xl pt-4">
-            Turning wild imaginations into reality
+            Project IDS
           </p>
           <div className="pt-4 text-lg">
             <p>CALGARY, ALBERTA</p>
-            <p>ONTHEGO@GMAIL.COM</p>
+            <p>ProjectIDS225@GMAIL.COM</p>
             <p>+1 (123) 456 7890</p>
           </div>
 
           <p>CANADA</p>
           <div className="text-sm pt-4">
-            <p>@2024 ONTHEGO Production</p>
-            <p>ONTHEGO Production is registered in Canada</p>
+            <p>@2024 Project IDS Company</p>
+            <p>Project IDS Company is registered in Canada</p>
             <p>Company number: 123456789</p>
           </div>
         </div>
