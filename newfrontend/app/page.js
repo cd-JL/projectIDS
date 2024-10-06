@@ -14,14 +14,9 @@ export default function Home() {
             <section className="relative h-screen w-full">
                 <div className="absolute top-1/4  left-10  text-start z-10">
                     <h1 className="font-black text-3xl mb-4">
-                        VIDEO PRODUCTION TAILORED FOR SaaS/PaaS COMPANIES <br /> AND THEIR BRAND INDENTITIES
+                        PROJECT IDS <br /> Cyber Security Detector
                     </h1>
-                    <p>OnTheGoProduction is a comprehensive video production agency dedicated to helping SaaS brands <br /> attract new customers through innovative content and effective campaigns.</p>
-                    <Link href="/">
-                        <button className="bg-orange-500 hover:bg-orange-400 text-white py-2 px-4 rounded mt-20 border border-black ">
-                            PLAY SHOW REEL
-                        </button>
-                    </Link>
+                    <p>Project IDS application can detect any vulnerabilites on your computers <br /> (Only Windows computers for now)</p>
                 </div>
 
                 <video

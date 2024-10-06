@@ -1,0 +1,583 @@
+[
+{
+    "resultsPerPage": 4,
+    "startIndex": 0,
+    "totalResults": 4,
+    "format": "NVD_CVE",
+    "version": "2.0",
+    "timestamp": "2024-10-06T03:26:48.870",
+    "vulnerabilities": [
+        {
+            "cve": {
+                "id": "CVE-2012-2647",
+                "sourceIdentifier": "vultures@jpcert.or.jp",
+                "published": "2012-07-31T10:45:42.093",
+                "lastModified": "2012-07-31T10:45:42.093",
+                "vulnStatus": "Analyzed",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "Yahoo! Toolbar 1.0.0.5 and earlier for Chrome and Safari allows remote attackers to modify the configured search URL, and intercept search terms, via a crafted web page."
+                    },
+                    {
+                        "lang": "es",
+                        "value": "Yahoo! Toolbar v1.0.0.5 y anteriores para Chrome y Safari, permiten a usuarios remotos modificar la URL de b\u00fasqueda configurada e interceptar termindos de b\u00fasqueda a trav\u00e9s de una p\u00e1gina web modificada."
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV2": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "2.0",
+                                "vectorString": "AV:N/AC:M/Au:N/C:P/I:P/A:N",
+                                "accessVector": "NETWORK",
+                                "accessComplexity": "MEDIUM",
+                                "authentication": "NONE",
+                                "confidentialityImpact": "PARTIAL",
+                                "integrityImpact": "PARTIAL",
+                                "availabilityImpact": "NONE",
+                                "baseScore": 5.8
+                            },
+                            "baseSeverity": "MEDIUM",
+                            "exploitabilityScore": 8.6,
+                            "impactScore": 4.9,
+                            "acInsufInfo": false,
+                            "obtainAllPrivilege": false,
+                            "obtainUserPrivilege": false,
+                            "obtainOtherPrivilege": false,
+                            "userInteractionRequired": true
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-200"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "operator": "AND",
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:yahoo:toolbar:*:*:*:*:*:*:*:*",
+                                        "versionEndIncluding": "1.0.0.5",
+                                        "matchCriteriaId": "B62220DE-72E1-484D-99C8-ED5020D52472"
+                                    }
+                                ]
+                            },
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": false,
+                                        "criteria": "cpe:2.3:a:apple:safari:*:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "AE370CAA-04B3-434E-BD5B-1D87DE596C10"
+                                    },
+                                    {
+                                        "vulnerable": false,
+                                        "criteria": "cpe:2.3:a:google:chrome:*:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "07E9B637-69D8-4E4F-8896-F8F14CC55E03"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "http://jvn.jp/en/jp/JVN51769987/index.html",
+                        "source": "vultures@jpcert.or.jp"
+                    },
+                    {
+                        "url": "http://jvndb.jvn.jp/jvndb/JVNDB-2012-000072",
+                        "source": "vultures@jpcert.or.jp"
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2012-4929",
+                "sourceIdentifier": "cve@mitre.org",
+                "published": "2012-09-15T18:55:03.187",
+                "lastModified": "2018-04-22T01:29:00.363",
+                "vulnStatus": "Modified",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "The TLS protocol 1.2 and earlier, as used in Mozilla Firefox, Google Chrome, Qt, and other products, can encrypt compressed data without properly obfuscating the length of the unencrypted data, which allows man-in-the-middle attackers to obtain plaintext HTTP headers by observing length differences during a series of guesses in which a string in an HTTP request potentially matches an unknown string in an HTTP header, aka a \"CRIME\" attack."
+                    },
+                    {
+                        "lang": "es",
+                        "value": "El protocolo TLS 1.2 y versiones anteriores, como el usado en Mozilla Firefox, Google Chrome, y otros productos, puede hacer cifrados TLS de datos comprimidos sin ofuscar de forma adecuada la longitud de los datos no cifrado, lo que permte a atacantes man-in-the-middle obtener cabeceras HTTP en texto plano observando las diferencias de longitud durante una serie de previsiones en la cual una cadena en una petici\u00f3n HTTP potencialmente coincide con una cadena desconocida en una cabecera HTPP, tambi\u00e9n conocido como ataque \"CRIME\"."
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV2": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "2.0",
+                                "vectorString": "AV:N/AC:H/Au:N/C:P/I:N/A:N",
+                                "accessVector": "NETWORK",
+                                "accessComplexity": "HIGH",
+                                "authentication": "NONE",
+                                "confidentialityImpact": "PARTIAL",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "NONE",
+                                "baseScore": 2.6
+                            },
+                            "baseSeverity": "LOW",
+                            "exploitabilityScore": 4.9,
+                            "impactScore": 2.9,
+                            "acInsufInfo": false,
+                            "obtainAllPrivilege": false,
+                            "obtainUserPrivilege": false,
+                            "obtainOtherPrivilege": false,
+                            "userInteractionRequired": false
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-310"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:7.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "16F59A04-14CF-49E2-9973-645477EA09DA"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:8.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "C11E6FB0-C8C0-4527-9AA0-CB9B316F8F43"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:google:chrome:*:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "07E9B637-69D8-4E4F-8896-F8F14CC55E03"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:mozilla:firefox:*:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "14E6A30E-7577-4569-9309-53A0AF7FE3AC"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "http://arstechnica.com/security/2012/09/crime-hijacks-https-sessions/",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://code.google.com/p/chromium/issues/detail?id=139744",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://isecpartners.com/blog/2012/9/14/details-on-the-crime-attack.html",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://jvn.jp/en/jp/JVN65273415/index.html",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://jvndb.jvn.jp/en/contents/2016/JVNDB-2016-000129.html",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://lists.apple.com/archives/security-announce/2013/Jun/msg00000.html",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://lists.fedoraproject.org/pipermail/package-announce/2013-April/101366.html",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://lists.opensuse.org/opensuse-updates/2012-10/msg00096.html",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://lists.opensuse.org/opensuse-updates/2013-01/msg00034.html",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://lists.opensuse.org/opensuse-updates/2013-01/msg00048.html",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://marc.info/?l=bugtraq&m=136612293908376&w=2",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://news.ycombinator.com/item?id=4510829",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://rhn.redhat.com/errata/RHSA-2013-0587.html",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://security.stackexchange.com/questions/19911/crime-how-to-beat-the-beast-successor",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://support.apple.com/kb/HT5784",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://threatpost.com/en_us/blogs/crime-attack-uses-compression-ratio-tls-requests-side-channel-hijack-secure-sessions-091312",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://threatpost.com/en_us/blogs/new-attack-uses-ssltls-information-leak-hijack-https-sessions-090512",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://www.debian.org/security/2012/dsa-2579",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://www.debian.org/security/2013/dsa-2627",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://www.debian.org/security/2015/dsa-3253",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://www.ekoparty.org/2012/thai-duong.php",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://www.iacr.org/cryptodb/data/paper.php?pubkey=3091",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://www.securityfocus.com/bid/55704",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://www.theregister.co.uk/2012/09/14/crime_tls_attack/",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://www.ubuntu.com/usn/USN-1627-1",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://www.ubuntu.com/usn/USN-1628-1",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://www.ubuntu.com/usn/USN-1898-1",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=857051",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "https://chromiumcodereview.appspot.com/10825183",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "https://community.qualys.com/blogs/securitylabs/2012/09/14/crime-information-leakage-attack-against-ssltls",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "https://gist.github.com/3696912",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "https://github.com/mpgn/CRIME-poc",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "https://oval.cisecurity.org/repository/search/definition/oval%3Aorg.mitre.oval%3Adef%3A18920",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "https://threatpost.com/en_us/blogs/demo-crime-tls-attack-091212",
+                        "source": "cve@mitre.org"
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2012-4930",
+                "sourceIdentifier": "cve@mitre.org",
+                "published": "2012-09-15T18:55:03.250",
+                "lastModified": "2013-01-30T04:55:34.587",
+                "vulnStatus": "Modified",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "The SPDY protocol 3 and earlier, as used in Mozilla Firefox, Google Chrome, and other products, can perform TLS encryption of compressed data without properly obfuscating the length of the unencrypted data, which allows man-in-the-middle attackers to obtain plaintext HTTP headers by observing length differences during a series of guesses in which a string in an HTTP request potentially matches an unknown string in an HTTP header, aka a \"CRIME\" attack."
+                    },
+                    {
+                        "lang": "es",
+                        "value": "El protocolo SPDY 3 y anteriores, como el usado en Mozilla Firefox, Google Chrome, y otros productos, puede hacer cifrados TLS de datos comprimidos sin ofuscar de forma adecuada la longitud de los datos no cifrado, lo que permte a atacantes man-in-the-middle obtener cabeceras HTTP en texto plano observando las diferencias de longitud durante una serie de previsiones en la cual una cadena en una petici\u00f3n HTTP potencialmente coincide con una cadena desconocida en una cabecera HTPP, tambi\u00e9n conocido como ataque \"CRIME\"."
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV2": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "2.0",
+                                "vectorString": "AV:N/AC:H/Au:N/C:P/I:N/A:N",
+                                "accessVector": "NETWORK",
+                                "accessComplexity": "HIGH",
+                                "authentication": "NONE",
+                                "confidentialityImpact": "PARTIAL",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "NONE",
+                                "baseScore": 2.6
+                            },
+                            "baseSeverity": "LOW",
+                            "exploitabilityScore": 4.9,
+                            "impactScore": 2.9,
+                            "acInsufInfo": false,
+                            "obtainAllPrivilege": false,
+                            "obtainUserPrivilege": false,
+                            "obtainOtherPrivilege": false,
+                            "userInteractionRequired": true
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-310"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:google:chrome:*:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "07E9B637-69D8-4E4F-8896-F8F14CC55E03"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:mozilla:firefox:*:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "14E6A30E-7577-4569-9309-53A0AF7FE3AC"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "http://arstechnica.com/security/2012/09/crime-hijacks-https-sessions/",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://isecpartners.com/blog/2012/9/14/details-on-the-crime-attack.html",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://lists.opensuse.org/opensuse-security-announce/2012-10/msg00010.html",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://threatpost.com/en_us/blogs/crime-attack-uses-compression-ratio-tls-requests-side-channel-hijack-secure-sessions-091312",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://www.ekoparty.org/2012/thai-duong.php",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://www.iacr.org/cryptodb/data/paper.php?pubkey=3091",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "http://www.theregister.co.uk/2012/09/14/crime_tls_attack/",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "https://bugzilla.redhat.com/show_bug.cgi?id=857737",
+                        "source": "cve@mitre.org"
+                    },
+                    {
+                        "url": "https://community.qualys.com/blogs/securitylabs/2012/09/14/crime-information-leakage-attack-against-ssltls",
+                        "source": "cve@mitre.org"
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2013-6662",
+                "sourceIdentifier": "cve@mitre.org",
+                "published": "2017-04-13T17:59:00.247",
+                "lastModified": "2017-04-20T14:26:57.707",
+                "vulnStatus": "Analyzed",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "Google Chrome caches TLS sessions before certificate validation occurs."
+                    },
+                    {
+                        "lang": "es",
+                        "value": "Google Chrome guarda en cach\u00e9 las sesiones TLS antes de que se produzca la validaci\u00f3n del certificado."
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV30": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.0",
+                                "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "HIGH",
+                                "availabilityImpact": "NONE",
+                                "baseScore": 6.5,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.6
+                        }
+                    ],
+                    "cvssMetricV2": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "2.0",
+                                "vectorString": "AV:N/AC:M/Au:N/C:N/I:P/A:N",
+                                "accessVector": "NETWORK",
+                                "accessComplexity": "MEDIUM",
+                                "authentication": "NONE",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "PARTIAL",
+                                "availabilityImpact": "NONE",
+                                "baseScore": 4.3
+                            },
+                            "baseSeverity": "MEDIUM",
+                            "exploitabilityScore": 8.6,
+                            "impactScore": 2.9,
+                            "acInsufInfo": false,
+                            "obtainAllPrivilege": false,
+                            "obtainUserPrivilege": false,
+                            "obtainOtherPrivilege": false,
+                            "userInteractionRequired": true
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-295"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:google:chrome:*:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "07E9B637-69D8-4E4F-8896-F8F14CC55E03"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://bugs.chromium.org/p/chromium/issues/detail?id=305220",
+                        "source": "cve@mitre.org",
+                        "tags": [
+                            "Issue Tracking",
+                            "Patch",
+                            "Third Party Advisory"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
+]

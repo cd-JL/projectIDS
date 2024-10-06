@@ -1,0 +1,3764 @@
+[
+{
+    "resultsPerPage": 25,
+    "startIndex": 0,
+    "totalResults": 25,
+    "format": "NVD_CVE",
+    "version": "2.0",
+    "timestamp": "2024-10-06T03:36:00.477",
+    "vulnerabilities": [
+        {
+            "cve": {
+                "id": "CVE-2023-1161",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2023-03-06T21:15:10.990",
+                "lastModified": "2023-10-20T18:23:56.467",
+                "vulnStatus": "Analyzed",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "ISO 15765 and ISO 10681 dissector crash in Wireshark 4.0.0 to 4.0.3 and 3.6.0 to 3.6.11 allows denial of service via packet injection or crafted capture file"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "El fallo del disector ISO 15765 e ISO 10681 en Wireshark 4.0.0 a 4.0.3 y 3.6.0 a 3.6.11 permite la denegaci\u00f3n de servicio mediante la inyecci\u00f3n de paquetes o un archivo de captura manipulado."
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "LOW",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 7.1,
+                                "baseSeverity": "HIGH"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 4.2
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "LOW",
+                                "integrityImpact": "LOW",
+                                "availabilityImpact": "LOW",
+                                "baseScore": 6.3,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.4
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "NVD-CWE-noinfo"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "3.6.0",
+                                        "versionEndExcluding": "3.6.12",
+                                        "matchCriteriaId": "5F7FFE8E-2DCE-405E-AEF3-7FF92FCBAC31"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndExcluding": "4.0.4",
+                                        "matchCriteriaId": "367479CF-5177-4907-8952-533FDDBC17E6"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "07B237A9-69A3-4A9C-9DA0-4E06BD37AE73"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:12.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "46D69DCC-AE4D-4EA5-861C-D60951444C6C"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/gitlab-org/cves/-/blob/master/2023/CVE-2023-1161.json",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/18839",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Issue Tracking",
+                            "Vendor Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://lists.debian.org/debian-lts-announce/2023/04/msg00029.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Mailing List",
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://security.gentoo.org/glsa/202309-02",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.debian.org/security/2023/dsa-5429",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-08.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-1992",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2023-04-12T21:15:15.147",
+                "lastModified": "2023-11-07T04:05:40.417",
+                "vulnStatus": "Modified",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "RPCoRDMA dissector crash in Wireshark 4.0.0 to 4.0.4 and 3.6.0 to 3.6.12 allows denial of service via packet injection or crafted capture file"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "El fallo del disector RPCoRDMA en Wireshark 4.0.0 a 4.0.4 y 3.6.0 a 3.6.12 permite la denegaci\u00f3n de servicio mediante la inyecci\u00f3n de paquetes o un archivo de captura manipulado."
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "NONE",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 7.5,
+                                "baseSeverity": "HIGH"
+                            },
+                            "exploitabilityScore": 3.9,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "LOW",
+                                "integrityImpact": "LOW",
+                                "availabilityImpact": "LOW",
+                                "baseScore": 6.3,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.4
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-400"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "3.6.0",
+                                        "versionEndExcluding": "3.6.13",
+                                        "matchCriteriaId": "02990DE8-2F8D-409E-B3D6-DCBE234BEA72"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndExcluding": "4.0.5",
+                                        "matchCriteriaId": "C399FC60-C37A-459D-A981-FA41764A5D48"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "07B237A9-69A3-4A9C-9DA0-4E06BD37AE73"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:12.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "46D69DCC-AE4D-4EA5-861C-D60951444C6C"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:fedoraproject:fedora:36:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "5C675112-476C-4D7C-BCB9-A2FB2D0BC9FD"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:fedoraproject:fedora:37:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "E30D0E6F-4AE8-4284-8716-991DFA48CC5D"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:fedoraproject:fedora:38:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "CC559B26-5DFC-4B7A-A27C-B77DE755DFF9"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/gitlab-org/cves/-/blob/master/2023/CVE-2023-1992.json",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/18852",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Exploit",
+                            "Issue Tracking",
+                            "Patch",
+                            "Vendor Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://lists.debian.org/debian-lts-announce/2023/04/msg00029.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Mailing List",
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/EHLTD25WNQSPQNELX52UH6YLP4TBLKTT/",
+                        "source": "cve@gitlab.com"
+                    },
+                    {
+                        "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/FZA7IMATNNQPLIM6WMRPM3T5ZY24NRR2/",
+                        "source": "cve@gitlab.com"
+                    },
+                    {
+                        "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/PFJERBHVWYLYWXO2B3V47QH66IEB6EZ3/",
+                        "source": "cve@gitlab.com"
+                    },
+                    {
+                        "url": "https://security.gentoo.org/glsa/202309-02",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.debian.org/security/2023/dsa-5429",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-09.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-1993",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2023-04-12T21:15:16.183",
+                "lastModified": "2023-11-07T04:05:40.703",
+                "vulnStatus": "Modified",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "LISP dissector large loop in Wireshark 4.0.0 to 4.0.4 and 3.6.0 to 3.6.12 allows denial of service via packet injection or crafted capture file"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "El bucle grande del disector LISP en Wireshark 4.0.0 a 4.0.4 y 3.6.0 a 3.6.12 permite la denegaci\u00f3n de servicio mediante inyecci\u00f3n de paquetes o archivo de captura manipulado"
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 6.5,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "LOW",
+                                "integrityImpact": "LOW",
+                                "availabilityImpact": "LOW",
+                                "baseScore": 6.3,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.4
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-834"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "3.6.0",
+                                        "versionEndExcluding": "3.6.13",
+                                        "matchCriteriaId": "02990DE8-2F8D-409E-B3D6-DCBE234BEA72"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndExcluding": "4.0.5",
+                                        "matchCriteriaId": "C399FC60-C37A-459D-A981-FA41764A5D48"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "07B237A9-69A3-4A9C-9DA0-4E06BD37AE73"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:12.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "46D69DCC-AE4D-4EA5-861C-D60951444C6C"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:fedoraproject:fedora:36:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "5C675112-476C-4D7C-BCB9-A2FB2D0BC9FD"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:fedoraproject:fedora:37:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "E30D0E6F-4AE8-4284-8716-991DFA48CC5D"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:fedoraproject:fedora:38:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "CC559B26-5DFC-4B7A-A27C-B77DE755DFF9"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/gitlab-org/cves/-/blob/master/2023/CVE-2023-1993.json",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/18900",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Exploit",
+                            "Issue Tracking",
+                            "Patch",
+                            "Vendor Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://lists.debian.org/debian-lts-announce/2023/04/msg00029.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Mailing List",
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/EHLTD25WNQSPQNELX52UH6YLP4TBLKTT/",
+                        "source": "cve@gitlab.com"
+                    },
+                    {
+                        "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/FZA7IMATNNQPLIM6WMRPM3T5ZY24NRR2/",
+                        "source": "cve@gitlab.com"
+                    },
+                    {
+                        "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/PFJERBHVWYLYWXO2B3V47QH66IEB6EZ3/",
+                        "source": "cve@gitlab.com"
+                    },
+                    {
+                        "url": "https://security.gentoo.org/glsa/202309-02",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.debian.org/security/2023/dsa-5429",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-10.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-1994",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2023-04-12T22:15:13.987",
+                "lastModified": "2023-11-07T04:05:41.017",
+                "vulnStatus": "Modified",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "GQUIC dissector crash in Wireshark 4.0.0 to 4.0.4 and 3.6.0 to 3.6.12 allows denial of service via packet injection or crafted capture file"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "El fallo del disector GQUIC en Wireshark 4.0.0 a 4.0.4 y 3.6.0 a 3.6.12 permite la denegaci\u00f3n de servicio mediante la inyecci\u00f3n de paquetes o un archivo de captura manipulado."
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 6.5,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "LOW",
+                                "integrityImpact": "LOW",
+                                "availabilityImpact": "LOW",
+                                "baseScore": 6.3,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.4
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-400"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "3.6.0",
+                                        "versionEndExcluding": "3.6.13",
+                                        "matchCriteriaId": "02990DE8-2F8D-409E-B3D6-DCBE234BEA72"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndExcluding": "4.0.5",
+                                        "matchCriteriaId": "C399FC60-C37A-459D-A981-FA41764A5D48"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "07B237A9-69A3-4A9C-9DA0-4E06BD37AE73"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:12.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "46D69DCC-AE4D-4EA5-861C-D60951444C6C"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:fedoraproject:fedora:36:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "5C675112-476C-4D7C-BCB9-A2FB2D0BC9FD"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:fedoraproject:fedora:37:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "E30D0E6F-4AE8-4284-8716-991DFA48CC5D"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:fedoraproject:fedora:38:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "CC559B26-5DFC-4B7A-A27C-B77DE755DFF9"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/gitlab-org/cves/-/blob/master/2023/CVE-2023-1994.json",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/18947",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Exploit",
+                            "Issue Tracking",
+                            "Vendor Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://lists.debian.org/debian-lts-announce/2023/04/msg00029.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Mailing List",
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/EHLTD25WNQSPQNELX52UH6YLP4TBLKTT/",
+                        "source": "cve@gitlab.com"
+                    },
+                    {
+                        "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/FZA7IMATNNQPLIM6WMRPM3T5ZY24NRR2/",
+                        "source": "cve@gitlab.com"
+                    },
+                    {
+                        "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/PFJERBHVWYLYWXO2B3V47QH66IEB6EZ3/",
+                        "source": "cve@gitlab.com"
+                    },
+                    {
+                        "url": "https://security.gentoo.org/glsa/202309-02",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.debian.org/security/2023/dsa-5429",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-11.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-2854",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2023-05-26T21:15:17.643",
+                "lastModified": "2023-10-20T18:07:51.753",
+                "vulnStatus": "Analyzed",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "BLF file parser crash in Wireshark 4.0.0 to 4.0.5 and 3.6.0 to 3.6.13 allows denial of service via crafted capture file"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "El fallo del analizador de archivos BLF en Wireshark 4.0.0 a 4.0.5 y 3.6.0 a 3.6.13 permite la denegaci\u00f3n de servicio a trav\u00e9s de un archivo de captura manipulado."
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 6.5,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                                "attackVector": "LOCAL",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "LOW",
+                                "integrityImpact": "LOW",
+                                "availabilityImpact": "LOW",
+                                "baseScore": 5.3,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 1.8,
+                            "impactScore": 3.4
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-787"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "3.6.0",
+                                        "versionEndExcluding": "3.6.14",
+                                        "matchCriteriaId": "CED49BFD-0350-4790-9D15-35875AEE4F00"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndExcluding": "4.0.6",
+                                        "matchCriteriaId": "FBA0E5F8-10A3-4294-95A8-6CB594C4DADE"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:12.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "46D69DCC-AE4D-4EA5-861C-D60951444C6C"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/gitlab-org/cves/-/blob/master/2023/CVE-2023-2854.json",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19084",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Exploit",
+                            "Issue Tracking",
+                            "Patch",
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://security.gentoo.org/glsa/202309-02",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.debian.org/security/2023/dsa-5429",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-17.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-2855",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2023-05-26T21:15:17.757",
+                "lastModified": "2023-10-20T18:02:30.760",
+                "vulnStatus": "Analyzed",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "Candump log parser crash in Wireshark 4.0.0 to 4.0.5 and 3.6.0 to 3.6.13 allows denial of service via crafted capture file"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "La falla del analizador de registros de Candump en Wireshark 4.0.0 a 4.0.5 y 3.6.0 a 3.6.13 permite la denegaci\u00f3n de servicio a trav\u00e9s de un archivo de captura manipulado"
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 6.5,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                                "attackVector": "LOCAL",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "LOW",
+                                "integrityImpact": "LOW",
+                                "availabilityImpact": "LOW",
+                                "baseScore": 5.3,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 1.8,
+                            "impactScore": 3.4
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-787"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "3.6.0",
+                                        "versionEndExcluding": "3.6.14",
+                                        "matchCriteriaId": "CED49BFD-0350-4790-9D15-35875AEE4F00"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndExcluding": "4.0.6",
+                                        "matchCriteriaId": "FBA0E5F8-10A3-4294-95A8-6CB594C4DADE"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:12.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "46D69DCC-AE4D-4EA5-861C-D60951444C6C"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/gitlab-org/cves/-/blob/master/2023/CVE-2023-2855.json",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19062",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Exploit",
+                            "Issue Tracking",
+                            "Patch",
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://security.gentoo.org/glsa/202309-02",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.debian.org/security/2023/dsa-5429",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-12.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-2856",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2023-05-26T21:15:17.913",
+                "lastModified": "2023-10-20T17:53:32.420",
+                "vulnStatus": "Analyzed",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "VMS TCPIPtrace file parser crash in Wireshark 4.0.0 to 4.0.5 and 3.6.0 to 3.6.13 allows denial of service via crafted capture file"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "El fallo del analizador de archivos VMS TCPIPtrace en Wireshark 4.0.0 a 4.0.5 y 3.6.0 a 3.6.13 permite la denegaci\u00f3n de servicio a trav\u00e9s de un archivo de captura manipulado."
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 6.5,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                                "attackVector": "LOCAL",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "LOW",
+                                "integrityImpact": "LOW",
+                                "availabilityImpact": "LOW",
+                                "baseScore": 5.3,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 1.8,
+                            "impactScore": 3.4
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-787"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "3.6.0",
+                                        "versionEndExcluding": "3.6.14",
+                                        "matchCriteriaId": "CED49BFD-0350-4790-9D15-35875AEE4F00"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndExcluding": "4.0.6",
+                                        "matchCriteriaId": "FBA0E5F8-10A3-4294-95A8-6CB594C4DADE"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "07B237A9-69A3-4A9C-9DA0-4E06BD37AE73"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:12.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "46D69DCC-AE4D-4EA5-861C-D60951444C6C"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/gitlab-org/cves/-/blob/master/2023/CVE-2023-2856.json",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19083",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Exploit",
+                            "Issue Tracking",
+                            "Patch",
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://lists.debian.org/debian-lts-announce/2023/06/msg00004.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Mailing List",
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://security.gentoo.org/glsa/202309-02",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.debian.org/security/2023/dsa-5429",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-16.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-2857",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2023-05-26T21:15:18.273",
+                "lastModified": "2023-10-20T17:53:17.220",
+                "vulnStatus": "Analyzed",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "BLF file parser crash in Wireshark 4.0.0 to 4.0.5 and 3.6.0 to 3.6.13 allows denial of service via crafted capture file"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "El fallo del analizador de archivos BLF en Wireshark 4.0.0 a 4.0.5 y 3.6.0 a 3.6.13 permite la denegaci\u00f3n de servicio a trav\u00e9s de un archivo de captura manipulado."
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 6.5,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                                "attackVector": "LOCAL",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "LOW",
+                                "integrityImpact": "LOW",
+                                "availabilityImpact": "LOW",
+                                "baseScore": 5.3,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 1.8,
+                            "impactScore": 3.4
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-787"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "3.6.0",
+                                        "versionEndExcluding": "3.6.14",
+                                        "matchCriteriaId": "CED49BFD-0350-4790-9D15-35875AEE4F00"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndExcluding": "4.0.6",
+                                        "matchCriteriaId": "FBA0E5F8-10A3-4294-95A8-6CB594C4DADE"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:12.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "46D69DCC-AE4D-4EA5-861C-D60951444C6C"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/gitlab-org/cves/-/blob/master/2023/CVE-2023-2857.json",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19063",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Exploit",
+                            "Issue Tracking",
+                            "Patch",
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://security.gentoo.org/glsa/202309-02",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.debian.org/security/2023/dsa-5429",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-13.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-2858",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2023-05-26T21:15:18.633",
+                "lastModified": "2023-10-20T17:52:55.287",
+                "vulnStatus": "Analyzed",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "NetScaler file parser crash in Wireshark 4.0.0 to 4.0.5 and 3.6.0 to 3.6.13 allows denial of service via crafted capture file"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "El fallo del analizador de archivos BLF en Wireshark 4.0.0 a 4.0.5 y 3.6.0 a 3.6.13 permite la denegaci\u00f3n de servicio a trav\u00e9s de un archivo de captura manipulado."
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 6.5,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                                "attackVector": "LOCAL",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "LOW",
+                                "integrityImpact": "LOW",
+                                "availabilityImpact": "LOW",
+                                "baseScore": 5.3,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 1.8,
+                            "impactScore": 3.4
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-787"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "3.6.0",
+                                        "versionEndExcluding": "3.6.14",
+                                        "matchCriteriaId": "CED49BFD-0350-4790-9D15-35875AEE4F00"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndExcluding": "4.0.6",
+                                        "matchCriteriaId": "FBA0E5F8-10A3-4294-95A8-6CB594C4DADE"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "07B237A9-69A3-4A9C-9DA0-4E06BD37AE73"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:12.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "46D69DCC-AE4D-4EA5-861C-D60951444C6C"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/gitlab-org/cves/-/blob/master/2023/CVE-2023-2858.json",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19081",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Exploit",
+                            "Issue Tracking",
+                            "Patch",
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://lists.debian.org/debian-lts-announce/2023/06/msg00004.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://security.gentoo.org/glsa/202309-02",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.debian.org/security/2023/dsa-5429",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-15.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-2879",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2023-05-26T21:15:19.000",
+                "lastModified": "2023-10-20T17:52:45.083",
+                "vulnStatus": "Analyzed",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "GDSDB infinite loop in Wireshark 4.0.0 to 4.0.5 and 3.6.0 to 3.6.13 allows denial of service via packet injection or crafted capture file"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "GDSDB bucle infinito en Wireshark 4.0.0 a 4.0.5 y 3.6.0 a 3.6.13 permite la denegaci\u00f3n de servicio a trav\u00e9s de inyecci\u00f3n de paquetes o archivo de captura manipulado"
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "NONE",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 7.5,
+                                "baseSeverity": "HIGH"
+                            },
+                            "exploitabilityScore": 3.9,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "LOW",
+                                "integrityImpact": "LOW",
+                                "availabilityImpact": "LOW",
+                                "baseScore": 6.3,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.4
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-835"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "3.6.0",
+                                        "versionEndExcluding": "3.6.14",
+                                        "matchCriteriaId": "CED49BFD-0350-4790-9D15-35875AEE4F00"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndExcluding": "4.0.6",
+                                        "matchCriteriaId": "FBA0E5F8-10A3-4294-95A8-6CB594C4DADE"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "07B237A9-69A3-4A9C-9DA0-4E06BD37AE73"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:12.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "46D69DCC-AE4D-4EA5-861C-D60951444C6C"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/gitlab-org/cves/-/blob/master/2023/CVE-2023-2879.json",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19068",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Exploit",
+                            "Issue Tracking",
+                            "Patch",
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://lists.debian.org/debian-lts-announce/2023/06/msg00004.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Mailing List",
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://security.gentoo.org/glsa/202309-02",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.debian.org/security/2023/dsa-5429",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-14.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-2952",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2023-05-30T23:15:09.887",
+                "lastModified": "2023-10-20T17:52:38.970",
+                "vulnStatus": "Analyzed",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "XRA dissector infinite loop in Wireshark 4.0.0 to 4.0.5 and 3.6.0 to 3.6.13 allows denial of service via packet injection or crafted capture file"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "El bucle infinito del disector XRA en Wireshark 4.0.0 a 4.0.5 y 3.6.0 a 3.6.13 permite la denegaci\u00f3n de servicio mediante la inyecci\u00f3n de paquetes o un archivo de captura manipulado"
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 6.5,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                                "attackVector": "LOCAL",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "LOW",
+                                "integrityImpact": "LOW",
+                                "availabilityImpact": "LOW",
+                                "baseScore": 5.3,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 1.8,
+                            "impactScore": 3.4
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-835"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "3.6.0",
+                                        "versionEndExcluding": "3.6.14",
+                                        "matchCriteriaId": "CED49BFD-0350-4790-9D15-35875AEE4F00"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndExcluding": "4.0.6",
+                                        "matchCriteriaId": "FBA0E5F8-10A3-4294-95A8-6CB594C4DADE"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:10.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "07B237A9-69A3-4A9C-9DA0-4E06BD37AE73"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:12.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "46D69DCC-AE4D-4EA5-861C-D60951444C6C"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/gitlab-org/cves/-/blob/master/2023/CVE-2023-2952.json",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19100",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Exploit"
+                        ]
+                    },
+                    {
+                        "url": "https://lists.debian.org/debian-lts-announce/2023/06/msg00004.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Mailing List",
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://security.gentoo.org/glsa/202309-02",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.debian.org/security/2023/dsa-5429",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-20.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-0666",
+                "sourceIdentifier": "cve@takeonme.org",
+                "published": "2023-06-07T03:15:09.000",
+                "lastModified": "2023-10-20T20:53:33.607",
+                "vulnStatus": "Analyzed",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "Due to failure in validating the length provided by an attacker-crafted RTPS packet, Wireshark version 4.0.5 and prior, by default, is susceptible to a heap-based buffer overflow, and possibly code execution in the context of the process running Wireshark."
+                    },
+                    {
+                        "lang": "es",
+                        "value": "Debido a un fallo en la validaci\u00f3n de la longitud proporcionada por un atacante de paquetes manipulados RTPS, Wireshark v4.0.5 y anteriores, por defecto, es susceptible a un desbordamiento de b\u00fafer de pila y posiblemente la ejecuci\u00f3n de c\u00f3digo en el contexto del proceso que ejecuta Wireshark. "
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 6.5,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.6
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-787"
+                            }
+                        ]
+                    },
+                    {
+                        "source": "cve@takeonme.org",
+                        "type": "Secondary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-122"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndExcluding": "4.0.6",
+                                        "matchCriteriaId": "FBA0E5F8-10A3-4294-95A8-6CB594C4DADE"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:12.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "46D69DCC-AE4D-4EA5-861C-D60951444C6C"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19085",
+                        "source": "cve@takeonme.org",
+                        "tags": [
+                            "Exploit",
+                            "Issue Tracking"
+                        ]
+                    },
+                    {
+                        "url": "https://security.gentoo.org/glsa/202309-02",
+                        "source": "cve@takeonme.org",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://takeonme.org/cves/CVE-2023-0666.html",
+                        "source": "cve@takeonme.org",
+                        "tags": [
+                            "Exploit"
+                        ]
+                    },
+                    {
+                        "url": "https://www.debian.org/security/2023/dsa-5429",
+                        "source": "cve@takeonme.org",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/docs/relnotes/wireshark-4.0.6.html",
+                        "source": "cve@takeonme.org",
+                        "tags": [
+                            "Release Notes"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-18.html",
+                        "source": "cve@takeonme.org",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-0667",
+                "sourceIdentifier": "cve@takeonme.org",
+                "published": "2023-06-07T03:15:09.117",
+                "lastModified": "2023-10-20T20:55:29.700",
+                "vulnStatus": "Analyzed",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "Due to failure in validating the length provided by an attacker-crafted MSMMS packet, Wireshark version 4.0.5 and prior, in an unusual configuration, is susceptible to a heap-based buffer overflow, and possibly code execution in the context of the process running Wireshark"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "Debido a un fallo en la validaci\u00f3n de la longitud proporcionada por un atacante en un paquete manipulado MSMMS, Wireshark v4.0.5 y anteriores, en una configuraci\u00f3n inusual, es susceptible a un desbordamiento de b\u00fafer de pila, y posiblemente a la ejecuci\u00f3n de c\u00f3digo en el contexto del proceso que ejecuta Wireshark. "
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 6.5,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.6
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-787"
+                            }
+                        ]
+                    },
+                    {
+                        "source": "cve@takeonme.org",
+                        "type": "Secondary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-122"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndExcluding": "4.0.6",
+                                        "matchCriteriaId": "FBA0E5F8-10A3-4294-95A8-6CB594C4DADE"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19086",
+                        "source": "cve@takeonme.org",
+                        "tags": [
+                            "Exploit",
+                            "Issue Tracking"
+                        ]
+                    },
+                    {
+                        "url": "https://security.gentoo.org/glsa/202309-02",
+                        "source": "cve@takeonme.org",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://takeonme.org/cves/CVE-2023-0667.html",
+                        "source": "cve@takeonme.org",
+                        "tags": [
+                            "Exploit",
+                            "Third Party Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-0668",
+                "sourceIdentifier": "cve@takeonme.org",
+                "published": "2023-06-07T03:15:09.193",
+                "lastModified": "2023-10-20T20:56:32.827",
+                "vulnStatus": "Analyzed",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "Due to failure in validating the length provided by an attacker-crafted IEEE-C37.118 packet, Wireshark version 4.0.5 and prior, by default, is susceptible to a heap-based buffer overflow, and possibly code execution in the context of the process running Wireshark."
+                    },
+                    {
+                        "lang": "es",
+                        "value": "Debido a un fallo en la validaci\u00f3n de la longitud proporcionada por un atacante de paquetes IEEE-C37.118, Wireshark v4.0.5 y anteriores, por defecto, es susceptible a un desbordamiento de b\u00fafer de la pila, y posiblemente la ejecuci\u00f3n de c\u00f3digo en el contexto del proceso que ejecuta Wireshark. "
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 6.5,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.6
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-787"
+                            }
+                        ]
+                    },
+                    {
+                        "source": "cve@takeonme.org",
+                        "type": "Secondary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-125"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "3.6.0",
+                                        "versionEndExcluding": "3.6.14",
+                                        "matchCriteriaId": "CED49BFD-0350-4790-9D15-35875AEE4F00"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndExcluding": "4.0.6",
+                                        "matchCriteriaId": "FBA0E5F8-10A3-4294-95A8-6CB594C4DADE"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:12.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "46D69DCC-AE4D-4EA5-861C-D60951444C6C"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19087",
+                        "source": "cve@takeonme.org",
+                        "tags": [
+                            "Exploit",
+                            "Issue Tracking"
+                        ]
+                    },
+                    {
+                        "url": "https://security.gentoo.org/glsa/202309-02",
+                        "source": "cve@takeonme.org",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://takeonme.org/cves/CVE-2023-0668.html",
+                        "source": "cve@takeonme.org",
+                        "tags": [
+                            "Exploit"
+                        ]
+                    },
+                    {
+                        "url": "https://www.debian.org/security/2023/dsa-5429",
+                        "source": "cve@takeonme.org",
+                        "tags": [
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/docs/relnotes/wireshark-4.0.6.html",
+                        "source": "cve@takeonme.org",
+                        "tags": [
+                            "Release Notes"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-19.html",
+                        "source": "cve@takeonme.org",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-3648",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2023-07-14T07:15:08.387",
+                "lastModified": "2023-07-25T18:24:30.347",
+                "vulnStatus": "Analyzed",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "Kafka dissector crash in Wireshark 4.0.0 to 4.0.6 and 3.6.0 to 3.6.14 allows denial of service via packet injection or crafted capture file"
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                                "attackVector": "LOCAL",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 5.5,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 1.8,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                                "attackVector": "LOCAL",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "LOW",
+                                "integrityImpact": "LOW",
+                                "availabilityImpact": "LOW",
+                                "baseScore": 5.3,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 1.8,
+                            "impactScore": 3.4
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "NVD-CWE-Other"
+                            }
+                        ]
+                    },
+                    {
+                        "source": "cve@gitlab.com",
+                        "type": "Secondary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-762"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "3.6.0",
+                                        "versionEndIncluding": "3.6.14",
+                                        "matchCriteriaId": "5330ADDD-4D42-4085-8F50-5C21FB172A49"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndIncluding": "4.0.6",
+                                        "matchCriteriaId": "6E8AD4F6-E793-4847-858F-30F069053088"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19105",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-21.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-3649",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2023-07-14T07:15:08.593",
+                "lastModified": "2023-07-25T18:20:46.537",
+                "vulnStatus": "Analyzed",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "iSCSI dissector crash in Wireshark 4.0.0 to 4.0.6 allows denial of service via packet injection or crafted capture file"
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                                "attackVector": "LOCAL",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 5.5,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 1.8,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                                "attackVector": "LOCAL",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "LOW",
+                                "integrityImpact": "LOW",
+                                "availabilityImpact": "LOW",
+                                "baseScore": 5.3,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 1.8,
+                            "impactScore": 3.4
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-125"
+                            }
+                        ]
+                    },
+                    {
+                        "source": "cve@gitlab.com",
+                        "type": "Secondary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-126"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndIncluding": "4.0.6",
+                                        "matchCriteriaId": "6E8AD4F6-E793-4847-858F-30F069053088"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19164",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Issue Tracking",
+                            "Vendor Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-22.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-4511",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2023-08-24T07:15:12.107",
+                "lastModified": "2024-08-29T15:15:16.010",
+                "vulnStatus": "Modified",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "BT SDP dissector infinite loop in Wireshark 4.0.0 to 4.0.7 and 3.6.0 to 3.6.15 allows denial of service via packet injection or crafted capture file"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "El bucle infinito del disector BT SDP en Wireshark 4.0.0 a 4.0.7 y 3.6.0 a 3.6.15 permite la denegaci\u00f3n de servicio mediante inyecci\u00f3n de paquetes o archivo de captura manipulado"
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "NONE",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 7.5,
+                                "baseSeverity": "HIGH"
+                            },
+                            "exploitabilityScore": 3.9,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                                "attackVector": "LOCAL",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "LOW",
+                                "integrityImpact": "LOW",
+                                "availabilityImpact": "LOW",
+                                "baseScore": 5.3,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 1.8,
+                            "impactScore": 3.4
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-835"
+                            }
+                        ]
+                    },
+                    {
+                        "source": "cve@gitlab.com",
+                        "type": "Secondary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-835"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "3.6.0",
+                                        "versionEndIncluding": "3.6.15",
+                                        "matchCriteriaId": "8CC12A75-C7FC-4420-8E9A-A2F64B154CD8"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndIncluding": "4.0.7",
+                                        "matchCriteriaId": "AC85AA46-6DB6-4742-AD6A-CE755D2FAD3E"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19258",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Issue Tracking",
+                            "Patch",
+                            "Vendor Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-24.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-4512",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2023-08-24T07:15:12.207",
+                "lastModified": "2024-08-29T15:15:16.160",
+                "vulnStatus": "Modified",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "CBOR dissector crash in Wireshark 4.0.0 to 4.0.6 allows denial of service via packet injection or crafted capture file"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "La falla del disector CBOR en Wireshark 4.0.0 a 4.0.6 permite la denegaci\u00f3n de servicio mediante inyecci\u00f3n de paquetes o archivo de captura manipulado"
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "NONE",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 7.5,
+                                "baseSeverity": "HIGH"
+                            },
+                            "exploitabilityScore": 3.9,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                                "attackVector": "LOCAL",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "LOW",
+                                "integrityImpact": "LOW",
+                                "availabilityImpact": "LOW",
+                                "baseScore": 5.3,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 1.8,
+                            "impactScore": 3.4
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-674"
+                            }
+                        ]
+                    },
+                    {
+                        "source": "cve@gitlab.com",
+                        "type": "Secondary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-674"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndIncluding": "4.0.7",
+                                        "matchCriteriaId": "AC85AA46-6DB6-4742-AD6A-CE755D2FAD3E"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19144",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Exploit",
+                            "Issue Tracking",
+                            "Patch"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-23.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Issue Tracking",
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-4513",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2023-08-24T07:15:12.300",
+                "lastModified": "2024-08-29T15:15:16.273",
+                "vulnStatus": "Modified",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "BT SDP dissector memory leak in Wireshark 4.0.0 to 4.0.7 and 3.6.0 to 3.6.15 allows denial of service via packet injection or crafted capture file"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "La p\u00e9rdida de memoria del disector BT SDP en Wireshark 4.0.0 a 4.0.7 y 3.6.0 a 3.6.15 permite la denegaci\u00f3n de servicio mediante inyecci\u00f3n de paquetes o archivo de captura manipulado"
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "NONE",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 7.5,
+                                "baseSeverity": "HIGH"
+                            },
+                            "exploitabilityScore": 3.9,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                                "attackVector": "LOCAL",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "LOW",
+                                "integrityImpact": "LOW",
+                                "availabilityImpact": "LOW",
+                                "baseScore": 5.3,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 1.8,
+                            "impactScore": 3.4
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-401"
+                            }
+                        ]
+                    },
+                    {
+                        "source": "cve@gitlab.com",
+                        "type": "Secondary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-401"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "3.6.0",
+                                        "versionEndIncluding": "3.6.15",
+                                        "matchCriteriaId": "8CC12A75-C7FC-4420-8E9A-A2F64B154CD8"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndIncluding": "4.0.7",
+                                        "matchCriteriaId": "AC85AA46-6DB6-4742-AD6A-CE755D2FAD3E"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19259",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Exploit",
+                            "Issue Tracking",
+                            "Patch"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-25.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-2906",
+                "sourceIdentifier": "cve@takeonme.org",
+                "published": "2023-08-25T21:15:07.963",
+                "lastModified": "2023-09-15T22:15:13.367",
+                "vulnStatus": "Modified",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "Due to a failure in validating the length provided by an attacker-crafted CP2179 packet, Wireshark versions 2.0.0 through 4.0.7 is susceptible to a divide by zero allowing for a denial of service attack.\n"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "Debido a un error al validar la longitud proporcionada por un paquete CP2179 creado por un atacante, las versiones de Wireshark 2.0.0 a 4.0.7 son susceptibles a una divisi\u00f3n por cero, lo que permite un ataque de denegaci\u00f3n de servicio."
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 6.5,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.6
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-369"
+                            }
+                        ]
+                    },
+                    {
+                        "source": "cve@takeonme.org",
+                        "type": "Secondary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-369"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "2.0.0",
+                                        "versionEndIncluding": "4.0.7",
+                                        "matchCriteriaId": "4BC02992-A101-46F2-BC8C-78774D6D2787"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19229",
+                        "source": "cve@takeonme.org",
+                        "tags": [
+                            "Exploit",
+                            "Issue Tracking",
+                            "Patch",
+                            "Third Party Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/6HCUPLDY7HLPO46PHMGIJSUBJFTT237C/",
+                        "source": "cve@takeonme.org"
+                    },
+                    {
+                        "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/L4AVRUYSHDNEAJILVSGY5W6MPOMG2YRF/",
+                        "source": "cve@takeonme.org"
+                    },
+                    {
+                        "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/TRKHFQPWFU7F3OXTL6IEIQSJG6FVXZTZ/",
+                        "source": "cve@takeonme.org"
+                    },
+                    {
+                        "url": "https://takeonme.org/cves/CVE-2023-2906.html",
+                        "source": "cve@takeonme.org",
+                        "tags": [
+                            "Exploit",
+                            "Third Party Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-5371",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2023-10-04T17:15:10.437",
+                "lastModified": "2024-08-29T15:15:18.620",
+                "vulnStatus": "Modified",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "RTPS dissector memory leak in Wireshark 4.0.0 to 4.0.8 and 3.6.0 to 3.6.16 allows denial of service via packet injection or crafted capture file"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "La p\u00e9rdida de memoria del disector RTPS en Wireshark 4.0.0 a 4.0.8 y 3.6.0 a 3.6.16 permite la denegaci\u00f3n de servicio mediante inyecci\u00f3n de paquetes o archivo de captura manipulado."
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 6.5,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                                "attackVector": "LOCAL",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "LOW",
+                                "integrityImpact": "LOW",
+                                "availabilityImpact": "LOW",
+                                "baseScore": 5.3,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 1.8,
+                            "impactScore": 3.4
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-770"
+                            }
+                        ]
+                    },
+                    {
+                        "source": "cve@gitlab.com",
+                        "type": "Secondary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-789"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "3.6.0",
+                                        "versionEndExcluding": "3.6.17",
+                                        "matchCriteriaId": "A2D8B132-2CA2-4CC8-8268-EBDC6FC91A86"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndExcluding": "4.0.9",
+                                        "matchCriteriaId": "1681464F-3F72-46F1-B81E-C1C4B34FBE08"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19322",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Exploit",
+                            "Issue Tracking",
+                            "Vendor Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-27.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2023-6174",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2023-11-16T12:15:07.240",
+                "lastModified": "2024-08-29T15:15:19.920",
+                "vulnStatus": "Modified",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "SSH dissector crash in Wireshark 4.0.0 to 4.0.10 allows denial of service via packet injection or crafted capture file"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "La falla del disector SSH en Wireshark 4.0.0 a 4.0.10 permite la denegaci\u00f3n de servicio mediante inyecci\u00f3n de paquetes o archivo de captura manipulado"
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 6.5,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "LOW",
+                                "integrityImpact": "LOW",
+                                "availabilityImpact": "LOW",
+                                "baseScore": 6.3,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 2.8,
+                            "impactScore": 3.4
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-74"
+                            }
+                        ]
+                    },
+                    {
+                        "source": "cve@gitlab.com",
+                        "type": "Secondary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-125"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndIncluding": "4.0.10",
+                                        "matchCriteriaId": "C9D0926F-17C4-4594-B8D7-5683A7CFF2DF"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:o:debian:debian_linux:12.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "46D69DCC-AE4D-4EA5-861C-D60951444C6C"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19369",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2023-28.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2024-0208",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2024-01-03T08:15:10.340",
+                "lastModified": "2024-10-03T07:15:27.590",
+                "vulnStatus": "Modified",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "GVCP dissector crash in Wireshark 4.2.0, 4.0.0 to 4.0.11, and 3.6.0 to 3.6.19 allows denial of service via packet injection or crafted capture file"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "El fallo del disector GVCP en Wireshark 4.2.0, 4.0.0 a 4.0.11 y 3.6.0 a 3.6.19 permite la denegaci\u00f3n de servicio mediante inyecci\u00f3n de paquetes o archivo de captura manipulado"
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "NONE",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 7.5,
+                                "baseSeverity": "HIGH"
+                            },
+                            "exploitabilityScore": 3.9,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                                "attackVector": "LOCAL",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "HIGH",
+                                "integrityImpact": "HIGH",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 7.8,
+                                "baseSeverity": "HIGH"
+                            },
+                            "exploitabilityScore": 1.8,
+                            "impactScore": 5.9
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-674"
+                            }
+                        ]
+                    },
+                    {
+                        "source": "cve@gitlab.com",
+                        "type": "Secondary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-230"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "3.6.0",
+                                        "versionEndIncluding": "3.6.19",
+                                        "matchCriteriaId": "65FBDC60-FF20-4229-ABC0-EE9086383FF1"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndIncluding": "4.0.11",
+                                        "matchCriteriaId": "8B81555C-B047-479C-A5C2-44B5FFEF9332"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:4.2.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "1F212AE9-0C17-4994-8B70-853E941D27E4"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19496",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Exploit",
+                            "Issue Tracking",
+                            "Vendor Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2024-01.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Issue Tracking",
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2024-0209",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2024-01-03T08:15:10.793",
+                "lastModified": "2024-01-10T14:03:18.133",
+                "vulnStatus": "Analyzed",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "IEEE 1609.2 dissector crash in Wireshark 4.2.0, 4.0.0 to 4.0.11, and 3.6.0 to 3.6.19 allows denial of service via packet injection or crafted capture file"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "El fallo del disector IEEE 1609.2 en Wireshark 4.2.0, 4.0.0 a 4.0.11 y 3.6.0 a 3.6.19 permite la denegaci\u00f3n de servicio mediante inyecci\u00f3n de paquetes o archivo de captura manipulado"
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                                "attackVector": "NETWORK",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "NONE",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 7.5,
+                                "baseSeverity": "HIGH"
+                            },
+                            "exploitabilityScore": 3.9,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                                "attackVector": "LOCAL",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "HIGH",
+                                "integrityImpact": "HIGH",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 7.8,
+                                "baseSeverity": "HIGH"
+                            },
+                            "exploitabilityScore": 1.8,
+                            "impactScore": 5.9
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-476"
+                            }
+                        ]
+                    },
+                    {
+                        "source": "cve@gitlab.com",
+                        "type": "Secondary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-476"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "3.6.0",
+                                        "versionEndIncluding": "3.6.19",
+                                        "matchCriteriaId": "65FBDC60-FF20-4229-ABC0-EE9086383FF1"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndIncluding": "4.0.11",
+                                        "matchCriteriaId": "8B81555C-B047-479C-A5C2-44B5FFEF9332"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:4.2.0:*:*:*:*:*:*:*",
+                                        "matchCriteriaId": "1F212AE9-0C17-4994-8B70-853E941D27E4"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19501",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Exploit",
+                            "Issue Tracking",
+                            "Vendor Advisory"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2024-02.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Issue Tracking",
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "cve": {
+                "id": "CVE-2024-8250",
+                "sourceIdentifier": "cve@gitlab.com",
+                "published": "2024-08-29T00:15:09.370",
+                "lastModified": "2024-08-30T16:32:16.917",
+                "vulnStatus": "Analyzed",
+                "cveTags": [],
+                "descriptions": [
+                    {
+                        "lang": "en",
+                        "value": "NTLMSSP dissector crash in Wireshark 4.2.0 to 4.0.6 and 4.0.0 to 4.0.16 allows denial of service via packet injection or crafted capture file"
+                    },
+                    {
+                        "lang": "es",
+                        "value": "La falla del disector NTLMSSP en Wireshark 4.2.0 a 4.0.6 y 4.0.0 a 4.0.16 permite la denegaci\u00f3n de servicio a trav\u00e9s de la inyecci\u00f3n de paquetes o un archivo de captura manipulado"
+                    }
+                ],
+                "metrics": {
+                    "cvssMetricV31": [
+                        {
+                            "source": "nvd@nist.gov",
+                            "type": "Primary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+                                "attackVector": "LOCAL",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "NONE",
+                                "integrityImpact": "NONE",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 5.5,
+                                "baseSeverity": "MEDIUM"
+                            },
+                            "exploitabilityScore": 1.8,
+                            "impactScore": 3.6
+                        },
+                        {
+                            "source": "cve@gitlab.com",
+                            "type": "Secondary",
+                            "cvssData": {
+                                "version": "3.1",
+                                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                                "attackVector": "LOCAL",
+                                "attackComplexity": "LOW",
+                                "privilegesRequired": "NONE",
+                                "userInteraction": "REQUIRED",
+                                "scope": "UNCHANGED",
+                                "confidentialityImpact": "HIGH",
+                                "integrityImpact": "HIGH",
+                                "availabilityImpact": "HIGH",
+                                "baseScore": 7.8,
+                                "baseSeverity": "HIGH"
+                            },
+                            "exploitabilityScore": 1.8,
+                            "impactScore": 5.9
+                        }
+                    ]
+                },
+                "weaknesses": [
+                    {
+                        "source": "nvd@nist.gov",
+                        "type": "Primary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-787"
+                            }
+                        ]
+                    },
+                    {
+                        "source": "cve@gitlab.com",
+                        "type": "Secondary",
+                        "description": [
+                            {
+                                "lang": "en",
+                                "value": "CWE-825"
+                            }
+                        ]
+                    }
+                ],
+                "configurations": [
+                    {
+                        "nodes": [
+                            {
+                                "operator": "OR",
+                                "negate": false,
+                                "cpeMatch": [
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.0.0",
+                                        "versionEndExcluding": "4.0.17",
+                                        "matchCriteriaId": "F37A16F6-57A7-4EC6-8E17-524FB330505D"
+                                    },
+                                    {
+                                        "vulnerable": true,
+                                        "criteria": "cpe:2.3:a:wireshark:wireshark:*:*:*:*:*:*:*:*",
+                                        "versionStartIncluding": "4.2.0",
+                                        "versionEndExcluding": "4.2.7",
+                                        "matchCriteriaId": "5763B5AD-7F9C-4239-95CF-B46F245E9924"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "references": [
+                    {
+                        "url": "https://gitlab.com/wireshark/wireshark/-/issues/19943",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Exploit",
+                            "Issue Tracking"
+                        ]
+                    },
+                    {
+                        "url": "https://www.wireshark.org/security/wnpa-sec-2024-11.html",
+                        "source": "cve@gitlab.com",
+                        "tags": [
+                            "Vendor Advisory"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
+]
