@@ -65,7 +65,7 @@ const menuGroups = [
             />
           </svg>
         ),
-        label: "Calendar",
+        label: "Security Services",
         route: "/calendar",
       },
       {
