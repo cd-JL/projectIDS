@@ -241,11 +241,9 @@ const SignIn: React.FC = () => {
                 </div>
 
                 <div className="mb-5">
-                  <input
-                    type="submit"
-                    value="Sign In"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-                  />
+                  <button className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white hover:bg-opacity-90">
+                    Sign In
+                  </button>
                 </div>
 
                 <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
