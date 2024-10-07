@@ -1,176 +1,129 @@
-
-// "use client"; 
-// import React from "react";
-
-// import Records from './docker_docker_desktop_4.33.1.json';
-// // import Records from 'scripts\vulnerabilities\microsoft_microsoft_edge_129.0.2792.79.json';
-
-// function Fetch_json() {
-//   return (
-//     <main className="flex flex-col justify-center items-center min-h-screen gap-10">
-//       <div className="w-full max-w-4xl px-10">
-//         {
-//           // Ensure Records exists and has at least one element, and check if vulnerabilities exist
-//           Records?.[0]?.vulnerabilities?.length > 0 ? (
-//             Records[0].vulnerabilities.map((record, index) => {
-//               return (
-//                 <div className="w-full bg-white p-10 shadow-md border border-black mt-20" key={index}>
-//                   {/* Display the CVE ID */}
-//                   <strong>{record?.cve?.id || "No ID available"}</strong>
-                
-//                   {/* Flexbox container for side-by-side display */}
-//                   <div className="flex flex-row justify-between gap-10 w-full mt-5">
-                    
-//                     {/* Descriptions */}
-//                     <div className="flex-1 bg-white p-5 shadow-md border border-black">
-//                       <h4 className="font-semibold">Descriptions:</h4>
-//                       {
-//                         record?.cve?.descriptions?.length > 0 ? (
-//                           record.cve.descriptions.map((description, descIndex) => {
-//                             return (
-//                               <p key={descIndex}>
-//                                 {description.lang === "en" && description.value}
-//                               </p>
-//                             );
-//                           })
-//                         ) : (
-//                           <p>No descriptions available</p>
-//                         )
-//                       }
-//                     </div>
-
-//                     {/* References */}
-//                     <div className="flex-1 bg-white p-5 shadow-md border border-black">
-//                       <h4 className="font-semibold">References:</h4>
-//                       {
-//                         record?.cve?.references?.length > 0 ? (
-//                           record.cve.references.map((reference, refIndex) => {
-//                             return (
-//                               <p key={refIndex}>
-//                                 <a href={reference.url} target="_blank" rel="noopener noreferrer">
-//                                   {reference.source}
-//                                 </a>
-//                               </p>
-//                             );
-//                           })
-//                         ) : (
-//                           <p>No references available</p>
-//                         )
-//                       }
-//                     </div>
-
-//                   </div>
-//                 </div>
-//               );
-//             })
-//           ) : (
-//             <p>No vulnerabilities available</p>
-//           )
-//         }
-        
-//       </div>
-//     </main>
-//   );
-// }
-
-// export default Fetch_json;
-
 "use client";
 import React from "react";
-import Records from './docker_docker_desktop_4.33.1.json';
 
-function Fetch_json() {
+export async function getServerSideProps(context) {
+  const { id } = context.params;
+
+  // Fetch the company details from your API endpoint
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/companies/${id}`);
+  const company = await res.json();
+
+  // Log the company data to the server console
+  console.log("Company Data (Server-Side):", company);
+
+  return {
+    props: {
+      company,
+    },
+  };
+}
+
+export default function CompanyDetails({ company }) {
+  // Log the company data to the browser console
+  console.log("Company Data (Client-Side):", company);
+
+  if (!company) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <main className="flex flex-col justify-center items-center min-h-screen gap-10">
       <div className="w-full max-w-4xl px-10">
-        {
-          // Ensure Records exists and has at least one element, and check if vulnerabilities exist
-          Records?.[0]?.vulnerabilities?.length > 0 ? (
-            Records[0].vulnerabilities.map((record, index) => {
-              // Get the CVSS data for version 3.1 or 4.0, whichever is available
-              const cvssV31 = record?.cve?.metrics?.cvssMetricV31?.[0]?.cvssData;
-              const cvssV40 = record?.cve?.metrics?.cvssMetricV40?.[0]?.cvssData;
+        {/* Display company details */}
+        <div className="w-full bg-white p-10 shadow-md border border-black mt-20">
+          <h1 className="text-3xl font-bold">{company.name || "No Company Name Available"}</h1>
 
-              return (
-                <div className="w-full bg-white p-10 shadow-md border border-black mt-20" key={index}>
-                  {/* Display the CVE ID */}
-                  <strong>{record?.cve?.id || "No ID available"}</strong>
-                
-                  {/* Flexbox container for side-by-side display */}
-                  <div className="flex flex-row justify-between gap-10 w-full mt-5">
-                    
-                    {/* Descriptions */}
-                    <div className="flex-1 bg-white p-5 shadow-md border border-black">
-                      <h4 className="font-semibold">Descriptions:</h4>
-                      {
-                        record?.cve?.descriptions?.length > 0 ? (
-                          record.cve.descriptions.map((description, descIndex) => {
-                            return (
-                              <p key={descIndex}>
-                                {description.lang === "en" && description.value}
-                              </p>
-                            );
-                          })
-                        ) : (
-                          <p>No descriptions available</p>
-                        )
-                      }
-                    </div>
-
-                    {/* References */}
-                    <div className="flex-1 bg-white p-5 shadow-md border border-black">
-                      <h4 className="font-semibold">References:</h4>
-                      {
-                        record?.cve?.references?.length > 0 ? (
-                          record.cve.references.map((reference, refIndex) => {
-                            return (
-                              <p key={refIndex}>
-                                <a href={reference.url} target="_blank" rel="noopener noreferrer">
-                                  {reference.source}
-                                </a>
-                              </p>
-                            );
-                          })
-                        ) : (
-                          <p>No references available</p>
-                        )
-                      }
-                    </div>
-
-                  </div>
-
-                  {/* CVSS Base Score and Severity */}
-                  <div className="flex flex-col w-full mt-5">
-                
-                    <h4 className="font-semibold">CVSS Scores & Severity:</h4>
-                    {cvssV31 ? (
-                      <div>
-                        <p><strong>Base Score (v3.1):</strong> {cvssV31.baseScore}</p>
-                        <p><strong>Base Severity (v3.1):</strong> {cvssV31.baseSeverity}</p>
-                      </div>
-                    ) : (
-                      <p>No CVSS v3.1 data available</p>
-                    )}
-
-                    {cvssV40 ? (
-                      <div>
-                        <p><strong>Base Score (v4.0):</strong> {cvssV40.baseScore}</p>
-                        <p><strong>Base Severity (v4.0):</strong> {cvssV40.baseSeverity}</p>
-                      </div>
-                    ) : (
-                      <p>No CVSS v4.0 data available</p>
-                    )}
-                  </div>
+          {/* Display users for the company */}
+          <div className="flex flex-col w-full mt-5">
+            <h4 className="font-semibold text-lg">Users:</h4>
+            {company?.users?.length > 0 ? (
+              company.users.map((user, index) => (
+                <div key={index} className="bg-white p-5 shadow-md border border-black mt-2">
+                  <p>
+                    <strong>Username:</strong> {user.username}
+                  </p>
+                  <p>
+                    <strong>Email:</strong> {user.email}
+                  </p>
+                  <p>
+                    <strong>Role:</strong> {user.role}
+                  </p>
                 </div>
-              );
-            })
-          ) : (
-            <p>No vulnerabilities available</p>
-          )
-        }
+              ))
+            ) : (
+              <p>No users available</p>
+            )}
+          </div>
+
+          {/* Display sensors for the company */}
+          <div className="flex flex-col w-full mt-5">
+            <h4 className="font-semibold text-lg">Sensors:</h4>
+            {company?.sensors?.length > 0 ? (
+              company.sensors.map((sensor, index) => (
+                <div key={index} className="bg-white p-5 shadow-md border border-black mt-2">
+                  <p>
+                    <strong>Sensor ID:</strong> {sensor.sensorId}
+                  </p>
+                  <p>
+                    <strong>Type:</strong> {sensor.type}
+                  </p>
+                  {sensor.vulnerabilities && sensor.vulnerabilities.length > 0 ? (
+                    <div className="mt-4">
+                      <h5 className="font-semibold">Vulnerabilities:</h5>
+                      {sensor.vulnerabilities.map((vulnerability, vIndex) => (
+                        <div
+                          key={vIndex}
+                          className="bg-gray-100 p-3 shadow-sm border border-black mt-2"
+                        >
+                          <strong>{vulnerability.cve?.id || "No CVE ID Available"}</strong>
+
+                          {/* Descriptions */}
+                          <div className="mt-2">
+                            <h6 className="font-semibold">Descriptions:</h6>
+                            {vulnerability.cve?.descriptions?.length > 0 ? (
+                              vulnerability.cve.descriptions.map((desc, descIndex) => (
+                                <p key={descIndex}>
+                                  {desc.lang === "en" && desc.value}
+                                </p>
+                              ))
+                            ) : (
+                              <p>No descriptions available</p>
+                            )}
+                          </div>
+
+                          {/* References */}
+                          <div className="mt-2">
+                            <h6 className="font-semibold">References:</h6>
+                            {vulnerability.cve?.references?.length > 0 ? (
+                              vulnerability.cve.references.map((ref, refIndex) => (
+                                <p key={refIndex}>
+                                  <a
+                                    href={ref.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    {ref.source}
+                                  </a>
+                                </p>
+                              ))
+                            ) : (
+                              <p>No references available</p>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p>No vulnerabilities available for this sensor</p>
+                  )}
+                </div>
+              ))
+            ) : (
+              <p>No sensors available</p>
+            )}
+          </div>
+        </div>
       </div>
     </main>
   );
 }
-
-export default Fetch_json;
