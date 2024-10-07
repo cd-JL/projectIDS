@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import TableOne from "@/components/Tables/TableOne";
+import TableTwo from "@/components/Tables/TableTwo";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 
 const fetchSensorData = async (id: string) => {
@@ -25,10 +25,12 @@ const fetchSensorData = async (id: string) => {
 const TablesPage = () => {
   const [sensorData, setSensorData] = useState([]);
   const [selectedSensor, setSelectedSensor] = useState("");
+  const [searchQuery, setSearchQuery] = useState(""); // State to track the search input
+  const [filteredPrograms, setFilteredPrograms] = useState([]); // State to track filtered programs
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchSensorData('670300d49e3775f3873461fd'); // Replace with the actual company ID
+      const data = await fetchSensorData("670300d49e3775f3873461fd"); // Replace with the actual company ID
       setSensorData(data);
       if (data.length > 0) {
         setSelectedSensor(data[0]._id); // Set the first sensor as the default selection
@@ -37,6 +39,24 @@ const TablesPage = () => {
 
     fetchData();
   }, []);
+
+  // Effect to update the filtered programs when selected sensor or search query changes
+  useEffect(() => {
+    if (selectedSensor) {
+      const selected = sensorData.find((sensor) => sensor._id === selectedSensor);
+      if (selected && selected.programs) {
+        const filtered = selected.programs.filter((program) => {
+          // Safely access and check for Name and Version before using toLowerCase
+          const name = program.Name ? program.Name.toLowerCase() : "";
+          const version = program.Version ? program.Version.toLowerCase() : "";
+
+          // Apply search query to both fields
+          return name.includes(searchQuery.toLowerCase()) || version.includes(searchQuery.toLowerCase());
+        });
+        setFilteredPrograms(filtered);
+      }
+    }
+  }, [selectedSensor, searchQuery, sensorData]);
 
   return (
     <DefaultLayout>
@@ -62,9 +82,24 @@ const TablesPage = () => {
           </select>
         </div>
 
+        {/* Search Bar */}
+        <div className="mb-4">
+          <label htmlFor="search-programs" className="mr-2">
+            Search Programs:
+          </label>
+          <input
+            id="search-programs"
+            type="text"
+            placeholder="Search by name or version"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="border rounded px-3 py-2 w-full"
+          />
+        </div>
+
         {/* Display the table for the selected sensor */}
         {sensorData.length > 0 ? (
-          <TableOne sensor={sensorData.find((sensor) => sensor._id === selectedSensor)} />
+          <TableTwo sensor={sensorData.find((sensor) => sensor._id === selectedSensor)} programs={filteredPrograms} />
         ) : (
           <p>No sensors available</p>
         )}

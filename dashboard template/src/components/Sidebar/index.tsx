@@ -47,7 +47,7 @@ const menuGroups = [
         ),
         label: "Dashboard",
         route: "#",
-        children: [{ label: "eCommerce", route: "/" }],
+        children: [{ label: "About Us", route: "/" }],
       },
       {
         icon: (
@@ -123,12 +123,8 @@ const menuGroups = [
             />
           </svg>
         ),
-        label: "Forms",
-        route: "#",
-        children: [
-          { label: "Form Elements", route: "/forms/form-elements" },
-          { label: "Form Layout", route: "/forms/form-layout" },
-        ],
+        label: "Sensor Programs",
+        route: "/forms",
       },
       {
         icon: (
@@ -158,7 +154,7 @@ const menuGroups = [
             </defs>
           </svg>
         ),
-        label: "Tables",
+        label: "Sensor Vulnerabilities",
         route: "/tables",
       },
       {

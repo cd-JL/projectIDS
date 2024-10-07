@@ -1,106 +1,61 @@
-import Image from "next/image";
-import { Product } from "@/types/product";
+import { FC, useEffect, useState } from "react";
 
-const productData: Product[] = [
-  {
-    image: "/images/product/product-01.png",
-    name: "Apple Watch Series 7",
-    category: "Electronics",
-    price: 296,
-    sold: 22,
-    profit: 45,
-  },
-  {
-    image: "/images/product/product-02.png",
-    name: "Macbook Pro M1",
-    category: "Electronics",
-    price: 546,
-    sold: 12,
-    profit: 125,
-  },
-  {
-    image: "/images/product/product-03.png",
-    name: "Dell Inspiron 15",
-    category: "Electronics",
-    price: 443,
-    sold: 64,
-    profit: 247,
-  },
-  {
-    image: "/images/product/product-04.png",
-    name: "HP Probook 450",
-    category: "Electronics",
-    price: 499,
-    sold: 72,
-    profit: 103,
-  },
-];
+interface Program {
+  Name: string;
+  Version: string;
+}
 
-const TableTwo = () => {
+interface Sensor {
+  sensorId: string;
+}
+
+interface TableTwoProps {
+  sensor: Sensor;
+  programs: Array<Program>; // Updated to use the filtered programs as a prop
+}
+
+const TableTwo: FC<TableTwoProps> = ({ sensor, programs }) => {
+  const [programsVisible, setProgramsVisible] = useState<boolean>(true);
+
+  useEffect(() => {
+    console.log("Sensor Data:", sensor);
+    console.log("Filtered Programs in TableTwo:", programs); // Verify that the programs are being passed correctly
+  }, [sensor, programs]);
+
   return (
-    <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      <div className="px-4 py-6 md:px-6 xl:px-7.5">
-        <h4 className="text-xl font-semibold text-black dark:text-white">
-          Top Products
-        </h4>
-      </div>
+    <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
+        Sensor ID: {sensor ? sensor.sensorId : "Loading..."}
+      </h4>
 
-      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
-        <div className="col-span-3 flex items-center">
-          <p className="font-medium">Product Name</p>
-        </div>
-        <div className="col-span-2 hidden items-center sm:flex">
-          <p className="font-medium">Category</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="font-medium">Price</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="font-medium">Sold</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="font-medium">Profit</p>
-        </div>
-      </div>
+      {/* Toggle Button to Show/Hide Programs */}
+      <button
+        onClick={() => setProgramsVisible(!programsVisible)}
+        className="text-blue-500 underline mb-4"
+      >
+        {programsVisible ? "Hide Programs" : "Show Programs"}
+      </button>
 
-      {productData.map((product, key) => (
-        <div
-          className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
-          key={key}
-        >
-          <div className="col-span-3 flex items-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <div className="h-12.5 w-15 rounded-md">
-                <Image
-                  src={product.image}
-                  width={60}
-                  height={50}
-                  alt="Product"
-                />
-              </div>
-              <p className="text-sm text-black dark:text-white">
-                {product.name}
+      {/* Programs List */}
+      {programsVisible && programs && programs.length > 0 ? (
+        <div className="flex flex-col gap-4">
+          {programs.map((program, index) => (
+            <div
+              key={index}
+              className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-4 mb-4"
+            >
+              <h6 className="text-md font-bold text-gray-700 dark:text-gray-300">
+                {program.Name}
+              </h6>
+              <p className="mt-2 text-sm">
+                <strong>Version:</strong> {program.Version}
               </p>
             </div>
-          </div>
-          <div className="col-span-2 hidden items-center sm:flex">
-            <p className="text-sm text-black dark:text-white">
-              {product.category}
-            </p>
-          </div>
-          <div className="col-span-1 flex items-center">
-            <p className="text-sm text-black dark:text-white">
-              ${product.price}
-            </p>
-          </div>
-          <div className="col-span-1 flex items-center">
-            <p className="text-sm text-black dark:text-white">{product.sold}</p>
-          </div>
-          <div className="col-span-1 flex items-center">
-            <p className="text-sm text-meta-3">${product.profit}</p>
-          </div>
+          ))}
         </div>
-      ))}
+      ) : programsVisible ? (
+        <p>No programs available for this sensor</p>
+      ) : null}
     </div>
   );
 };
