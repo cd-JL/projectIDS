@@ -72,7 +72,7 @@ const Calendar = () => {
             {/* Protect your business */}
             <div className="group relative bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
               <img
-                src="https://www.sralab.org/sites/default/files/styles/hero_full_width_1200_800_/public/2023-02/istockphoto-1340023944-170667a.jpg?itok=xtwe-zeh"
+                src="https://images.pexels.com/photos/586104/pexels-photo-586104.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                 alt="Protect your business"
                 className="w-full h-64 object-cover"
               />
