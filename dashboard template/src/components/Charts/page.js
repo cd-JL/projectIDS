@@ -86,7 +86,9 @@ import ChartOne from "./ChartOne";
 
 function Chart() {
   return (
-    <ChartOne />
+    <div className="flex justify-center items-center h-screen">
+      <ChartOne />
+    </div>
   )
 
 }
