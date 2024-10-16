@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import Link from "next/link";
-// import router from "next/router";
 import { useRouter } from "next/navigation";
 
 const SignIn: React.FC = () => {
@@ -13,8 +12,8 @@ const SignIn: React.FC = () => {
   const router = useRouter();
 
   const handleSubmission = async (e: React.FormEvent) => {
-    e.preventDefault(); 
-    setError(""); 
+    e.preventDefault();
+    setError("");
 
     if (!email || !password) {
       setError("All fields are required.");
@@ -35,20 +34,21 @@ const SignIn: React.FC = () => {
         body: JSON.stringify(userData),
       });
 
-
       if (!response.ok) {
         const result = await response.json();
-        setError(result.error);
-        throw new Error(result.error || "Failed to sign in.");
+        setError(result.message);
+        throw new Error(result.message || "Failed to sign in.");
       }
 
       const result = await response.json();
       setEmail("");
       setPassword("");
       setError(result.message);
-      
-      if (result.messagee == "Signed In"){
-        router.push('/profile')
+
+      if (result.messagee === "Signed In") {
+        // Store user email in local storage
+        localStorage.setItem("userEmail", email);
+        router.push('/profile');
       }
 
     } catch (err: any) {
