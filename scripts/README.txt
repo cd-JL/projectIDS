@@ -1,7 +1,7 @@
 HOW TO USE
 
 
-EXE
+EXE (NOT IN CURRENT BUILD)
 Click the exe in the dist folder. It will save the scanned vulnerabilities to a folder named vulnerabilities in the dist folder.
 
 It takes a very long time to run. Let it run and generate all the json files in there.
@@ -14,5 +14,7 @@ Setup guide: https://docs.python.org/3/using/index.html
 
 pip install requests
 pip install load_dotenv
+
+after that, run sensor_intializer in console
 
 
