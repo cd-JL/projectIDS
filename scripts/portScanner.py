@@ -44,7 +44,10 @@ high_risk_ports = {
     'POP3S': 995,
 }
 
-# Function to check if a port is open
+# List of weak ciphers to check for in TLS 1.2
+weak_ciphers = ['RC4', '3DES', 'AES-CBC']
+
+# Check if a port is open
 def check_port(host, port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.settimeout(1)  # Timeout after 1 second
@@ -54,60 +57,95 @@ def check_port(host, port):
         except (socket.timeout, socket.error):
             return False
 
-# Function to check TLS version
-def check_tls_version(host):
+# Check TLS version and cipher suites for HTTPS (port 443)
+def check_tls_version_and_ciphers(host):
     context = ssl.create_default_context()
     try:
         with socket.create_connection((host, 443), timeout=3) as sock:
             with context.wrap_socket(sock, server_hostname=host) as ssock:
-                protocol = ssock.version()
-                return protocol
+                protocol = ssock.version()  # Get TLS version
+                cipher = ssock.cipher()  # Get the cipher suite
+                cipher_suite = cipher[0]
+
+                if protocol == 'TLSv1.2':
+                    # Check if the cipher suite is weak
+                    for weak in weak_ciphers:
+                        if weak in cipher_suite:
+                            return f"Port 443 is open with {protocol} using weak cipher {cipher_suite} (vulnerable)"
+                    return f"Port 443 is open with {protocol} using strong cipher {cipher_suite} (good)"
+                elif protocol == 'TLSv1.3':
+                    return f"Port 443 is open with {protocol} (good)"
+                else:
+                    return f"Port 443 is open with outdated protocol {protocol} (vulnerable)"
     except (ssl.SSLError, socket.timeout):
         return None
 
-# Function to differentiate between good and bad HTTP/HTTPS connections
-def check_http_https(host):
-    http_open = check_port(host, 80)
-    https_open = check_port(host, 443)
-    tls_version = check_tls_version(host) if https_open else None
-    
-    results = {}
-    if http_open:
-        results['HTTP'] = "Port 80 is open. Check if it redirects to HTTPS."
-    if https_open:
-        if tls_version in ['TLSv1.2', 'TLSv1.3']:
-            results['HTTPS'] = f"Port 443 is open with {tls_version} (good)"
+# Check if HTTP redirects to HTTPS
+def check_http(host):
+    try:
+        response = requests.get(f'http://{host}', timeout=3)
+        if response.history and response.url.startswith('https://'):
+            return "HTTP redirects to HTTPS (good)"
         else:
-            results['HTTPS'] = f"Port 443 is open with {tls_version} (outdated TLS version)"
-    return results
+            return "HTTP does not redirect to HTTPS (potential risk)"
+    except requests.RequestException:
+        return "Unable to connect to HTTP"
 
-# Function to check all high-risk ports and HTTP/HTTPS
-def check_ports_and_tls(host='127.0.0.1'):
-    open_ports = {}
+# Check SSH for weak ciphers or outdated protocols
+def check_ssh(host):
+    try:
+        client = paramiko.SSHClient()
+        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        client.connect(host, port=22, username='invalid', password='invalid', timeout=3)
+    except paramiko.AuthenticationException:
+        # Authentication is expected to fail, but check if the server supports outdated ciphers
+        try:
+            transport = client.get_transport()
+            if transport:
+                ciphers = transport.get_security_options().ciphers
+                if 'aes128-cbc' in ciphers or '3des-cbc' in ciphers:
+                    return "SSH supports outdated ciphers (vulnerable)"
+                else:
+                    return "SSH uses secure ciphers (good)"
+        except:
+            return "SSH configuration could not be fully determined"
+    except:
+        return "Unable to connect to SSH"
+
+# Check SMB configuration (e.g., if SMBv1 is enabled)
+def check_smb(host):
+    # SMB checks would require third-party tools or library integration (e.g., impacket)
+    return "SMB checks not implemented in this example"
+
+# General check for all ports
+def check_ports_and_configs(host='127.0.0.1'):
+    results = {}
 
     # Check high-risk ports
     for service, port in high_risk_ports.items():
         if check_port(host, port):
-            open_ports[service] = port
+            if service == 'HTTP':
+                results['HTTP'] = check_http(host)
+            elif service == 'HTTPS':
+                results['HTTPS'] = check_tls_version_and_ciphers(host)
+            elif service == 'SSH':
+                results['SSH'] = check_ssh(host)
+            else:
+                results[service] = f"Port {port} is open (basic check, configuration not implemented)"
     
-    # Check HTTP/HTTPS
-    http_https_results = check_http_https(host)
-    if http_https_results:
-        open_ports.update(http_https_results)
-    
-    return open_ports
+    return results
 
 # Save the results to a JSON file
-def save_to_json(data, filename='open_ports_tls.json'):
+def save_to_json(data, filename='open_ports_configs.json'):
     with open(filename, 'w') as json_file:
         json.dump(data, json_file, indent=4)
 
 if __name__ == "__main__":
     host_to_check = '127.0.0.1'  # Host computer (localhost)
-    open_ports = check_ports_and_tls(host_to_check)
+    open_ports = check_ports_and_configs(host_to_check)
     
     if open_ports:
-        print(f"Open high-risk ports or HTTP/HTTPS issues found: {open_ports}")
+        print(f"Open high-risk ports and configuration issues found: {open_ports}")
         save_to_json(open_ports)
     else:
-        print("No high-risk ports or TLS issues found.")
+        print("No high-risk ports or configuration issues found.")

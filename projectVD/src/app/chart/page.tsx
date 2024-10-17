@@ -14,7 +14,7 @@ const prisma = new PrismaClient()
 
 async function BasicChartPage() {
 
-  const data = await prisma.vulnerabilities.findMany({})
+const data = await prisma.vulnerabilities.findMany({})
 
   return (
     <DefaultLayout>

@@ -17,23 +17,23 @@ export async function GET(request, { params }) {
     // Step 2: For each sensor, find its vulnerabilities and programs
     const sensorsWithDetails = await Promise.all(
       sensors.map(async (sensor) => {
-        console.log("Fetching vulnerabilities and programs for sensorId:", sensor.sensorId);
+        console.log("Fetching vulnerabilities and programs for device:", sensor.deviceName);
 
         // Fetch vulnerabilities for the sensor
         const vulnerabilities = await db
           .collection("vulnerabilities")
-          .find({ sensorId: sensor.sensorId }) // Use sensorId as a string
+          .find({ sensorId: sensor.sensorId }) // sensorId is still used to link vulnerabilities
           .toArray();
 
         // Fetch programs for the sensor
         const programsData = await db
           .collection("programs")
-          .findOne({ sensorId: sensor.sensorId }); // Use sensorId as a string
+          .findOne({ sensorId: sensor.sensorId }); // sensorId is still used to link programs
 
         const programs = programsData ? programsData.programs : [];
 
-        console.log(`Vulnerabilities found for sensorId ${sensor.sensorId}:`, vulnerabilities);
-        console.log(`Programs found for sensorId ${sensor.sensorId}:`, programs);
+        console.log(`Vulnerabilities found for device ${sensor.deviceName}:`, vulnerabilities);
+        console.log(`Programs found for device ${sensor.deviceName}:`, programs);
 
         // Attach both vulnerabilities and programs to the sensor object
         return {

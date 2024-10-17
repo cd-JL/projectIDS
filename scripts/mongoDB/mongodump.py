@@ -1,7 +1,14 @@
 from pymongo import MongoClient
 
-# MongoDB connection URI
-uri = "mongodb+srv://lamjulienrd:3zgtpYc34JaYU9l3@projectv.sxtlx.mongodb.net/?retryWrites=true&w=majority&appName=projectv"
+
+# Load environment variables from the .env.local file
+parent_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'projectVD')
+env_path = os.path.join(parent_directory, '.env.local')
+load_dotenv(env_path)
+
+# Fetch MongoDB URI
+uri = os.getenv("MONGODB_URI")
+client = MongoClient(mongo_uri)
 
 # Connect to MongoDB
 client = MongoClient(uri)

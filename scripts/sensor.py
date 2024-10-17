@@ -10,11 +10,16 @@ import os
 
 # Define your NVD API key here
 API_KEY = 'b7803c2d-9a86-44b9-8c01-66074d62fbb4'
-CACHE_FOLDER = "cache"
+
+# Get the absolute path of the current script's directory
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Define cache and vulnerabilities folder relative to the script directory
+CACHE_FOLDER = os.path.join(script_dir, "cache")
 PROGRAMS_FILE = os.path.join(CACHE_FOLDER, "programs.json")
 VULNERABILITIES_FOLDER = os.path.join(CACHE_FOLDER, "vulnerabilities")
 
-# Create cache directory if it doesn't exist
+# Create cache directory and vulnerabilities directory if they don't exist
 os.makedirs(CACHE_FOLDER, exist_ok=True)
 os.makedirs(VULNERABILITIES_FOLDER, exist_ok=True)
 

@@ -33,7 +33,7 @@ user_schema = {
 
 sensor_schema = {
     "bsonType": "object",
-    "required": ["companyId", "sensorId", "vulnerabilities"],
+    "required": ["companyId", "sensorId"],
     "properties": {
         "companyId": {"bsonType": "objectId", "description": "Reference to the company ID this sensor belongs to"},
         "sensorId": {"bsonType": "string", "description": "Unique ID for the sensor"},
