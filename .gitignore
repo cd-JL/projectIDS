@@ -3,6 +3,6 @@
 
 
 # Ignore entire directories
-/webapp/node_modules
+/projectVD/node_modules
 /scripts/cache
 /cache
