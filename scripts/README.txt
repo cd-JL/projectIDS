@@ -15,4 +15,6 @@ Setup guide: https://docs.python.org/3/using/index.html
 pip install requests
 pip install load_dotenv
 
+after that, run sensor_intializer in console
+
 
