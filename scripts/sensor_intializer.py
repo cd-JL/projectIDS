@@ -8,22 +8,28 @@ from pymongo import MongoClient
 from bson import ObjectId
 from hashlib import md5
 from dotenv import load_dotenv
-import signal
+import atexit
 
-# Load environment variables from the .env.local file in the webapp folder
-parent_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'projectVD')
+# Get the absolute path of the current script's directory
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Load environment variables from the .env.local file in the parent folder of the script
+parent_directory = os.path.join(script_dir, '..', 'projectVD')
 env_path = os.path.join(parent_directory, '.env.local')
 load_dotenv(env_path)
 
 # Fetch MongoDB URI
 uri = os.getenv("MONGODB_URI")
 
-# Constants
-CACHE_DIR = "cache"
+# Constants - Ensuring all paths are relative to the script's directory
+CACHE_DIR = os.path.join(script_dir, "cache")
 SENSOR_ID_FILE = os.path.join(CACHE_DIR, "sensor_id.json")
 PROGRAMS_FILE = os.path.join(CACHE_DIR, "programs.json")
 VULNERABILITIES_DIR = os.path.join(CACHE_DIR, "vulnerabilities")
-SENSOR_SCRIPT = os.path.join("scripts", "sensor.py")
+
+# Assuming sensor.py is in the same folder as the current script
+SENSOR_SCRIPT = os.path.join(script_dir, "sensor.py")
+
 SCAN_INTERVAL = 10  # Time interval in seconds between scans
 
 # MongoDB connection setup
@@ -33,6 +39,10 @@ programs_collection = db["programs"]
 vulnerabilities_collection = db["vulnerabilities"]
 sensors_collection = db["sensors"]
 companies_collection = db["companies"]
+
+# Ensure cache directory and vulnerabilities directory are created
+os.makedirs(CACHE_DIR, exist_ok=True)
+os.makedirs(VULNERABILITIES_DIR, exist_ok=True)
 
 # Tracks hashes of previously uploaded data to detect changes
 previous_hashes = {"programs": None, "vulnerabilities": {}}
@@ -77,7 +87,6 @@ def pull_programs_from_db(sensor_id):
     except Exception as e:
         print(f"Error pulling programs data from database: {e}")
 
-
 def get_or_create_sensor_id():
     """Get the sensor ID from the sensor_id.json file or create one if it doesn't exist, including the device name."""
     try:
@@ -106,7 +115,6 @@ def get_or_create_sensor_id():
                         print(f"Updated local sensor ID to {db_sensor_id} from the database for device {device_name}.")
                     else:
                         print(f"Sensor ID in the local file matches the database for device {device_name}.")
-
             else:
                 # If the local file doesn't exist, save the sensor ID from the database
                 save_sensor_id(db_sensor_id, device_name)
@@ -200,7 +208,6 @@ def upload_sensor_id_to_db(sensor_id, company_id, device_name):
     except Exception as e:
         print(f"Error uploading or updating sensor ID in the database: {e}")
 
-
 def upload_programs(sensor_id):
     """Upload programs data to the database linked with the given sensor ID if changes are detected."""
     global previous_hashes
@@ -235,7 +242,6 @@ def upload_programs(sensor_id):
             print(f"Programs file not found: {PROGRAMS_FILE}")
         except Exception as e:
             print(f"Error uploading programs data: {e}")
-
 
 def upload_vulnerabilities(sensor_id):
     """Upload vulnerabilities data to the database linked with the given sensor ID if changes are detected."""
@@ -276,7 +282,6 @@ def upload_vulnerabilities(sensor_id):
     except Exception as e:
         print(f"Error uploading vulnerabilities data: {e}")
 
-
 def run_sensor_script():
     """Runs the sensor.py script and waits for it to complete."""
     try:
@@ -288,55 +293,42 @@ def run_sensor_script():
     except FileNotFoundError:
         print(f"{SENSOR_SCRIPT} not found. Please ensure that {SENSOR_SCRIPT} is in the correct directory.")
 
-# Add a global variable to track if the program is running
-running = True
+# Cleanup logic
+def cleanup(sensor_id):
+    """Ensure sensor is marked as inactive when the program exits."""
+    update_sensor_status(sensor_id, False)
+    print("Program exiting, sensor marked as inactive.")
 
-def handle_exit_signal(signum, frame):
-    """Handle exit signals to ensure the program updates the sensor status before exiting."""
-    global running
-    running = False
-
-# Register signal handlers for graceful shutdown
-signal.signal(signal.SIGINT, handle_exit_signal)
-signal.signal(signal.SIGTERM, handle_exit_signal)
-
+# Main function
 def main():
-    global running
+    # Step 1: Get or create the sensor ID
+    sensor_id = get_or_create_sensor_id()
+    if not sensor_id:
+        print("Sensor ID creation failed. Exiting.")
+        return
+    
+    # Register cleanup function with atexit
+    atexit.register(cleanup, sensor_id)
 
-    while running:
-        try:
-            # Step 1: Get or create the sensor ID
-            sensor_id = get_or_create_sensor_id()
-            if not sensor_id:
-                print("Sensor ID is missing. Cannot proceed with uploads.")
-                time.sleep(SCAN_INTERVAL)
-                continue
+    update_sensor_status(sensor_id, True)  # Mark sensor as active
 
-            # Step 2: Mark the sensor as active when the program starts running
-            update_sensor_status(sensor_id, True)
-
-            # Step 3: Run sensor.py script (scans running)
+    try:
+        while True:
+            # Step 2: Run sensor.py script (scans running)
             run_sensor_script()
 
-            # Step 4: Upload programs data linked with the sensor ID (only if changed)
+            # Step 3: Upload programs data linked with the sensor ID (only if changed)
             upload_programs(sensor_id)
 
-            # Step 5: Upload vulnerabilities data linked with the sensor ID (only if changed)
+            # Step 4: Upload vulnerabilities data linked with the sensor ID (only if changed)
             upload_vulnerabilities(sensor_id)
 
-            # Step 6: Wait for the next scan interval
+            # Step 5: Wait for the next scan interval
             print(f"Waiting {SCAN_INTERVAL} seconds before the next scan...")
             time.sleep(SCAN_INTERVAL)
         
-        except Exception as e:
-            print(f"Error during main loop execution: {e}")
-
-        finally:
-            # If the program is interrupted or completed, update sensor to inactive
-            if not running:
-                update_sensor_status(sensor_id, False)
-                print("Program interrupted or completed, sensor marked as inactive.")
-                break
+    except Exception as e:
+        print(f"Error during main loop execution: {e}")
 
 if __name__ == "__main__":
     main()
