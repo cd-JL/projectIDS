@@ -1,0 +1,7 @@
+# Ignore specific files
+/webapp/.env.local
+
+
+# Ignore entire directories
+/webapp/node_modules
+/cache
