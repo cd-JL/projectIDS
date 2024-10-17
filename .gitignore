@@ -1,5 +1,6 @@
 # Ignore specific files
-.env.local
+/webapp/.env.local
+
 
 # Ignore entire directories
 /webapp/node_modules
