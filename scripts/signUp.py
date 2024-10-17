@@ -3,8 +3,16 @@ import socketserver
 import json
 from pymongo import MongoClient
 import bcrypt
+import os
+from dotenv import load_dotenv
 
-mongo_uri = "mongodb+srv://lamjulienrd:3zgtpYc34JaYU9l3@projectv.sxtlx.mongodb.net/?retryWrites=true&w=majority&appName=projectv"
+# Load environment variables from the .env.local file
+parent_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'projectVD')
+env_path = os.path.join(parent_directory, '.env.local')
+load_dotenv(env_path)
+
+# Fetch MongoDB URI
+mongo_uri = os.getenv("MONGODB_URI")
 client = MongoClient(mongo_uri)
 db = client.projectv
 collection = db.sign_in
@@ -39,9 +47,9 @@ class SignUpHandler(http.server.BaseHTTPRequestHandler):
             
             if collection.find_one({"email": user_data['email']}):
                     self.send_response(409)
-                    response = {'message': "Email already exist."}
+                    response = {'message': "Email already exists."}
                     self.wfile.write(json.dumps(response).encode())
-                    print("email alrady exist")
+                    print("Email already exists")
                     return
             try:
                 hashed_password = bcrypt.hashpw(user_data['password'].encode('utf-8'), bcrypt.gensalt())

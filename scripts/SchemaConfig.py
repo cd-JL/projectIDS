@@ -37,7 +37,9 @@ sensor_schema = {
     "properties": {
         "companyId": {"bsonType": "objectId", "description": "Reference to the company ID this sensor belongs to"},
         "sensorId": {"bsonType": "string", "description": "Unique ID for the sensor"},
+        "sensorName": {"bsonType": "string", "description": "Name of the sensor"},
         "type": {"bsonType": "string", "description": "Type of sensor (e.g., network, application)"},
+        "active": {"bsonType": "bool", "description": "Indicates if the sensor is active or inactive"},
         "vulnerabilities": {"bsonType": "array", "items": {"bsonType": "objectId", "description": "References to vulnerability IDs in the 'vulnerabilities' collection"}}
     }
 }

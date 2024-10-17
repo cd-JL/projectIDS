@@ -3,8 +3,16 @@ import socketserver
 import json
 from pymongo import MongoClient
 import bcrypt
+import os
+from dotenv import load_dotenv
 
-mongo_uri = "mongodb+srv://lamjulienrd:3zgtpYc34JaYU9l3@projectv.sxtlx.mongodb.net/?retryWrites=true&w=majority&appName=projectv"
+# Load environment variables from the .env.local file
+parent_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'projectVD')
+env_path = os.path.join(parent_directory, '.env.local')
+load_dotenv(env_path)
+
+# Fetch MongoDB URI
+mongo_uri = os.getenv("MONGODB_URI")
 client = MongoClient(mongo_uri)
 db = client.projectv
 collection = db.sign_in
@@ -41,7 +49,7 @@ class SignInHandler(http.server.BaseHTTPRequestHandler):
                 self.send_response(400)
                 response = {'message': "User doesn't exist."}
                 self.wfile.write(json.dumps(response).encode())
-                print("User don't exist.")
+                print("User doesn't exist.")
                 return
             
             if bcrypt.checkpw(user_data['password'].encode('utf-8'), user['password']):
@@ -51,7 +59,7 @@ class SignInHandler(http.server.BaseHTTPRequestHandler):
             else:
                 self.send_response(400)
                 response = {'message': "Incorrect password."}
-                print('incorrect passwrod')
+                print('incorrect password')
 
             self.wfile.write(json.dumps(response).encode())
         else:

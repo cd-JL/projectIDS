@@ -13,5 +13,6 @@ Python download link: https://www.python.org/downloads/
 Setup guide: https://docs.python.org/3/using/index.html
 
 pip install requests
+pip install load_dotenv
 
 
