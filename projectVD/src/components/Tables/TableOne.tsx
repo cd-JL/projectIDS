@@ -1,36 +1,46 @@
 import { FC, useEffect, useState } from 'react';
 
-interface Vulnerability {
-  cve?: {
-    id?: string;
-    sourceIdentifier?: string;
-    descriptions?: Array<{ lang: string; value: string }>;
-    references?: Array<{ url: string; source: string }>;
-    metrics?: {
-      cvssMetricV2?: Array<{
-        cvssData?: {
-          baseScore?: number;
-          baseSeverity?: string;
-          exploitabilityScore?: number;
-          impactScore?: number;
-        };
-      }>;
-      cvssMetricV31?: Array<{
-        cvssData?: {
-          baseScore?: number;
-          baseSeverity?: string;
-          exploitabilityScore?: number;
-          impactScore?: number;
-        };
-      }>;
+interface VulnerabilityData {
+  resultsPerPage: number;
+  startIndex: number;
+  totalResults: number;
+  format: string;
+  version: string;
+  vulnerabilities: Array<{
+    cve?: {
+      id?: string;
+      sourceIdentifier?: string;
+      descriptions?: Array<{ lang: string; value: string }>;
+      references?: Array<{ url: string; source: string }>;
+      metrics?: {
+        cvssMetricV2?: Array<{
+          cvssData?: {
+            baseScore?: number;
+            baseSeverity?: string;
+            exploitabilityScore?: number;
+            impactScore?: number;
+          };
+        }>;
+        cvssMetricV31?: Array<{
+          cvssData?: {
+            baseScore?: number;
+            baseSeverity?: string;
+            exploitabilityScore?: number;
+            impactScore?: number;
+          };
+        }>;
+      };
     };
-  };
+  }>;
 }
 
 interface Sensor {
   sensorId: string;
   vulnerabilities: Array<{
-    vulnerabilities: Vulnerability[];
+    product: string;
+    vendor: string;
+    version: string;
+    vulnerabilityData: VulnerabilityData;
     sourceFile: string;
   }>;
 }
@@ -48,13 +58,13 @@ const TableOne: FC<TableOneProps> = ({ sensor }) => {
     console.log("Sensor Data:", sensor);
   }, [sensor]);
 
-  const getHighestBaseScore = (vulnerability: Vulnerability) => {
-    const scoreV2 = vulnerability.cve?.metrics?.cvssMetricV2?.[0]?.cvssData?.baseScore || 0;
-    const scoreV3 = vulnerability.cve?.metrics?.cvssMetricV31?.[0]?.cvssData?.baseScore || 0;
+  const getHighestBaseScore = (vulnerability: VulnerabilityData['vulnerabilities'][0]) => {
+    const scoreV2 = vulnerability?.cve?.metrics?.cvssMetricV2?.[0]?.cvssData?.baseScore || 0;
+    const scoreV3 = vulnerability?.cve?.metrics?.cvssMetricV31?.[0]?.cvssData?.baseScore || 0;
     return Math.max(scoreV2, scoreV3);
   };
 
-  const getSortedVulnerabilities = (vulnerabilities: Vulnerability[]) => {
+  const getSortedVulnerabilities = (vulnerabilities: VulnerabilityData['vulnerabilities']) => {
     return vulnerabilities.slice().sort((a, b) => {
       const scoreA = getHighestBaseScore(a);
       const scoreB = getHighestBaseScore(b);
@@ -77,7 +87,6 @@ const TableOne: FC<TableOneProps> = ({ sensor }) => {
       </h4>
 
       <div className="flex flex-col">
-        {/* Sorting Dropdown */}
         <div className="mb-4">
           <label htmlFor="sortOrder" className="mr-3 font-semibold">
             Sort by Severity:
@@ -95,8 +104,9 @@ const TableOne: FC<TableOneProps> = ({ sensor }) => {
 
         {sensor.vulnerabilities.length > 0 ? (
           sensor.vulnerabilities.map((vulnGroup, groupIndex) => {
-            const averageScore = vulnGroup.vulnerabilities.length > 0
-              ? Math.max(...vulnGroup.vulnerabilities.map(getHighestBaseScore))
+            const vulnerabilities = vulnGroup.vulnerabilityData.vulnerabilities || [];
+            const averageScore = vulnerabilities.length > 0
+              ? Math.max(...vulnerabilities.map(getHighestBaseScore))
               : 0;
             const gradientColor = calculateGradient(averageScore);
 
@@ -104,7 +114,7 @@ const TableOne: FC<TableOneProps> = ({ sensor }) => {
               <div key={groupIndex} className="mt-5">
                 <div className="flex justify-between items-center">
                   <h5 className="font-semibold text-lg">
-                    Source File: {vulnGroup.sourceFile}
+                    {vulnGroup.vendor} {vulnGroup.product} {vulnGroup.version}
                   </h5>
                   <button
                     onClick={() =>
@@ -123,9 +133,8 @@ const TableOne: FC<TableOneProps> = ({ sensor }) => {
                     className="rounded-lg p-4 mt-3 shadow-md text-black dark:text-white"
                     style={{ background: gradientColor }}
                   >
-                    {vulnGroup.vulnerabilities.length > 0 ? (
-                      getSortedVulnerabilities(vulnGroup.vulnerabilities).map((vulnerability, vIndex) => {
-                        // Extract CVSS metrics V2 and V3.1
+                    {vulnerabilities.length > 0 ? (
+                      getSortedVulnerabilities(vulnerabilities).map((vulnerability, vIndex) => {
                         const cvssMetricsV2 = vulnerability.cve?.metrics?.cvssMetricV2?.[0]?.cvssData;
                         const cvssMetricsV31 = vulnerability.cve?.metrics?.cvssMetricV31?.[0]?.cvssData;
 
@@ -137,13 +146,10 @@ const TableOne: FC<TableOneProps> = ({ sensor }) => {
                             <h6 className="text-md font-bold text-gray-700 dark:text-gray-300">
                               {vulnerability.cve?.id || "No CVE ID Available"}
                             </h6>
-
-                            {/* Source Identifier */}
                             <p className="mt-2 text-sm">
                               <strong>Source Identifier:</strong> {vulnerability.cve?.sourceIdentifier ?? "N/A"}
                             </p>
 
-                            {/* Descriptions */}
                             <div className="mt-2 text-sm">
                               <h6 className="font-semibold">Descriptions:</h6>
                               {vulnerability.cve?.descriptions?.length > 0 ? (
@@ -157,7 +163,6 @@ const TableOne: FC<TableOneProps> = ({ sensor }) => {
                               )}
                             </div>
 
-                            {/* References as a Dropdown */}
                             <div className="mt-2 text-sm">
                               <h6 className="font-semibold">
                                 References:{" "}
@@ -187,51 +192,49 @@ const TableOne: FC<TableOneProps> = ({ sensor }) => {
                                 ))}
                             </div>
 
-                            {/* CVSS Metrics V2 */}
                             <div className="mt-2 text-sm">
-                              <h6 className="font-semibold">CVSS Metrics V2:</h6>
-                              {cvssMetricsV2 ? (
-                                <>
-                                  <p>
-                                    <strong>Base Score:</strong> {cvssMetricsV2.baseScore ?? "N/A"}
-                                  </p>
-                                  <p>
-                                    <strong>Base Severity:</strong> {vulnerability.cve?.metrics?.cvssMetricV2?.[0]?.baseSeverity ?? "N/A"}
-                                  </p>
-                                  <p>
-                                    <strong>Exploitability Score:</strong> {vulnerability.cve?.metrics?.cvssMetricV2?.[0]?.exploitabilityScore ?? "N/A"}
-                                  </p>
-                                  <p>
-                                    <strong>Impact Score:</strong> {vulnerability.cve?.metrics?.cvssMetricV2?.[0]?.impactScore ?? "N/A"}
-                                  </p>
-                                </>
-                              ) : (
-                                <p>No CVSS metrics V2 available</p>
-                              )}
-                            </div>
+                  <h6 className="font-semibold">CVSS Metrics V2:</h6>
+                  {cvssMetricsV2 ? (
+                    <>
+                      <p>
+                        <strong>Base Score:</strong> {cvssMetricsV2.baseScore ?? "N/A"}
+                      </p>
+                      <p>
+                        <strong>Base Severity:</strong> {vulnerability.cve?.metrics?.cvssMetricV2?.[0]?.baseSeverity ?? "N/A"}
+                      </p>
+                      <p>
+                        <strong>Exploitability Score:</strong> {vulnerability.cve?.metrics?.cvssMetricV2?.[0]?.exploitabilityScore ?? "N/A"}
+                      </p>
+                      <p>
+                        <strong>Impact Score:</strong> {vulnerability.cve?.metrics?.cvssMetricV2?.[0]?.impactScore ?? "N/A"}
+                      </p>
+                    </>
+                  ) : (
+                    <p>No CVSS metrics V2 available</p>
+                  )}
+                </div>
 
-                            {/* CVSS Metrics V3.1 */}
-                            <div className="mt-2 text-sm">
-                              <h6 className="font-semibold">CVSS Metrics V3.1:</h6>
-                              {cvssMetricsV31 ? (
-                                <>
-                                  <p>
-                                    <strong>Base Score:</strong> {cvssMetricsV31.baseScore ?? "N/A"}
-                                  </p>
-                                  <p>
-                                    <strong>Base Severity:</strong> {vulnerability.cve?.metrics?.cvssMetricV31?.[0]?.baseSeverity ?? "N/A"}
-                                  </p>
-                                  <p>
-                                    <strong>Exploitability Score:</strong> {vulnerability.cve?.metrics?.cvssMetricV31?.[0]?.exploitabilityScore ?? "N/A"}
-                                  </p>
-                                  <p>
-                                    <strong>Impact Score:</strong> {vulnerability.cve?.metrics?.cvssMetricV31?.[0]?.impactScore ?? "N/A"}
-                                  </p>
-                                </>
-                              ) : (
-                                <p>No CVSS metrics V3.1 available</p>
-                              )}
-                            </div>
+                <div className="mt-2 text-sm">
+                  <h6 className="font-semibold">CVSS Metrics V3.1:</h6>
+                  {cvssMetricsV31 ? (
+                    <>
+                      <p>
+                        <strong>Base Score:</strong> {cvssMetricsV31.baseScore ?? "N/A"}
+                      </p>
+                      <p>
+                        <strong>Base Severity:</strong> {vulnerability.cve?.metrics?.cvssMetricV31?.[0]?.cvssData?.baseSeverity ?? "N/A"}
+                      </p>
+                      <p>
+                        <strong>Exploitability Score:</strong> {vulnerability.cve?.metrics?.cvssMetricV31?.[0]?.exploitabilityScore ?? "N/A"}
+                      </p>
+                      <p>
+                        <strong>Impact Score:</strong> {vulnerability.cve?.metrics?.cvssMetricV31?.[0]?.impactScore ?? "N/A"}
+                      </p>
+                    </>
+                  ) : (
+                    <p>No CVSS metrics V3.1 available</p>
+                  )}
+                </div>
                           </div>
                         );
                       })
