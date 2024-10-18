@@ -7,6 +7,7 @@ import requests
 import platform
 from pprint import pprint
 import os
+from dotenv import load_dotenv
 
 # Define your NVD API key here
 API_KEY = 'b7803c2d-9a86-44b9-8c01-66074d62fbb4'
@@ -23,21 +24,71 @@ VULNERABILITIES_FOLDER = os.path.join(CACHE_FOLDER, "vulnerabilities")
 os.makedirs(CACHE_FOLDER, exist_ok=True)
 os.makedirs(VULNERABILITIES_FOLDER, exist_ok=True)
 
-def get_installed_programs():
+def get_combined_installed_programs():
     """
-    Extracts installed programs using PowerShell.
+    Combines Win32_Product and registry queries to get a full list of installed programs.
+    """
+    installed_programs = get_installed_programs_from_wmi()  # Original WMI method
+    installed_programs.extend(get_installed_programs_from_registry())  # Registry method
+    return installed_programs
+
+def get_installed_programs_from_wmi():
+    """
+    Extracts installed programs using Win32_Product.
     """
     command = '''
     Get-WmiObject -Class Win32_Product | Select-Object -Property Name, Version | ConvertTo-Json
     '''
     try:
         output = subprocess.check_output(["powershell", "-Command", command], universal_newlines=True)
-        installed_programs = json.loads(output)
-        return installed_programs
+        return json.loads(output)
     except subprocess.CalledProcessError as e:
         print(f"Error executing PowerShell command: {e}")
         return []
 
+def get_installed_programs_from_registry():
+    """
+    Extracts installed programs by querying the Windows Registry.
+    """
+    registry_paths = [
+        r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
+        r"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
+    ]
+
+    installed_programs = []
+
+    for registry_path in registry_paths:
+        try:
+            command = f'reg query "HKLM\\{registry_path}" /s'
+            output = subprocess.check_output(["powershell", "-Command", command], universal_newlines=True)
+            program_data = parse_registry_output(output)
+            installed_programs.extend(program_data)
+        except subprocess.CalledProcessError as e:
+            print(f"Error querying registry: {e}")
+
+    return installed_programs
+
+def parse_registry_output(output):
+    """
+    Parses the registry output to extract program names and versions.
+    """
+    program_list = []
+    program_name = None
+    program_version = None
+
+    for line in output.splitlines():
+        line = line.strip()
+        if line.startswith("DisplayName"):
+            program_name = line.split("    ")[-1]
+        elif line.startswith("DisplayVersion"):
+            program_version = line.split("    ")[-1]
+
+        if program_name and program_version:
+            program_list.append({"Name": program_name, "Version": program_version})
+            program_name = None
+            program_version = None
+
+    return program_list
 
 def get_windows_version():
     """
@@ -46,7 +97,6 @@ def get_windows_version():
     win_version = platform.win32_ver()
     os_name = f"Windows {win_version[0]} {win_version[1]}"
     return {"Name": os_name, "Version": win_version[1]}
-
 
 def determine_vendor(program_name):
     """
@@ -75,7 +125,6 @@ def determine_vendor(program_name):
     default_vendor = program_name.split()[0] if program_name.split() else "unknown"
     return default_vendor
 
-
 def strip_version_from_name(product_name):
     """
     Strips unnecessary details like versions and parentheses from product names.
@@ -83,7 +132,6 @@ def strip_version_from_name(product_name):
     cleaned_name = re.sub(r'\b(version\s*[0-9\.]+|[0-9\.]+.*)\b', '', product_name, flags=re.IGNORECASE)
     cleaned_name = re.sub(r'\s*\(.*\)\s*', '', cleaned_name)
     return cleaned_name.strip()
-
 
 def condense_programs(installed_programs):
     """
@@ -122,7 +170,6 @@ def condense_programs(installed_programs):
 
     return {name: ', '.join(sorted(versions)) for name, versions in condensed.items()}
 
-
 def clean_product_name(vendor, product):
     """
     Cleans up the product name by removing redundant vendor names and formatting marks.
@@ -133,7 +180,6 @@ def clean_product_name(vendor, product):
         product = product.lower().replace(vendor, "").replace("__", "_").strip("_")
     return product.capitalize() if product else vendor.capitalize()
 
-
 def generate_cpe_query(vendor, product, version):
     """
     Generates the CPE query format.
@@ -141,14 +187,12 @@ def generate_cpe_query(vendor, product, version):
     product = clean_product_name(vendor, product)
     return f"cpe:2.3:a:{vendor}:{product}:{version}:*:*:*:*:*:*:*"
 
-
 def parse_version(version):
     """
     Parses version strings into a list of integers for sorting.
     """
     numeric_parts = re.findall(r'\d+', version)
     return [int(part) for part in numeric_parts if part.isdigit()]
-
 
 def query_vulnerabilities(condensed_programs):
     """
@@ -203,7 +247,6 @@ def query_vulnerabilities(condensed_programs):
     print(f"Total programs with vulnerabilities: {vulnerabilities_count}")
     pprint(vulnerable_programs)
 
-
 def save_vulnerability_to_file(vulnerability_data, vendor, product, version):
     """
     Saves the vulnerability data as a JSON file in the vulnerabilities folder using the custom format.
@@ -222,7 +265,6 @@ def save_vulnerability_to_file(vulnerability_data, vendor, product, version):
     else:
         print(f"File already exists: {file_path}")
 
-
 def save_program_list(programs):
     """
     Saves the list of installed programs to a JSON file.
@@ -230,7 +272,6 @@ def save_program_list(programs):
     with open(PROGRAMS_FILE, 'w') as file:
         json.dump(programs, file, indent=4)
     print(f"Saved current program list to {PROGRAMS_FILE}")
-
 
 def load_program_list():
     """
@@ -241,7 +282,6 @@ def load_program_list():
             return json.load(file)
     return []
 
-
 def check_for_changes(current_programs):
     """
     Checks if the current programs differ from the previously saved list.
@@ -249,12 +289,11 @@ def check_for_changes(current_programs):
     previous_programs = load_program_list()
     return current_programs != previous_programs
 
-
 def main():
     print("Starting a new scan...")
     
     # Step 1: Retrieve currently installed programs and save them
-    installed_programs = get_installed_programs()
+    installed_programs = get_combined_installed_programs()
     windows_version = get_windows_version()
     installed_programs.append(windows_version)
 
@@ -269,7 +308,6 @@ def main():
         print("No changes detected in installed programs. Skipping scan.")
 
     print("Scan completed.")
-
 
 if __name__ == "__main__":
     main()
