@@ -6,15 +6,15 @@ import { ApexOptions } from "apexcharts";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-interface ChartTwoProps {
-  data: { deviceName: string; totalVulnerabilities: number }[];
+interface TotalCVEScoreChartProps {
+  data: { deviceName: string; totalCveScore: number }[];
 }
 
-const ChartTwo: React.FC<ChartTwoProps> = ({ data }) => {
+const TotalCVEScoreChart: React.FC<TotalCVEScoreChartProps> = ({ data }) => {
   const series = [
     {
-      name: "Total Vulnerabilities",
-      data: data.map(d => d.totalVulnerabilities),
+      name: "Total CVE Score",
+      data: data.map(d => d.totalCveScore),
     },
   ];
 
@@ -26,22 +26,22 @@ const ChartTwo: React.FC<ChartTwoProps> = ({ data }) => {
     xaxis: {
       categories: data.map(d => d.deviceName),
       title: {
-        text: "Devices",
+        text: "Sensors",
       },
     },
     yaxis: {
       title: {
-        text: "Total Vulnerabilities",
+        text: "Total CVE Score",
       },
     },
   };
 
   return (
     <div>
-      <h3>Total Vulnerabilities by Device</h3>
+      <h3>Total CVE Score by Sensor</h3>
       <ReactApexChart options={options} series={series} type="bar" height={350} />
     </div>
   );
 };
 
-export default ChartTwo;
+export default TotalCVEScoreChart;

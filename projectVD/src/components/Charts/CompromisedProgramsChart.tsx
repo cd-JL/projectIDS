@@ -6,15 +6,15 @@ import { ApexOptions } from "apexcharts";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-interface ChartTwoProps {
-  data: { deviceName: string; totalVulnerabilities: number }[];
+interface CompromisedProgramsChartProps {
+  data: { program: string; count: number }[];
 }
 
-const ChartTwo: React.FC<ChartTwoProps> = ({ data }) => {
+const CompromisedProgramsChart: React.FC<CompromisedProgramsChartProps> = ({ data }) => {
   const series = [
     {
-      name: "Total Vulnerabilities",
-      data: data.map(d => d.totalVulnerabilities),
+      name: "Instances",
+      data: data.map(d => d.count),
     },
   ];
 
@@ -24,24 +24,24 @@ const ChartTwo: React.FC<ChartTwoProps> = ({ data }) => {
       height: 350,
     },
     xaxis: {
-      categories: data.map(d => d.deviceName),
+      categories: data.map(d => d.program),
       title: {
-        text: "Devices",
+        text: "Compromised Programs",
       },
     },
     yaxis: {
       title: {
-        text: "Total Vulnerabilities",
+        text: "Number of Instances",
       },
     },
   };
 
   return (
     <div>
-      <h3>Total Vulnerabilities by Device</h3>
+      <h3>Compromised Programs Across All Sensors</h3>
       <ReactApexChart options={options} series={series} type="bar" height={350} />
     </div>
   );
 };
 
-export default ChartTwo;
+export default CompromisedProgramsChart;
