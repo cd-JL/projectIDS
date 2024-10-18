@@ -262,7 +262,7 @@ const menuGroups = [
           </svg>
         ),
         label: "Chart",
-        route: "/chart",
+        route: "/chart/670300d49e3775f3873461fd",
       },
       {
         icon: (
