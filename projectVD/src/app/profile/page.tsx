@@ -14,6 +14,7 @@ function ProfilePage() {
       if (response.ok) {
         const userData = await response.json();
         setUser(userData);
+        console.log(userData)
       } else {
         console.error("Failed to fetch user data");
       }
@@ -47,10 +48,10 @@ function ProfilePage() {
               alt="Profile"
               className="w-32 h-32 rounded-full border-4 border-gray-300 mb-4"
             />
-            <h2 className="text-2xl font-semibold text-gray-800">{user?.name || "Username"}</h2>
+            <h2 className="text-2xl font-semibold text-gray-800">{user?.username || "Username"}</h2>
             <h3 className="text-xl font-semibold text-gray-800">Company XYZ</h3>
             <p className="text-gray-600">{user?.email || "Email"}</p>
-            <p className="text-gray-600">Role</p>
+            <p className="text-gray-600">{user?.role || "role"}</p>
           </div>
         </div>
       </div>
@@ -59,3 +60,5 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
+
+
