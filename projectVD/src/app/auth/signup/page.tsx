@@ -8,6 +8,7 @@ import Link from "next/link";
 const SignUp: React.FC = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [companyId, setCompanyId] = useState("");
   const [password, setPassword] = useState("");
   const [reEnterPassword, setReEnterPassword] = useState("");
   const [error, setError] = useState("");
@@ -17,7 +18,7 @@ const SignUp: React.FC = () => {
     setError("");
     setSuccessMessage("");
 
-    if (!name || !email || !password || !reEnterPassword) {
+    if (!name || !email || !password || !reEnterPassword || !companyId) {
       setError("All fields are required.");
       return;
     }
@@ -37,7 +38,7 @@ const SignUp: React.FC = () => {
       return;
     }
 
-    const userData = { name, email, password };
+    const userData = { name, email, password, companyId };
 
     try {
       const response = await fetch("http://localhost:8000/signUp", {
@@ -56,6 +57,7 @@ const SignUp: React.FC = () => {
       setSuccessMessage(result.message);
       setName("");
       setEmail("");
+      setCompanyId("");
       setPassword("");
       setReEnterPassword("");
     } catch (err: any) {
@@ -87,6 +89,21 @@ const SignUp: React.FC = () => {
                       placeholder="Enter your full name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
+                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-4">
+                  <label className="mb-2.5 block font-medium text-black dark:text-white">
+                    Company ID
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      placeholder="Enter your company Id"
+                      value={companyId}
+                      onChange={(e) => setCompanyId(e.target.value)}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
                   </div>
