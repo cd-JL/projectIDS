@@ -13,6 +13,7 @@ interface SidebarProps {
   setSidebarOpen: (arg: boolean) => void;
 }
 
+
 const menuGroups = [
   {
     name: "MENU",
@@ -352,6 +353,16 @@ const menuGroups = [
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const pathname = usePathname();
   const [pageName, setPageName] = useLocalStorage("selectedMenu", "dashboard");
+  const [user, setUser] = useState(null);
+  const userEmail = localStorage.getItem("userEmail");
+
+  const conditionalLabels = [
+    "Profile",
+    "Devices",
+    "Sensor Programs",
+    "Sensor Vulnerabilities",
+    "Settings",
+  ];
 
   return (
     <ClickOutside onClick={() => setSidebarOpen(false)}>
@@ -405,12 +416,23 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
                 <ul className="mb-6 flex flex-col gap-1.5">
                   {group.menuItems.map((menuItem, menuIndex) => (
-                    <SidebarItem
-                      key={menuIndex}
-                      item={menuItem}
-                      pageName={pageName}
-                      setPageName={setPageName}
-                    />
+                    conditionalLabels.includes(menuItem.label)? (
+                      userEmail ? (
+                        <SidebarItem
+                          key={menuIndex}
+                          item={menuItem}
+                          pageName={pageName}
+                          setPageName={setPageName}
+                        />
+                      ) : null
+                    ) : (
+                      <SidebarItem
+                        key={menuIndex}
+                        item={menuItem}
+                        pageName={pageName}
+                        setPageName={setPageName}
+                      />
+                    )
                   ))}
                 </ul>
               </div>
@@ -424,3 +446,4 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 };
 
 export default Sidebar;
+
