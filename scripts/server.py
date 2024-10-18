@@ -121,14 +121,15 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         # HANDLE GET USER FUNCTIONALITY
         if self.path.startswith('/getUser'):
+            print("USERS FOUND4")
             self.send_response(200)
             self.send_header('Access-Control-Allow-Origin', '*')
             self.send_header('Access-Control-Allow-Methods', 'GET')
             self.send_header('Access-Control-Allow-Headers', 'Content-Type')
             self.end_headers()
 
-            email = self.path.split('=')[-1]  # Extract email from the query string
-            user = db.user.find_one({"email": email}, {"_id": 0})  # Exclude password
+            email = self.path.split('=')[-1] 
+            user = db.user.find_one({"email": email}, {"_id": 0}) 
 
             if user:
                 self.wfile.write(json.dumps(user).encode())
@@ -138,16 +139,19 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                 self.wfile.write(json.dumps(response).encode())
 
         elif self.path.startswith('/getUsers'):
+            print("USERS FOUND3")
             self.send_response(200)
             self.send_header('Access-Control-Allow-Origin', '*')
             self.send_header('Access-Control-Allow-Methods', 'GET')
             self.send_header('Access-Control-Allow-Headers', 'Content-Type')
             self.end_headers()
 
-            users  = list(db.user.find({}, {"_id": 0}))
+            users  = list(db.user.find({},{"_id": 0}))
+            print(f"Fetched users: {users}") 
 
             if users:
                 self.wfile.write(json.dumps(users).encode())
+                print("USERS FOUND1")
             else:
                 self.send_response(404)
                 response = {'message': "Users not found."}

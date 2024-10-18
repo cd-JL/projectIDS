@@ -57,8 +57,8 @@ const DropdownUser = () => {
           <img
             width={112}
             height={112}
-            // src={"/images/user/user-01.png"}
-            src="https://vignette.wikia.nocookie.net/naruto/images/8/8d/UchihaItachi.png/revision/latest?cb=20180420021356&path-prefix=pt-br"
+            src={"/images/user/user-01.png"}
+            // src="https://vignette.wikia.nocookie.net/naruto/images/8/8d/UchihaItachi.png/revision/latest?cb=20180420021356&path-prefix=pt-br"
             style={{
               width: "auto",
               height: "auto",
