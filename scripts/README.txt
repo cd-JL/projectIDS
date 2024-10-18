@@ -13,7 +13,11 @@ Python download link: https://www.python.org/downloads/
 Setup guide: https://docs.python.org/3/using/index.html
 
 pip install requests
-pip install load_dotenv
+pip install python-dotenv
+pip install pymongo
+
+if you get a pymongo error docs
+python -m pip install --upgrade --force-reinstall pymongo
 
 after that, run sensor_intializer in console
 
