@@ -27,10 +27,14 @@ os.makedirs(VULNERABILITIES_FOLDER, exist_ok=True)
 def get_combined_installed_programs():
     """
     Combines Win32_Product and registry queries to get a full list of installed programs.
+    Deduplicates entries by program name and version.
     """
     installed_programs = get_installed_programs_from_wmi()  # Original WMI method
     installed_programs.extend(get_installed_programs_from_registry())  # Registry method
-    return installed_programs
+    
+    # Deduplicate entries based on the combination of Name and Version
+    unique_programs = {f"{p['Name'].lower()}_{p['Version']}": p for p in installed_programs if p['Name'] and p['Version']}
+    return list(unique_programs.values())
 
 def get_installed_programs_from_wmi():
     """
@@ -115,6 +119,7 @@ def determine_vendor(program_name):
         "notepad++": "notepad-plus-plus",
         "visual studio": "microsoft",
         "mozilla": "mozilla"
+
     }
 
     for keyword, vendor in vendor_map.items():
@@ -201,7 +206,7 @@ def query_vulnerabilities(condensed_programs):
     vulnerable_programs = []
     total_scanned = 0
     vulnerabilities_count = 0
-    all_queries = []  # Store all queries to print before making requests
+    all_queries = []
 
     # Prepare all queries
     for program, versions in condensed_programs.items():
@@ -212,7 +217,6 @@ def query_vulnerabilities(condensed_programs):
         latest_version = version_list[0]
         vendor = determine_vendor(program)
 
-        # Properly format the product name
         product = program if vendor == program else program.replace(vendor, "").replace("-", "").replace("_", "").strip()
         cpe_query = generate_cpe_query(vendor, product, latest_version)
         query_url = f"https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName={cpe_query}"
@@ -245,7 +249,6 @@ def query_vulnerabilities(condensed_programs):
 
     print(f"Total programs scanned: {total_scanned}")
     print(f"Total programs with vulnerabilities: {vulnerabilities_count}")
-    pprint(vulnerable_programs)
 
 def save_vulnerability_to_file(vulnerability_data, vendor, product, version):
     """

@@ -20,13 +20,13 @@ companies_collection = db["companies"]
 programs_collection = db["programs"]
 vulnerabilities_collection = db["vulnerabilities"]
 
-# Step 1: Retrieve sensorId and ObjectId for the device with name 'CuleDood911'
-sensor = sensors_collection.find_one({"deviceName": "CuleDood911"})
+# Step 1: Retrieve sensorId and ObjectId for the device with name 'GuyMan6'
+sensor = sensors_collection.find_one({"deviceName": "GuyMan6"})
 
 if sensor:
     sensor_id = sensor.get("sensorId")
     object_id = sensor.get("_id")
-    print(f"Found sensor with sensorName 'CuleDood911': sensorId = '{sensor_id}', objectId = '{object_id}'")
+    print(f"Found sensor with sensorName 'GuyMan6': sensorId = '{sensor_id}', objectId = '{object_id}'")
 
     # Step 2: Delete the sensor from the sensors collection
     sensor_deletion_result = sensors_collection.delete_one({"_id": object_id, "sensorId": sensor_id})
@@ -56,4 +56,4 @@ if sensor:
     print(f"Remaining vulnerabilities after deletion: {len(remaining_vulnerabilities)}")
 
 else:
-    print("No sensor found with the name 'CuleDood911'.")
+    print("No sensor found with the name 'GuyMan6'.")
