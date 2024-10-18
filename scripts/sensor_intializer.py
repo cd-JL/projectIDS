@@ -10,6 +10,8 @@ from dotenv import load_dotenv
 import atexit
 import re
 from collections import defaultdict
+from bson import ObjectId
+
 
 # Get the absolute path of the current script's directory
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -23,6 +25,7 @@ load_dotenv(env_path)
 uri = os.getenv("MONGODB_URI")
 
 # Constants - Ensuring all paths are relative to the script's directory
+COMPANY_NAME = "Big Corp"  # Variable for the company name
 CACHE_DIR = os.path.join(script_dir, "cache")
 SENSOR_ID_FILE = os.path.join(CACHE_DIR, "sensor_id.json")
 PROGRAMS_FILE = os.path.join(CACHE_DIR, "programs.json")
@@ -75,16 +78,16 @@ def get_file_hash(filepath):
     except FileNotFoundError:
         return None
 
-def get_big_corp_id():
-    """Get the ObjectId of 'Big Corp' from the companies collection."""
+def get_company_id():
+    """Retrieve the company ID based on the company name."""
     try:
-        company = companies_collection.find_one({"name": "Big Corp"})
+        company = companies_collection.find_one({"name": COMPANY_NAME})
         if company:
             return company["_id"]
         else:
-            raise ValueError("Company 'Big Corp' not found in the companies collection.")
+            raise ValueError(f"Company '{COMPANY_NAME}' not found in the companies collection.")
     except Exception as e:
-        print(f"Error retrieving 'Big Corp' ID: {e}")
+        print(f"Error retrieving company ID for '{COMPANY_NAME}': {e}")
         return None
 
 def save_sensor_id(sensor_id, device_name):
@@ -108,12 +111,30 @@ def update_sensor_status(sensor_id, status):
     except Exception as e:
         print(f"Error updating sensor status: {e}")
 
+from bson import ObjectId
+
+def add_sensor_to_company(sensor_id, company_id):
+    """Adds the sensor ID to the specified company's sensors array if it's not already there."""
+    try:
+        sensor_object_id = sensors_collection.find_one({"sensorId": sensor_id})["_id"]
+        result = companies_collection.update_one(
+            {"_id": company_id},
+            {"$addToSet": {"sensors": sensor_object_id}}
+        )
+        if result.modified_count > 0:
+            print(f"Sensor {sensor_id} added to {COMPANY_NAME}.")
+        else:
+            print(f"Sensor {sensor_id} was already associated with {COMPANY_NAME}.")
+    except Exception as e:
+        print(f"Error adding sensor to '{COMPANY_NAME}': {e}")
+
+
 def get_or_create_sensor_id():
     """Get the sensor ID from the sensor_id.json file or create one if it doesn't exist."""
     try:
-        company_id = get_big_corp_id()
+        company_id = get_company_id()
         if not company_id:
-            print("Company ID for 'Big Corp' is missing. Cannot proceed.")
+            print(f"Company ID for '{COMPANY_NAME}' is missing. Cannot proceed.")
             return None
 
         device_name = get_device_name()
@@ -124,12 +145,14 @@ def get_or_create_sensor_id():
             db_sensor_id = existing_sensor.get("sensorId")
             save_sensor_id(db_sensor_id, device_name)
             pull_programs_and_vulnerabilities(db_sensor_id)
+            add_sensor_to_company(db_sensor_id, company_id)  # Pass company ID here
             return db_sensor_id
 
         # Generate a new sensor ID if it does not exist
         new_sensor_id = str(uuid.uuid4())
         save_sensor_id(new_sensor_id, device_name)
         upload_sensor_id_to_db(new_sensor_id, company_id, device_name)
+        add_sensor_to_company(new_sensor_id, company_id)  # Pass company ID here
         return new_sensor_id
 
     except Exception as e:
@@ -195,7 +218,7 @@ def upload_sensor_id_to_db(sensor_id, company_id, device_name):
             print(f"Sensor with ID {sensor_id} already exists. Updated device name to {device_name}.")
     except Exception as e:
         print(f"Error uploading or updating sensor ID in the database: {e}")
-
+        
 def upload_programs(sensor_id):
     """Upload programs data to the database linked with the given sensor ID if changes are detected."""
     global previous_hashes
