@@ -136,6 +136,22 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                 self.send_response(404)
                 response = {'message': "User not found."}
                 self.wfile.write(json.dumps(response).encode())
+
+        elif self.path.startswith('/getUsers'):
+            self.send_response(200)
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.send_header('Access-Control-Allow-Methods', 'GET')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+            self.end_headers()
+
+            users  = list(db.user.find({}, {"_id": 0}))
+
+            if users:
+                self.wfile.write(json.dumps(users).encode())
+            else:
+                self.send_response(404)
+                response = {'message': "Users not found."}
+                self.wfile.write(json.dumps(response).encode())
         
         else:
             self.send_response(404)
