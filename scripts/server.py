@@ -5,6 +5,7 @@ import json
 from dotenv import load_dotenv
 from pymongo import MongoClient
 import bcrypt
+import bson
 
 # Load environment variables from the .env.local file
 parent_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'projectVD')
@@ -94,6 +95,12 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                 hashed_password = bcrypt.hashpw(user_data['password'].encode('utf-8'), bcrypt.gensalt())
                 user_data['password'] = hashed_password
                 collection.insert_one(user_data)
+                db.user.insert_one({
+                    "username": user_data['name'],
+                    "email": user_data['email'],
+                    "role": "view-only",
+                    # "companyId": bson.ObjectId(user_data['companyId'])
+                })
                 response = {'message': 'Account created successfully.'}
                 self.send_response(200) 
 
@@ -121,7 +128,7 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
 
             email = self.path.split('=')[-1]  # Extract email from the query string
-            user = collection.find_one({"email": email}, {"_id": 0, "password": 0})  # Exclude password
+            user = db.user.find_one({"email": email}, {"_id": 0})  # Exclude password
 
             if user:
                 self.wfile.write(json.dumps(user).encode())
