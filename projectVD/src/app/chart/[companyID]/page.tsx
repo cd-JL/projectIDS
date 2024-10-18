@@ -1,4 +1,7 @@
-// src/app/chart/[companyID]/page.tsx
+// The BasicChartPage component gets and shows data about sensors for a specific company using the companyID from the URL. 
+// It keeps track of several states, such as whether it's loading, any error messages, and formatted data for vulnerabilities, CVE scores, and compromised programs. 
+// The data is pulled from an API, processed to find important numbers, and the state is updated. 
+// Finally, it shows loading messages, error messages, or three charts depending on the data it fetches.
 
 "use client";
 
@@ -22,6 +25,7 @@ const BasicChartPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // useEffect allows you to perform side effect in function component (data fetching, subscriptions, etc) or manually changing DOM, and run it after component renders
   useEffect(() => {
     if (!companyID) {
       setError("companyID is missing.");
@@ -29,6 +33,7 @@ const BasicChartPage = () => {
       return;
     }
 
+    // Async allows task to run concurrently without blocking main execution (improve responsive/efficiency)
     const fetchData = async () => {
       try {
         console.log("Fetching data for companyID:", companyID);
@@ -55,6 +60,7 @@ const BasicChartPage = () => {
         console.log("Formatted data for ChartTwo:", data);
 
         // Data for TotalCVEScoreChart: CVE scores by sensor (sum of base scores using the higher between v2 and v3)
+        // map create create new array by applying provided callback funtion to each element of OG array (transform value without mddifying the OG array)
         const cveScores = sensorsWithDetails.map(sensor => {
           let totalCveScore = 0;
 
