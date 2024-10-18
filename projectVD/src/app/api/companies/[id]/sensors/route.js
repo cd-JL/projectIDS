@@ -1,4 +1,4 @@
-import clientPromise from '@lib/mongodb'; // Using the alias for simpler imports
+import clientPromise from '@lib/mongodb';
 import { ObjectId } from 'mongodb';
 
 export async function GET(request, { params }) {
@@ -7,12 +7,25 @@ export async function GET(request, { params }) {
   try {
     console.log("Received company ID:", id);
 
+    // Validate the company ID format
+    if (!ObjectId.isValid(id)) {
+      console.error("Invalid company ID format:", id);
+      return new Response(
+        JSON.stringify({ error: "Invalid company ID format" }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
     const client = await clientPromise;
     const db = client.db("projectv");
 
     // Step 1: Find all sensors for the given company
     const sensors = await db.collection("sensors").find({ companyId: new ObjectId(id) }).toArray();
     console.log("Sensors found for company:", sensors);
+
+    if (sensors.length === 0) {
+      console.log("No sensors found for the given company ID:", id);
+    }
 
     // Step 2: For each sensor, find its vulnerabilities and programs
     const sensorsWithDetails = await Promise.all(
@@ -22,13 +35,13 @@ export async function GET(request, { params }) {
         // Fetch vulnerabilities for the sensor
         const vulnerabilities = await db
           .collection("vulnerabilities")
-          .find({ sensorId: sensor.sensorId }) // sensorId is still used to link vulnerabilities
+          .find({ sensorId: sensor.sensorId })
           .toArray();
 
         // Fetch programs for the sensor
         const programsData = await db
           .collection("programs")
-          .findOne({ sensorId: sensor.sensorId }); // sensorId is still used to link programs
+          .findOne({ sensorId: sensor.sensorId });
 
         const programs = programsData ? programsData.programs : [];
 
@@ -52,9 +65,9 @@ export async function GET(request, { params }) {
     });
   } catch (e) {
     console.error("Error fetching sensors, vulnerabilities, and programs:", e);
-    return new Response(JSON.stringify({ error: "Unable to fetch sensors, vulnerabilities, and programs" }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({ error: "Unable to fetch sensors, vulnerabilities, and programs" }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    );
   }
 }
