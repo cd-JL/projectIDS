@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from pymongo import MongoClient
 import bcrypt
 import bson
+from bson.json_util import dumps
 
 # Load environment variables from the .env.local file
 parent_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'projectVD')
@@ -121,7 +122,6 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         # HANDLE GET USER FUNCTIONALITY
         if self.path.startswith('/getUser'):
-            print("USERS FOUND4")
             self.send_response(200)
             self.send_header('Access-Control-Allow-Origin', '*')
             self.send_header('Access-Control-Allow-Methods', 'GET')
@@ -138,25 +138,48 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                 response = {'message': "User not found."}
                 self.wfile.write(json.dumps(response).encode())
 
-        elif self.path.startswith('/getUsers'):
-            print("USERS FOUND3")
+        elif self.path.startswith('/Users'):
+            print("USERS FOUND3 - Processing request")  # Step 1: Debug entry point
             self.send_response(200)
             self.send_header('Access-Control-Allow-Origin', '*')
             self.send_header('Access-Control-Allow-Methods', 'GET')
             self.send_header('Access-Control-Allow-Headers', 'Content-Type')
             self.end_headers()
 
-            users  = list(db.user.find({},{"_id": 0}))
-            print(f"Fetched users: {users}") 
+            try:
+                # Step 2: Debugging before database query
+                print("Attempting to query the database for users...")
 
-            if users:
-                self.wfile.write(json.dumps(users).encode())
-                print("USERS FOUND1")
-            else:
-                self.send_response(404)
-                response = {'message': "Users not found."}
+                # Fetch users, excluding the _id field
+                # Fetch all documents from the collection without any projection to verify data
+                users = list(db.user.find())
+                print(users)  # Output fetched users
+
+                # Step 3: Debugging after fetching from DB
+                print(f"Query successful. Users fetched: {users}")
+
+                if users:
+                    # Convert the user data to JSON format and send it in the response
+                    json_data = dumps(users)  # Convert BSON to JSON
+
+                    # Step 4: Debugging JSON conversion
+                    print(f"Users data after JSON conversion: {json_data}")
+
+                    self.wfile.write(json_data.encode())
+                    print("USERS FOUND1 - Data sent to client")
+                else:
+                    # Step 5: Debugging when no users found
+                    print("No users found in the database.")
+                    self.send_response(404)
+                    response = {'message': "Users not found."}
+                    self.wfile.write(json.dumps(response).encode())
+            except Exception as e:
+                # Step 6: Debugging in case of an exception
+                print(f"Error fetching users: {str(e)}")  # Log the actual error
+                self.send_response(500)
+                response = {'message': 'Internal server error.'}
                 self.wfile.write(json.dumps(response).encode())
-        
+
         else:
             self.send_response(404)
             self.end_headers()
