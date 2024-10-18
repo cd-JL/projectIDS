@@ -49,10 +49,7 @@ os.makedirs(VULNERABILITIES_DIR, exist_ok=True)
 previous_hashes = {"programs": None, "vulnerabilities": {}}
 
 def extract_details_from_filename(filename):
-    """
-    Extracts the vendor, product, and version from the given filename.
-    Assumes the filename format is 'vendor_product_version.json'.
-    """
+    """Extracts the vendor, product, and version from the given filename."""
     try:
         base_name = filename.replace('.json', '')
         vendor, product, version = base_name.split('_', 2)
@@ -126,6 +123,7 @@ def get_or_create_sensor_id():
         if existing_sensor:
             db_sensor_id = existing_sensor.get("sensorId")
             save_sensor_id(db_sensor_id, device_name)
+            pull_programs_and_vulnerabilities(db_sensor_id)
             return db_sensor_id
 
         # Generate a new sensor ID if it does not exist
@@ -137,6 +135,47 @@ def get_or_create_sensor_id():
     except Exception as e:
         print(f"Error in get_or_create_sensor_id: {e}")
         return None
+
+def pull_programs_and_vulnerabilities(sensor_id):
+    """Pull programs and vulnerabilities data from the database if not present locally."""
+    pull_programs_from_db(sensor_id)
+    pull_vulnerabilities_from_db(sensor_id)
+
+def pull_programs_from_db(sensor_id):
+    """Pull programs data from the database if not present locally."""
+    if not os.path.exists(PROGRAMS_FILE):
+        try:
+            program_data = programs_collection.find_one({"sensorId": sensor_id})
+            if program_data and "programs" in program_data:
+                with open(PROGRAMS_FILE, 'w') as programs_file:
+                    json.dump(program_data["programs"], programs_file)
+                print(f"Programs data pulled from the database and saved to {PROGRAMS_FILE} for sensor {sensor_id}.")
+            else:
+                print(f"No programs data found in the database for sensor {sensor_id}.")
+        except Exception as e:
+            print(f"Error pulling programs data from database: {e}")
+    else:
+        print(f"Programs file already exists locally: {PROGRAMS_FILE}")
+
+def pull_vulnerabilities_from_db(sensor_id):
+    """Pull vulnerabilities data from the database if not present locally."""
+    try:
+        vulnerabilities = vulnerabilities_collection.find({"sensorId": sensor_id})
+        for vuln in vulnerabilities:
+            vendor = vuln.get("vendor")
+            product = vuln.get("product")
+            version = vuln.get("version")
+            if vendor and product and version:
+                filename = f"{vendor}_{product}_{version}.json"
+                file_path = os.path.join(VULNERABILITIES_DIR, filename)
+                if not os.path.exists(file_path):
+                    with open(file_path, 'w') as file:
+                        json.dump(vuln.get("vulnerabilityData", {}), file)
+                    print(f"Vulnerability data pulled and saved to {file_path} for {vendor} {product} version {version}.")
+                else:
+                    print(f"Vulnerability file {filename} already exists locally.")
+    except Exception as e:
+        print(f"Error pulling vulnerabilities data from database: {e}")
 
 def upload_sensor_id_to_db(sensor_id, company_id, device_name):
     """Upload or update the sensor ID, device name, and company ID in the sensors collection."""
@@ -252,7 +291,8 @@ def main():
 
     try:
         while True:
-            run_sensor_script()
+            if not os.path.exists(PROGRAMS_FILE):
+                run_sensor_script()
             upload_programs(sensor_id)
             upload_vulnerabilities(sensor_id)
             print(f"Waiting {SCAN_INTERVAL} seconds before the next scan...")
