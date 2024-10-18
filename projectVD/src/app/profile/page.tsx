@@ -2,11 +2,14 @@
 
 import { useEffect, useState } from "react";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import Admin from "@/components/Admin/Admin";
+
 
 function ProfilePage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const userEmail = localStorage.getItem("userEmail");
+  
 
   const fetchUserData = async (email) => {
     try {
@@ -55,6 +58,7 @@ function ProfilePage() {
           </div>
         </div>
       </div>
+      {user?.role == "admin" && <Admin/>}
     </DefaultLayout>
   );
 }
