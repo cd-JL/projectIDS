@@ -1,6 +1,8 @@
 import http.server
+import os
 import socketserver
 import json
+from dotenv import load_dotenv
 from pymongo import MongoClient
 import bcrypt
 
@@ -24,7 +26,7 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
     
     def do_POST(self):
-        # HANDELS SIGN IN FUNCTIONALITY
+        # HANDLE SIGN IN FUNCTIONALITY
         if self.path == '/signIn':
             self.send_response(200)
             self.send_header('Access-Control-Allow-Origin', '*')
@@ -48,7 +50,7 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                 self.send_response(400)
                 response = {'message': "User doesn't exist."}
                 self.wfile.write(json.dumps(response).encode())
-                print("User don't exist.")
+                print("User doesn't exist.")
                 return
             
             if bcrypt.checkpw(user_data['password'].encode('utf-8'), user['password']):
@@ -58,11 +60,11 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
             else:
                 self.send_response(400)
                 response = {'message': "Incorrect password."}
-                print('incorrect passwrod')
+                print('incorrect password')
 
             self.wfile.write(json.dumps(response).encode())
         
-        # HANDLES SIGN UP FUNCTIONALITY
+        # HANDLE SIGN UP FUNCTIONALITY
         elif self.path == '/signUp':
             self.send_response(200)
             self.send_header('Access-Control-Allow-Origin', '*')
@@ -82,15 +84,15 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                 return
             
             if collection.find_one({"email": user_data['email']}):
-                    self.send_response(409)
-                    response = {'message': "Email already exist."}
-                    self.wfile.write(json.dumps(response).encode())
-                    print("email alrady exist")
-                    return
+                self.send_response(409)
+                response = {'message': "Email already exists."}
+                self.wfile.write(json.dumps(response).encode())
+                print("Email already exists")
+                return
+            
             try:
                 hashed_password = bcrypt.hashpw(user_data['password'].encode('utf-8'), bcrypt.gensalt())
                 user_data['password'] = hashed_password
-                
                 collection.insert_one(user_data)
                 response = {'message': 'Account created successfully.'}
                 self.send_response(200) 
@@ -107,6 +109,32 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             response = {'message': 'Not found'}
             print('api')
+            self.wfile.write(json.dumps(response).encode())
+
+    def do_GET(self):
+        # HANDLE GET USER FUNCTIONALITY
+        if self.path.startswith('/getUser'):
+            self.send_response(200)
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.send_header('Access-Control-Allow-Methods', 'GET')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+            self.end_headers()
+
+            email = self.path.split('=')[-1]  # Extract email from the query string
+            user = collection.find_one({"email": email}, {"_id": 0, "password": 0})  # Exclude password
+
+            if user:
+                self.wfile.write(json.dumps(user).encode())
+            else:
+                self.send_response(404)
+                response = {'message': "User not found."}
+                self.wfile.write(json.dumps(response).encode())
+        
+        else:
+            self.send_response(404)
+            self.end_headers()
+            response = {'message': 'Not found'}
+            print('GET request not handled')
             self.wfile.write(json.dumps(response).encode())
 
 PORT = 8000
