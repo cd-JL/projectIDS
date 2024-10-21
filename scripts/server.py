@@ -179,7 +179,34 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                 self.send_response(500)
                 response = {'message': 'Internal server error.'}
                 self.wfile.write(json.dumps(response).encode())
+        
+        # Make a user admin
+        elif self.path.startswith('/makeAsAdmin'):
 
+            email = self.path.split('=')[-1] 
+
+            db.user.update_one({'email': email}, {"$set": {'role': "admin"}})
+            self.send_response(200)
+
+        # Dismiss a user view-only
+        elif self.path.startswith('/dismissAsAdmin'):
+
+            email = self.path.split("=")[-1]
+
+            db.user.update_one({'email': email}, {"$set": {'role': "view-only"}})
+            self.send_response(200)
+
+        # Delete user
+        elif self.path.startswith('/deleteUser'):
+
+            email = self.path.split("=")[-1]
+
+            db.user.delete_one({'email': email})
+            collection.delete_one({'email': email})
+            self.send_response(200)
+
+
+        
         else:
             self.send_response(404)
             self.end_headers()

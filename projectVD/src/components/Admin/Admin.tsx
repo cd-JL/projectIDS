@@ -50,7 +50,7 @@ const Admin = () => {
                   <td className="py-2 px-4 border-b">{user.username}</td>
                   <td className="py-2 px-4 border-b">{user.email}</td>
                   <td className="py-2 px-4 border-b">{user.role}</td>
-                  <ThreeDotMenu/>
+                  <ThreeDotMenu email={user.email} username={user.username}/>
                 </tr>
               ) : null
             ))

@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
 import ClickOutside from "@/components/ClickOutside"; // Ensure you have a ClickOutside component to handle outside clicks
+import { useRouter } from "next/router";
 
-const ThreeDotMenu = () => {
+const ThreeDotMenu = ({ email, username }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -20,20 +21,32 @@ const ThreeDotMenu = () => {
     };
   }, []);
 
-  const handleMakeAdmin = () => {
-    alert("Promoted to admin");
+  const handleMakeAdmin = async () => {
+    const isConfirm = confirm(`Make ${username} as admin`)
+    if(isConfirm){
+      await fetch(`http://localhost:8000/makeAsAdmin?email=${email}`);
+    }
+    return
   };
 
-  const handleDismissAdmin = () => {
-    alert("Dismissed as admin");
+  const handleDismissAdmin = async () => {
+    const isConfirm = confirm(`Dismiss ${username} as admin`)
+    if(isConfirm){
+      await fetch(`http://localhost:8000/dismissAsAdmin?email=${email}`);
+    }
+    return
   };
 
-  const handleDeleteUser = () => {
-    alert("User deleted");
+  const handleDeleteUser = async () => {
+    const isConfirm = confirm(`Delete ${username}`)
+    if(isConfirm){
+      await fetch(`http://localhost:8000/deleteUser?email=${email}`);
+    }
+    return
   };
 
   return (
-    <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
+    <ClickOutside onClick={() => setDropdownOpen(false)} className="">
       <button
         onClick={() => setDropdownOpen((prev) => !prev)}
         className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-200"
