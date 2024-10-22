@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from "react";
@@ -19,18 +20,21 @@ const ChartExploitability: React.FC<ChartExploitabilityProps> = ({ data }) => {
     return <div>No data available.</div>; // Render a message if data is not defined, not an array, or empty
   }
 
-  // For a pie chart, the series should be the array of values (exploitability scores)
-  const series = data.map(d => d.exploitabilityScore); // Array of exploitability scores for the pie chart
+  // For a donut chart, the series should be the array of values (exploitability scores)
+  const series = data.map(d => d.exploitabilityScore); // Array of exploitability scores for the donut chart
 
-  // Defining the options for the pie chart
+  // Defining the options for the donut chart
   const options: ApexOptions = {
     chart: {
-      type: "pie", // Set the chart type to 'pie'
+      type: "donut", // Changed the chart type to 'donut'
       height: 350,
     },
     labels: data.map(d => d.deviceName), // Labels will be the device names
     title: {
-      text: "Exploitability Score by Device", // Title of the chart
+      text: "Exploitability Score by Device Percentage", // Title of the chart
+      // style: {
+      //   color: "white", // Set the title text color to white
+      // },
     },
     legend: {
       position: 'bottom', // Position of the legend
@@ -52,8 +56,7 @@ const ChartExploitability: React.FC<ChartExploitabilityProps> = ({ data }) => {
 
   return (
     <div>
-      <h3>Exploitability Score by Device</h3>
-      <ReactApexChart options={options} series={series} type="pie" height={350} />
+      <ReactApexChart options={options} series={series} type="donut" height={350} />
     </div>
   );
 };
