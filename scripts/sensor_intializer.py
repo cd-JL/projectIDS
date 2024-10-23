@@ -12,7 +12,6 @@ import re
 from collections import defaultdict
 from bson import ObjectId
 
-
 # Get the absolute path of the current script's directory
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -25,14 +24,16 @@ load_dotenv(env_path)
 uri = os.getenv("MONGODB_URI")
 
 # Constants - Ensuring all paths are relative to the script's directory
-COMPANY_NAME = "Big Corp"  # Variable for the company name
+COMPANY_NAME = "Big Corp"
 CACHE_DIR = os.path.join(script_dir, "cache")
 SENSOR_ID_FILE = os.path.join(CACHE_DIR, "sensor_id.json")
 PROGRAMS_FILE = os.path.join(CACHE_DIR, "programs.json")
 VULNERABILITIES_DIR = os.path.join(CACHE_DIR, "vulnerabilities")
+PORT_SCAN_FILE = os.path.join(CACHE_DIR, "open_ports_configs.json")
 
-# Assuming sensor.py is in the same folder as the current script
+# Assuming sensor.py and portScanner.py are in the same folder as the current script
 SENSOR_SCRIPT = os.path.join(script_dir, "sensor.py")
+PORT_SCANNER_SCRIPT = os.path.join(script_dir, "portScanner.py")
 
 SCAN_INTERVAL = 10  # Time interval in seconds between scans
 
@@ -43,27 +44,14 @@ programs_collection = db["programs"]
 vulnerabilities_collection = db["vulnerabilities"]
 sensors_collection = db["sensors"]
 companies_collection = db["companies"]
+ports_collection = db["ports"]
 
 # Ensure cache directory and vulnerabilities directory are created
 os.makedirs(CACHE_DIR, exist_ok=True)
 os.makedirs(VULNERABILITIES_DIR, exist_ok=True)
 
 # Tracks hashes of previously uploaded data to detect changes
-previous_hashes = {"programs": None, "vulnerabilities": {}}
-
-def extract_details_from_filename(filename):
-    """Extracts the vendor, product, and version from the given filename."""
-    try:
-        base_name = filename.replace('.json', '')
-        vendor, product, version = base_name.split('_', 2)
-        return vendor, product, version
-    except ValueError:
-        raise ValueError(f"Filename {filename} is not in the expected 'vendor_product_version.json' format.")
-
-def parse_version(version):
-    """Parses version strings into a list of integers for sorting."""
-    numeric_parts = re.findall(r'\d+', version)
-    return [int(part) for part in numeric_parts if part.isdigit()]
+previous_hashes = {"programs": None, "vulnerabilities": {}, "ports": None}
 
 def get_device_name():
     """Get the device name using platform module."""
@@ -111,8 +99,6 @@ def update_sensor_status(sensor_id, status):
     except Exception as e:
         print(f"Error updating sensor status: {e}")
 
-from bson import ObjectId
-
 def add_sensor_to_company(sensor_id, company_id):
     """Adds the sensor ID to the specified company's sensors array if it's not already there."""
     try:
@@ -127,7 +113,6 @@ def add_sensor_to_company(sensor_id, company_id):
             print(f"Sensor {sensor_id} was already associated with {COMPANY_NAME}.")
     except Exception as e:
         print(f"Error adding sensor to '{COMPANY_NAME}': {e}")
-
 
 def get_or_create_sensor_id():
     """Get the sensor ID from the sensor_id.json file or create one if it doesn't exist."""
@@ -145,14 +130,14 @@ def get_or_create_sensor_id():
             db_sensor_id = existing_sensor.get("sensorId")
             save_sensor_id(db_sensor_id, device_name)
             pull_programs_and_vulnerabilities(db_sensor_id)
-            add_sensor_to_company(db_sensor_id, company_id)  # Pass company ID here
+            pull_ports_from_db(db_sensor_id)
             return db_sensor_id
 
         # Generate a new sensor ID if it does not exist
         new_sensor_id = str(uuid.uuid4())
         save_sensor_id(new_sensor_id, device_name)
         upload_sensor_id_to_db(new_sensor_id, company_id, device_name)
-        add_sensor_to_company(new_sensor_id, company_id)  # Pass company ID here
+        add_sensor_to_company(new_sensor_id, company_id)
         return new_sensor_id
 
     except Exception as e:
@@ -200,6 +185,26 @@ def pull_vulnerabilities_from_db(sensor_id):
     except Exception as e:
         print(f"Error pulling vulnerabilities data from database: {e}")
 
+def pull_ports_from_db(sensor_id):
+    """Pull port scan data from the database if not present locally."""
+    if not os.path.exists(PORT_SCAN_FILE):
+        try:
+            port_data = ports_collection.find_one({"sensorId": sensor_id})
+            if port_data and "services" in port_data:
+                # Convert ObjectId to a string for JSON serialization
+                port_data["_id"] = str(port_data["_id"])
+                
+                with open(PORT_SCAN_FILE, 'w') as ports_file:
+                    json.dump(port_data, ports_file)
+                print(f"Port scan data pulled from the database and saved to {PORT_SCAN_FILE} for sensor {sensor_id}.")
+            else:
+                print(f"No port scan data found in the database for sensor {sensor_id}.")
+        except Exception as e:
+            print(f"Error pulling port scan data from database: {e}")
+    else:
+        print(f"Port scan file already exists locally: {PORT_SCAN_FILE}")
+
+
 def upload_sensor_id_to_db(sensor_id, company_id, device_name):
     """Upload or update the sensor ID, device name, and company ID in the sensors collection."""
     try:
@@ -218,7 +223,7 @@ def upload_sensor_id_to_db(sensor_id, company_id, device_name):
             print(f"Sensor with ID {sensor_id} already exists. Updated device name to {device_name}.")
     except Exception as e:
         print(f"Error uploading or updating sensor ID in the database: {e}")
-        
+
 def upload_programs(sensor_id):
     """Upload programs data to the database linked with the given sensor ID if changes are detected."""
     global previous_hashes
@@ -255,7 +260,7 @@ def upload_vulnerabilities(sensor_id):
         for filename in os.listdir(VULNERABILITIES_DIR):
             if filename.endswith(".json"):
                 try:
-                    vendor, product, version = extract_details_from_filename(filename)
+                    vendor, product, version = filename.replace('.json', '').split('_', 2)
                     file_path = os.path.join(VULNERABILITIES_DIR, filename)
                     current_hash = get_file_hash(file_path)
                     previous_hash = previous_hashes["vulnerabilities"].get(filename)
@@ -287,6 +292,40 @@ def upload_vulnerabilities(sensor_id):
     except Exception as e:
         print(f"Error uploading vulnerabilities data: {e}")
 
+def upload_ports(sensor_id):
+    """Upload port scan data to the database linked with the given sensor ID if changes are detected."""
+    global previous_hashes
+    current_hash = get_file_hash(PORT_SCAN_FILE)
+
+    if current_hash and current_hash != previous_hashes["ports"]:
+        try:
+            with open(PORT_SCAN_FILE, 'r') as ports_file:
+                ports_data = json.load(ports_file)
+                document = {
+                    "sensorId": sensor_id,
+                    "services": [
+                        {
+                            "name": name,
+                            "port": details["port"],
+                            "status": details["status"],
+                            "dangerous": details["dangerous"]
+                        } for name, details in ports_data.items() if name != "all_open_ports"
+                    ],
+                    "all_open_ports": ports_data.get("all_open_ports", [])
+                }
+                result = ports_collection.update_one(
+                    {"sensorId": sensor_id},
+                    {"$set": document},
+                    upsert=True
+                )
+                if result.upserted_id:
+                    print(f"New port scan data uploaded for sensor ID: {sensor_id}")
+                else:
+                    print(f"Port scan data updated for sensor ID: {sensor_id}")
+                previous_hashes["ports"] = current_hash
+        except Exception as e:
+            print(f"Error uploading port scan data: {e}")
+
 def run_sensor_script():
     """Runs the sensor.py script and waits for it to complete."""
     try:
@@ -297,6 +336,17 @@ def run_sensor_script():
         print(f"Error running {SENSOR_SCRIPT}: {e}")
     except FileNotFoundError:
         print(f"{SENSOR_SCRIPT} not found. Please ensure that {SENSOR_SCRIPT} is in the correct directory.")
+
+def run_port_scanner():
+    """Runs the portScanner.py script and waits for it to complete."""
+    try:
+        print(f"Running portScanner.py from path: {PORT_SCANNER_SCRIPT}")
+        subprocess.run(["python", PORT_SCANNER_SCRIPT], check=True)
+        print("portScanner.py completed successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error running {PORT_SCANNER_SCRIPT}: {e}")
+    except FileNotFoundError:
+        print(f"{PORT_SCANNER_SCRIPT} not found. Please ensure that {PORT_SCANNER_SCRIPT} is in the correct directory.")
 
 def cleanup(sensor_id):
     """Ensure sensor is marked as inactive when the program exits."""
@@ -318,6 +368,11 @@ def main():
                 run_sensor_script()
             upload_programs(sensor_id)
             upload_vulnerabilities(sensor_id)
+
+            # Run port scanner and upload data
+            run_port_scanner()
+            upload_ports(sensor_id)
+
             print(f"Waiting {SCAN_INTERVAL} seconds before the next scan...")
             time.sleep(SCAN_INTERVAL)
     except Exception as e:

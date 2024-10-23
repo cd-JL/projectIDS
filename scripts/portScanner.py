@@ -1,6 +1,10 @@
 import socket
 import json
 import ssl
+import os
+import requests  # Ensure this is installed: `pip install requests`
+import paramiko  # Ensure this is installed: `pip install paramiko`
+import psutil  # Ensure this is installed: `pip install psutil`
 
 # Full list of high-risk ports (as per common services vulnerable to attacks)
 high_risk_ports = {
@@ -47,10 +51,16 @@ high_risk_ports = {
 # List of weak ciphers to check for in TLS 1.2
 weak_ciphers = ['RC4', '3DES', 'AES-CBC']
 
+# Directory setup for saving data in cache
+script_dir = os.path.dirname(os.path.abspath(__file__))
+CACHE_DIR = os.path.join(script_dir, "cache")
+os.makedirs(CACHE_DIR, exist_ok=True)
+RESULTS_FILE = os.path.join(CACHE_DIR, "open_ports_configs.json")
+
 # Check if a port is open
 def check_port(host, port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.settimeout(1)  # Timeout after 1 second
+        s.settimeout(3)  # Timeout after 3 seconds
         try:
             s.connect((host, port))
             return True
@@ -78,70 +88,68 @@ def check_tls_version_and_ciphers(host):
                 else:
                     return f"Port 443 is open with outdated protocol {protocol} (vulnerable)"
     except (ssl.SSLError, socket.timeout):
-        return None
+        return "Port 443 is open but could not determine TLS version or cipher"
 
 # Check if HTTP redirects to HTTPS
 def check_http(host):
     try:
         response = requests.get(f'http://{host}', timeout=3)
         if response.history and response.url.startswith('https://'):
-            return "HTTP redirects to HTTPS (good)"
+            return "Port 80 is open and HTTP redirects to HTTPS (good)"
         else:
-            return "HTTP does not redirect to HTTPS (potential risk)"
+            return "Port 80 is open but HTTP does not redirect to HTTPS (potential risk)"
     except requests.RequestException:
-        return "Unable to connect to HTTP"
-
-# Check SSH for weak ciphers or outdated protocols
-def check_ssh(host):
-    try:
-        client = paramiko.SSHClient()
-        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        client.connect(host, port=22, username='invalid', password='invalid', timeout=3)
-    except paramiko.AuthenticationException:
-        # Authentication is expected to fail, but check if the server supports outdated ciphers
-        try:
-            transport = client.get_transport()
-            if transport:
-                ciphers = transport.get_security_options().ciphers
-                if 'aes128-cbc' in ciphers or '3des-cbc' in ciphers:
-                    return "SSH supports outdated ciphers (vulnerable)"
-                else:
-                    return "SSH uses secure ciphers (good)"
-        except:
-            return "SSH configuration could not be fully determined"
-    except:
-        return "Unable to connect to SSH"
-
-# Check SMB configuration (e.g., if SMBv1 is enabled)
-def check_smb(host):
-    # SMB checks would require third-party tools or library integration (e.g., impacket)
-    return "SMB checks not implemented in this example"
+        return "Port 80 is open but unable to determine if HTTP redirects"
 
 # General check for all ports
 def check_ports_and_configs(host='127.0.0.1'):
     results = {}
+    all_open_ports = []
 
     # Check high-risk ports
     for service, port in high_risk_ports.items():
+        print(f"Checking {service} on port {port}...")
         if check_port(host, port):
             if service == 'HTTP':
-                results['HTTP'] = check_http(host)
+                results['HTTP'] = {
+                    'port': port,
+                    'status': check_http(host),
+                    'dangerous': True
+                }
             elif service == 'HTTPS':
-                results['HTTPS'] = check_tls_version_and_ciphers(host)
-            elif service == 'SSH':
-                results['SSH'] = check_ssh(host)
+                results['HTTPS'] = {
+                    'port': port,
+                    'status': check_tls_version_and_ciphers(host),
+                    'dangerous': False
+                }
             else:
-                results[service] = f"Port {port} is open (basic check, configuration not implemented)"
+                results[service] = {
+                    'port': port,
+                    'status': f"Port {port} is open (basic check, configuration not implemented)",
+                    'dangerous': True
+                }
+        else:
+            results[service] = {
+                'port': port,
+                'status': f"Port {port} is closed",
+                'dangerous': False
+            }
     
+    # Get all open ports on the computer
+    for conn in psutil.net_connections():
+        if conn.status == 'LISTEN' and conn.laddr.port not in all_open_ports:
+            all_open_ports.append(conn.laddr.port)
+
+    results['all_open_ports'] = all_open_ports
     return results
 
 # Save the results to a JSON file
-def save_to_json(data, filename='open_ports_configs.json'):
+def save_to_json(data, filename=RESULTS_FILE):
     with open(filename, 'w') as json_file:
         json.dump(data, json_file, indent=4)
 
 if __name__ == "__main__":
-    host_to_check = '127.0.0.1'  # Host computer (localhost)
+    host_to_check = '127.0.0.1'  # Change to local IP if needed
     open_ports = check_ports_and_configs(host_to_check)
     
     if open_ports:

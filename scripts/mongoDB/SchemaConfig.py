@@ -44,6 +44,28 @@ sensor_schema = {
     }
 }
 
+port_details_schema = {
+    "sensor_id": {
+        "type": "string",
+        "description": "UUID for the sensor, must be in the format 23c64bbe-1ecc-4401-a722-b9bbfe262a8a"
+    },
+    "services": [
+        {
+            "name": "string",
+            "port": "int",
+            "status": "string",
+            "dangerous": "bool"
+        }
+    ],
+    "all_open_ports": [
+        {
+            "type": "int",
+            "minimum": 0,
+            "maximum": 65535
+        }
+    ]
+}
+
 vulnerability_schema = {
     "bsonType": "object",
     "required": ["sensorId", "cve"],
