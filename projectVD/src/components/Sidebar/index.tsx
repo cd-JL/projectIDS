@@ -46,9 +46,8 @@ const menuGroups = [
             />
           </svg>
         ),
-        label: "Dashboard",
-        route: "#",
-        children: [{ label: "About Us", route: "/" }],
+        label: "Home",
+        route: "/",
       },
       {
         icon: (
@@ -319,6 +318,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     "Sensor Programs",
     "Sensor Vulnerabilities",
     "Settings",
+    "Chart",
   ];
 
   return (

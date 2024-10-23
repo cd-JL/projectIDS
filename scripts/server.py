@@ -205,8 +205,18 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
             collection.delete_one({'email': email})
             self.send_response(200)
 
+        elif self.path.startswith('/companies'):
+            self.send_response(200)
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.send_header('Access-Control-Allow-Methods', 'GET')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+            self.end_headers()
+            companies = list(db.companies.find({}, {"_id": 0, "name": 1}))
 
-        
+            if companies:
+                self.wfile.write(json.dumps(companies).encode())
+
+
         else:
             self.send_response(404)
             self.end_headers()
