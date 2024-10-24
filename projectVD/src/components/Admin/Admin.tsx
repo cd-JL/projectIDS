@@ -5,6 +5,7 @@ import ThreeDotMenu from './ThreeDotMenu';
 const Admin = () => {
   const [users, setUsers] = useState([]);
   const userEmail = localStorage.getItem("userEmail");
+  const indexNumber = 1;
 
 
   const fetchUsers = async () => {
@@ -37,19 +38,19 @@ const Admin = () => {
             <th className="py-2 px-4 border-b">No.</th>
             <th className="py-2 px-4 border-b">Username</th>
             <th className="py-2 px-4 border-b">Email</th>
-            <th className="py-2 px-4 border-b">Role</th>
+            <th className="py-2 px-4 border-b">Status</th>
             <th className="py-2 px-4 border-b">Edit</th>
           </tr>
         </thead>
         <tbody>
           {Array.isArray(users) ? (
             users.map((user, index) => (
-              user.email !== userEmail ? (
+              user.email !== userEmail && user.role !== 'owner'? (
                 <tr key={index} className="hover:bg-gray-50">
-                  <td className="py-2 px-4 border-b">{index + 1}</td>
+                  <td className="py-2 px-4 border-b">{index}</td>
                   <td className="py-2 px-4 border-b">{user.username}</td>
                   <td className="py-2 px-4 border-b">{user.email}</td>
-                  <td className="py-2 px-4 border-b">{user.role}</td>
+                  <td className="py-2 px-4 border-b">{user.status}</td>
                   <ThreeDotMenu email={user.email} username={user.username}/>
                 </tr>
               ) : null
