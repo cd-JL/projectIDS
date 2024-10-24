@@ -26,7 +26,7 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
         self.send_header('Access-Control-Allow-Headers', 'Content-Type')
         self.end_headers()
-    
+
     def do_POST(self):
         # HANDLE SIGN IN FUNCTIONALITY
         if self.path == '/signIn':
@@ -46,7 +46,7 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                 response = {'message': 'Invalid JSON format.'}
                 self.wfile.write(json.dumps(response).encode())
                 return
-
+        
             user = collection.find_one({"email": user_data['email']})
             if not user:
                 self.send_response(400)
@@ -55,14 +55,35 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                 print("User doesn't exist.")
                 return
             
-            if bcrypt.checkpw(user_data['password'].encode('utf-8'), user['password']):
-                self.send_response(200)
-                response = {'messagee': "Signed In"}
-                print('signed in')
+            
+
+            # if bcrypt.checkpw(user_data['password'].encode('utf-8'), user['password']):
+            #     self.send_response(200)
+            #     response = {'messagee': "Signed In"}
+            #     print('signed in')
+            # else:
+            #     self.send_response(400)
+            #     response = {'message': "Incorrect password."}
+            #     print('Incorrect password.')
+
+
+            if user['status'] == 'active':
+                if bcrypt.checkpw(user_data['password'].encode('utf-8'), user['password']):
+                    self.send_response(200)
+                    response = {'messagee': "Signed In"}
+                    print('signed in')
+                else:
+                    self.send_response(400)
+                    response = {'message': "Incorrect password."}
+                    print('Incorrect password.')
+            
             else:
-                self.send_response(400)
-                response = {'message': "Incorrect password."}
-                print('incorrect password')
+                self.send_response(403)
+                response = {'message': "This account is deactivated."}
+
+
+
+
 
             self.wfile.write(json.dumps(response).encode())
         
@@ -89,26 +110,36 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                 self.send_response(409)
                 response = {'message': "Email already exists."}
                 self.wfile.write(json.dumps(response).encode())
-                print("Email already exists")
+                print("Email already exists.")
                 return
             
             try:
                 hashed_password = bcrypt.hashpw(user_data['password'].encode('utf-8'), bcrypt.gensalt())
                 user_data['password'] = hashed_password
+                # user_data['status'] = 'active'
                 collection.insert_one(user_data)
                 db.user.insert_one({
                     "username": user_data['name'],
                     "email": user_data['email'],
                     "role": "view-only",
-                    # "companyId": bson.ObjectId(user_data['companyId'])
+                    "company": user_data['company'],
+                    "status": "active"
                 })
-                response = {'message': 'Account created successfully.'}
-                self.send_response(200) 
+                user_doc = db.user.find_one({'email': user_data['email']}, {'_id': 1})
+                response = {'message': f'User registered successfully.'}
+
+                db.companies.update_one(
+                    {'name': user_data['company']},
+                    {
+                        '$push': {'users': user_doc['_id']}
+                    }
+                )
 
             except Exception as e:
                 print(f"Error inserting into MongoDB: {e}")
                 self.send_response(500) 
                 response = {'message': str(e)}
+
 
             self.wfile.write(json.dumps(response).encode())
 
@@ -116,7 +147,7 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
             self.send_response(404)
             self.end_headers()
             response = {'message': 'Not found'}
-            print('api')
+            print('API endpoint not found.')
             self.wfile.write(json.dumps(response).encode())
 
     def do_GET(self):
@@ -139,7 +170,6 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                 self.wfile.write(json.dumps(response).encode())
 
         elif self.path.startswith('/Users'):
-            print("USERS FOUND3 - Processing request")  # Step 1: Debug entry point
             self.send_response(200)
             self.send_header('Access-Control-Allow-Origin', '*')
             self.send_header('Access-Control-Allow-Methods', 'GET')
@@ -147,63 +177,51 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
 
             try:
-                # Step 2: Debugging before database query
-                print("Attempting to query the database for users...")
+                # status_doc = list(collection.find({}, {"status": 1}))
+                users = list(db.user.find({}, {"_id": 0}))
 
-                # Fetch users, excluding the _id field
-                # Fetch all documents from the collection without any projection to verify data
-                users = list(db.user.find())
-                print(users)  # Output fetched users
-
-                # Step 3: Debugging after fetching from DB
-                print(f"Query successful. Users fetched: {users}")
+                # for i in range(len(users)):
+                #     if i < len(status_doc):
+                #         users[i]['status'] = status_doc[i]['status']
+                #     i+=1
 
                 if users:
-                    # Convert the user data to JSON format and send it in the response
-                    json_data = dumps(users)  # Convert BSON to JSON
-
-                    # Step 4: Debugging JSON conversion
-                    print(f"Users data after JSON conversion: {json_data}")
-
+                    json_data = dumps(users)
                     self.wfile.write(json_data.encode())
-                    print("USERS FOUND1 - Data sent to client")
+                    print("User data sent to client.")
                 else:
-                    # Step 5: Debugging when no users found
-                    print("No users found in the database.")
                     self.send_response(404)
                     response = {'message': "Users not found."}
                     self.wfile.write(json.dumps(response).encode())
             except Exception as e:
-                # Step 6: Debugging in case of an exception
-                print(f"Error fetching users: {str(e)}")  # Log the actual error
+                print(f"Error fetching users: {str(e)}")
                 self.send_response(500)
                 response = {'message': 'Internal server error.'}
                 self.wfile.write(json.dumps(response).encode())
         
-        # Make a user admin
         elif self.path.startswith('/makeAsAdmin'):
-
             email = self.path.split('=')[-1] 
-
-            db.user.update_one({'email': email}, {"$set": {'role': "admin"}})
+            db.user.update_one({'email': email}, {"$set": {'status': "active"}})
+            collection.update_one({'email': email}, {"$set": {'status': "active"}})
             self.send_response(200)
+            response = {'message': 'User role updated to admin.'}
+            self.wfile.write(json.dumps(response).encode())
 
-        # Dismiss a user view-only
         elif self.path.startswith('/dismissAsAdmin'):
-
             email = self.path.split("=")[-1]
-
-            db.user.update_one({'email': email}, {"$set": {'role': "view-only"}})
+            db.user.update_one({'email': email}, {"$set": {'status': "deactive"}})
+            collection.update_one({'email': email}, {"$set": {'status': "deactive"}})
             self.send_response(200)
+            response = {'message': 'User role updated to view-only.'}
+            self.wfile.write(json.dumps(response).encode())
 
-        # Delete user
         elif self.path.startswith('/deleteUser'):
-
             email = self.path.split("=")[-1]
-
             db.user.delete_one({'email': email})
             collection.delete_one({'email': email})
             self.send_response(200)
+            response = {'message': 'User deleted successfully.'}
+            self.wfile.write(json.dumps(response).encode())
 
         elif self.path.startswith('/companies'):
             self.send_response(200)
@@ -215,7 +233,10 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
 
             if companies:
                 self.wfile.write(json.dumps(companies).encode())
-
+            else:
+                self.send_response(404)
+                response = {'message': "No companies found."}
+                self.wfile.write(json.dumps(response).encode())
 
         else:
             self.send_response(404)

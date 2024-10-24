@@ -2,11 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import Link from "next/link";
 
 const SignUp: React.FC = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [companyId, setCompanyId] = useState("");
+  const [company, setCompany] = useState("");
   const [password, setPassword] = useState("");
   const [reEnterPassword, setReEnterPassword] = useState("");
   const [error, setError] = useState("");
@@ -23,6 +24,7 @@ const SignUp: React.FC = () => {
         }
         const data = await response.json();
         setCompanies(data);
+        console.log(data)
       } catch (error) {
         console.error("Error fetching companies:", error);
         setError("Failed to load companies");
@@ -37,7 +39,7 @@ const SignUp: React.FC = () => {
     setError("");
     setSuccessMessage("");
 
-    if (!name || !email || !password || !reEnterPassword || !companyId) {
+    if (!name || !email || !password || !reEnterPassword || !company) {
       setError("All fields are required.");
       return;
     }
@@ -58,7 +60,9 @@ const SignUp: React.FC = () => {
       return;
     }
 
-    const userData = { name, email, password, companyId };
+    const status = 'active'
+
+    const userData = { name, email, password, company, status };
 
     try {
       const response = await fetch("http://localhost:8000/signUp", {
@@ -77,7 +81,7 @@ const SignUp: React.FC = () => {
       setSuccessMessage(result.message);
       setName("");
       setEmail("");
-      setCompanyId("");
+      setCompany("");
       setPassword("");
       setReEnterPassword("");
     } catch (err: any) {
@@ -119,15 +123,15 @@ const SignUp: React.FC = () => {
                 </label>
                 <div className="relative">
                   <select
-                    value={companyId}
-                    onChange={(e) => setCompanyId(e.target.value)}
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
                     className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   >
                     <option value="" disabled>
                       Select your company
                     </option>
                     {companies.map((company) => (
-                      <option key={company._id} value={company._id}>
+                      <option key={company.name} value={company.name}>
                         {company.name}
                       </option>
                     ))}
@@ -186,6 +190,14 @@ const SignUp: React.FC = () => {
               >
                 Sign Up
               </button>
+              <div className="mt-6 text-center">
+                <p>
+                  Already have an account?{" "}
+                  <Link href="/auth/signin" className="text-primary">
+                    Sign In
+                  </Link>
+                </p>
+              </div>
             </form>
           </div>
         </div>

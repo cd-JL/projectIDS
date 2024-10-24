@@ -25,6 +25,7 @@ const ThreeDotMenu = ({ email, username }) => {
     const isConfirm = confirm(`Make ${username} as admin`)
     if(isConfirm){
       await fetch(`http://localhost:8000/makeAsAdmin?email=${email}`);
+      // window.location.href = '/profile'
     }
     return
   };
@@ -33,6 +34,7 @@ const ThreeDotMenu = ({ email, username }) => {
     const isConfirm = confirm(`Dismiss ${username} as admin`)
     if(isConfirm){
       await fetch(`http://localhost:8000/dismissAsAdmin?email=${email}`);
+      // window.location.href = '/profile'
     }
     return
   };
@@ -41,6 +43,7 @@ const ThreeDotMenu = ({ email, username }) => {
     const isConfirm = confirm(`Delete ${username}`)
     if(isConfirm){
       await fetch(`http://localhost:8000/deleteUser?email=${email}`);
+      // window.location.href = '/profile'
     }
     return
   };
@@ -75,7 +78,7 @@ const ThreeDotMenu = ({ email, username }) => {
                 onClick={handleMakeAdmin}
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               >
-                Make as admin
+                Activate User
               </button>
             </li>
             <li>
@@ -83,7 +86,7 @@ const ThreeDotMenu = ({ email, username }) => {
                 onClick={handleDismissAdmin}
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               >
-                Dismiss as admin
+                Deactivate User
               </button>
             </li>
             <li>
@@ -91,7 +94,7 @@ const ThreeDotMenu = ({ email, username }) => {
                 onClick={handleDeleteUser}
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               >
-                Delete user
+                Delete User
               </button>
             </li>
           </ul>
