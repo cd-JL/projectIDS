@@ -54,17 +54,28 @@ const DropdownUser = () => {
         </span>
 
         <span className="h-12 w-12 rounded-full">
-          <img
+        {user?.role == "admin" && 
+            <img
             width={112}
             height={112}
-            src={"/images/user/user-01.png"}
-            // src="https://vignette.wikia.nocookie.net/naruto/images/8/8d/UchihaItachi.png/revision/latest?cb=20180420021356&path-prefix=pt-br"
+            src={"/images/user/admin.png"}
             style={{
               width: "auto",
               height: "auto",
             }}
             alt="User"
-          />
+          />}
+            {user?.role == "view-only" && 
+            <img
+            width={112}
+            height={112}
+            src={"/images/user/user.png"}
+            style={{
+              width: "auto",
+              height: "auto",
+            }}
+            alt="User"
+          />}
         </span>
 
         <svg
