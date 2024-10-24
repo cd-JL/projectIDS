@@ -46,7 +46,7 @@ const Admin = () => {
             users.map((user, index) => (
               user.email !== userEmail ? (
                 <tr key={index} className="hover:bg-gray-50">
-                  <td className="py-2 px-4 border-b">{index + 1}</td>
+                  <td className="py-2 px-4 border-b">{index}</td>
                   <td className="py-2 px-4 border-b">{user.username}</td>
                   <td className="py-2 px-4 border-b">{user.email}</td>
                   <td className="py-2 px-4 border-b">{user.role}</td>
