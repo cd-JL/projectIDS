@@ -22,7 +22,7 @@ const ThreeDotMenu = ({ email, username }) => {
   }, []);
 
   const handleMakeAdmin = async () => {
-    const isConfirm = confirm(`Make ${username} as admin`)
+    const isConfirm = confirm(`Make ${username} active.`)
     if(isConfirm){
       await fetch(`http://localhost:8000/makeAsAdmin?email=${email}`);
       // window.location.href = '/profile'
@@ -31,7 +31,7 @@ const ThreeDotMenu = ({ email, username }) => {
   };
 
   const handleDismissAdmin = async () => {
-    const isConfirm = confirm(`Dismiss ${username} as admin`)
+    const isConfirm = confirm(`Make ${username} deactive.`)
     if(isConfirm){
       await fetch(`http://localhost:8000/dismissAsAdmin?email=${email}`);
       // window.location.href = '/profile'
