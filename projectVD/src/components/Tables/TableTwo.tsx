@@ -1,4 +1,6 @@
-import { FC, useEffect, useState } from "react";
+// TableTwo.tsx
+
+import React, { FC, useState } from 'react';
 
 interface Program {
   Name: string;
@@ -6,7 +8,7 @@ interface Program {
 }
 
 interface Sensor {
-  deviceName: string; // Updated to use deviceName instead of sensorId
+  deviceName: string;
 }
 
 interface TableTwoProps {
@@ -15,47 +17,50 @@ interface TableTwoProps {
 }
 
 const TableTwo: FC<TableTwoProps> = ({ sensor, programs }) => {
-  const [programsVisible, setProgramsVisible] = useState<boolean>(true);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
-    console.log("Sensor Data:", sensor);
-    console.log("Filtered Programs in TableTwo:", programs); // Verify that the programs are being passed correctly
-  }, [sensor, programs]);
+  const filteredPrograms = programs.filter((program) =>
+    program.Name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    program.Version.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
-    <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-      <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
-        Device Name: {sensor ? sensor.deviceName : "Loading..."} {/* Changed to show deviceName */}
-      </h4>
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+      <h2 className="text-2xl font-semibold mb-4 dark:text-white">
+        Device Name: {sensor.deviceName}
+      </h2>
 
-      {/* Toggle Button to Show/Hide Programs */}
-      <button
-        onClick={() => setProgramsVisible(!programsVisible)}
-        className="text-blue-500 underline mb-4"
-      >
-        {programsVisible ? "Hide Programs" : "Show Programs"}
-      </button>
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Search Programs..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full p-2 rounded border dark:bg-gray-700 dark:text-white"
+        />
+      </div>
 
-      {/* Programs List */}
-      {programsVisible && programs && programs.length > 0 ? (
-        <div className="flex flex-col gap-4">
-          {programs.map((program, index) => (
+      {filteredPrograms.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {filteredPrograms.map((program, index) => (
             <div
               key={index}
-              className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-4 mb-4"
+              className="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg shadow"
             >
-              <h6 className="text-md font-bold text-gray-700 dark:text-gray-300">
+              <h3 className="text-lg font-medium dark:text-white">
                 {program.Name}
-              </h6>
-              <p className="mt-2 text-sm">
-                <strong>Version:</strong> {program.Version}
+              </h3>
+              <p className="text-gray-700 dark:text-gray-300">
+                Version: {program.Version}
               </p>
             </div>
           ))}
         </div>
-      ) : programsVisible ? (
-        <p>No programs available for this device</p>
-      ) : null}
+      ) : (
+        <p className="text-gray-700 dark:text-gray-300">
+          No programs match your search.
+        </p>
+      )}
     </div>
   );
 };

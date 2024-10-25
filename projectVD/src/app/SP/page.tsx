@@ -14,7 +14,7 @@ const fetchSensorData = async (id: string) => {
     }
 
     const data = await response.json();
-    console.log("Sensors Data (Client-Side):", data);
+    //console.log("Sensors Data (Client-Side):", data);
     return data;
   } catch (error) {
     console.error("Error fetching sensor data:", error);

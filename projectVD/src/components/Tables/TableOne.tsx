@@ -1,37 +1,37 @@
-import { FC, useEffect, useState } from 'react';
+// TableOne.tsx
+
+import React, { FC, useState } from 'react';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
+
+interface Vulnerability {
+  cve?: {
+    id?: string;
+    sourceIdentifier?: string;
+    descriptions?: Array<{ lang: string; value: string }>;
+    references?: Array<{ url: string; source: string }>;
+    metrics?: {
+      cvssMetricV2?: Array<{
+        cvssData?: {
+          baseScore?: number;
+        };
+        baseSeverity?: string;
+        exploitabilityScore?: number;
+        impactScore?: number;
+      }>;
+      cvssMetricV31?: Array<{
+        cvssData?: {
+          baseScore?: number;
+        };
+        baseSeverity?: string;
+        exploitabilityScore?: number;
+        impactScore?: number;
+      }>;
+    };
+  };
+}
 
 interface VulnerabilityData {
-  resultsPerPage: number;
-  startIndex: number;
-  totalResults: number;
-  format: string;
-  version: string;
-  vulnerabilities: Array<{
-    cve?: {
-      id?: string;
-      sourceIdentifier?: string;
-      descriptions?: Array<{ lang: string; value: string }>;
-      references?: Array<{ url: string; source: string }>;
-      metrics?: {
-        cvssMetricV2?: Array<{
-          cvssData?: {
-            baseScore?: number;
-            baseSeverity?: string;
-            exploitabilityScore?: number;
-            impactScore?: number;
-          };
-        }>;
-        cvssMetricV31?: Array<{
-          cvssData?: {
-            baseScore?: number;
-            baseSeverity?: string;
-            exploitabilityScore?: number;
-            impactScore?: number;
-          };
-        }>;
-      };
-    };
-  }>;
+  vulnerabilities: Vulnerability[];
 }
 
 interface Sensor {
@@ -50,206 +50,231 @@ interface TableOneProps {
 }
 
 const TableOne: FC<TableOneProps> = ({ sensor }) => {
+  const [cvesVisible, setCvesVisible] = useState<{ [key: number]: boolean }>({});
   const [referencesVisible, setReferencesVisible] = useState<{ [key: string]: boolean }>({});
-  const [cvesVisible, setCvesVisible] = useState<{ [key: string]: boolean }>({});
-  const [sortOrder, setSortOrder] = useState<'highest' | 'lowest'>('highest');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
-  useEffect(() => {
-    console.log("Sensor Data:", sensor);
-  }, [sensor]);
-
-  const getHighestBaseScore = (vulnerability: VulnerabilityData['vulnerabilities'][0]) => {
+  const getHighestBaseScore = (vulnerability: Vulnerability) => {
     const scoreV2 = vulnerability?.cve?.metrics?.cvssMetricV2?.[0]?.cvssData?.baseScore || 0;
     const scoreV3 = vulnerability?.cve?.metrics?.cvssMetricV31?.[0]?.cvssData?.baseScore || 0;
     return Math.max(scoreV2, scoreV3);
   };
 
-  const getSortedVulnerabilities = (vulnerabilities: VulnerabilityData['vulnerabilities']) => {
+  const getSeverityColor = (score: number) => {
+    if (score >= 9) return 'bg-red-600';
+    if (score >= 7) return 'bg-orange-500';
+    if (score >= 4) return 'bg-yellow-500';
+    return 'bg-green-500';
+  };
+
+  const sortedVulnerabilities = (vulnerabilities: Vulnerability[]) => {
     return vulnerabilities.slice().sort((a, b) => {
       const scoreA = getHighestBaseScore(a);
       const scoreB = getHighestBaseScore(b);
-      return sortOrder === 'highest' ? scoreB - scoreA : scoreA - scoreB;
+      return sortOrder === 'desc' ? scoreB - scoreA : scoreA - scoreB;
     });
   };
 
-  const calculateGradient = (score: number) => {
-    if (score <= 5) {
-      return `linear-gradient(135deg, rgba(0, 128, 0, 0.6) ${50 - score * 10}%, rgba(255, 165, 0, 0.6) ${score * 10}%)`;
-    } else {
-      return `linear-gradient(135deg, rgba(255, 165, 0, 0.6) ${(10 - score) * 10}%, rgba(255, 0, 0, 0.6) ${(score - 5) * 20}%)`;
-    }
-  };
-
   return (
-    <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-      <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+      <h2 className="text-2xl font-semibold mb-4 dark:text-white">
         Sensor ID: {sensor.sensorId}
-      </h4>
+      </h2>
 
-      <div className="flex flex-col">
-        <div className="mb-4">
-          <label htmlFor="sortOrder" className="mr-3 font-semibold">
-            Sort by Severity:
-          </label>
-          <select
-            id="sortOrder"
-            value={sortOrder}
-            onChange={(e) => setSortOrder(e.target.value as 'highest' | 'lowest')}
-            className="p-2 border border-stroke dark:border-strokedark rounded-md"
-          >
-            <option value="highest">Highest to Lowest</option>
-            <option value="lowest">Lowest to Highest</option>
-          </select>
-        </div>
+      {/* Sorting Controls */}
+      <div className="mb-4">
+        <label htmlFor="sortOrder" className="mr-2 dark:text-white">
+          Sort by Severity:
+        </label>
+        <select
+          id="sortOrder"
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value as 'asc' | 'desc')}
+          className="p-2 border rounded dark:bg-gray-700 dark:text-white"
+        >
+          <option value="desc">Highest to Lowest</option>
+          <option value="asc">Lowest to Highest</option>
+        </select>
+      </div>
 
-        {sensor.vulnerabilities.length > 0 ? (
-          sensor.vulnerabilities.map((vulnGroup, groupIndex) => {
-            const vulnerabilities = vulnGroup.vulnerabilityData.vulnerabilities || [];
-            const averageScore = vulnerabilities.length > 0
-              ? Math.max(...vulnerabilities.map(getHighestBaseScore))
-              : 0;
-            const gradientColor = calculateGradient(averageScore);
+      {sensor.vulnerabilities.length > 0 ? (
+        sensor.vulnerabilities.map((vulnGroup, groupIndex) => {
+          const vulnerabilities = vulnGroup.vulnerabilityData.vulnerabilities || [];
 
-            return (
-              <div key={groupIndex} className="mt-5">
-                <div className="flex justify-between items-center">
-                  <h5 className="font-semibold text-lg">
-                    {vulnGroup.vendor} {vulnGroup.product} {vulnGroup.version}
-                  </h5>
-                  <button
-                    onClick={() =>
-                      setCvesVisible((prev) => ({
-                        ...prev,
-                        [groupIndex]: !prev[groupIndex],
-                      }))
-                    }
-                    className="text-blue-500 underline"
-                  >
-                    {cvesVisible[groupIndex] ? "Hide CVEs" : "Show CVEs"}
-                  </button>
+          // Calculate total severity score and number of vulnerabilities
+          const totalSeverityScore = vulnerabilities.reduce((total, vuln) => {
+            return total + getHighestBaseScore(vuln);
+          }, 0);
+
+          const numOfVulnerabilities = vulnerabilities.length;
+
+          // Sort vulnerabilities based on severity
+          const sortedVulns = sortedVulnerabilities(vulnerabilities);
+
+          return (
+            <div key={groupIndex} className="mb-6">
+              <button
+                onClick={() =>
+                  setCvesVisible((prev) => ({
+                    ...prev,
+                    [groupIndex]: !prev[groupIndex],
+                  }))
+                }
+                className="w-full flex justify-between items-center p-4 bg-gray-100 dark:bg-gray-700 rounded-lg"
+              >
+                <span className="text-lg font-medium dark:text-white">
+                  {vulnGroup.vendor} {vulnGroup.product} {vulnGroup.version}
+                </span>
+                <div className="flex items-center space-x-4">
+                  <span className="text-sm dark:text-white">
+                    Total Severity Score: {totalSeverityScore.toFixed(1)}
+                  </span>
+                  <span className="text-sm dark:text-white">
+                    Vulnerabilities: {numOfVulnerabilities}
+                  </span>
+                  {cvesVisible[groupIndex] ? (
+                    <ChevronUpIcon className="w-5 h-5 dark:text-white" />
+                  ) : (
+                    <ChevronDownIcon className="w-5 h-5 dark:text-white" />
+                  )}
                 </div>
-                {cvesVisible[groupIndex] && (
-                  <div
-                    className="rounded-lg p-4 mt-3 shadow-md text-black dark:text-white"
-                    style={{ background: gradientColor }}
-                  >
-                    {vulnerabilities.length > 0 ? (
-                      getSortedVulnerabilities(vulnerabilities).map((vulnerability, vIndex) => {
-                        const cvssMetricsV2 = vulnerability.cve?.metrics?.cvssMetricV2?.[0]?.cvssData;
-                        const cvssMetricsV31 = vulnerability.cve?.metrics?.cvssMetricV31?.[0]?.cvssData;
+              </button>
+              {cvesVisible[groupIndex] && (
+                <div className="mt-4">
+                  {sortedVulns.length > 0 ? (
+                    sortedVulns.map((vulnerability, vIndex) => {
+                      const score = getHighestBaseScore(vulnerability);
+                      const severityColor = getSeverityColor(score);
 
-                        return (
-                          <div
-                            key={`${groupIndex}-vuln-${vIndex}`}
-                            className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-4 mb-4"
-                          >
-                            <h6 className="text-md font-bold text-gray-700 dark:text-gray-300">
-                              {vulnerability.cve?.id || "No CVE ID Available"}
-                            </h6>
-                            <p className="mt-2 text-sm">
-                              <strong>Source Identifier:</strong> {vulnerability.cve?.sourceIdentifier ?? "N/A"}
+                      const cvssMetricsV2 = vulnerability.cve?.metrics?.cvssMetricV2?.[0];
+                      const cvssMetricsV31 = vulnerability.cve?.metrics?.cvssMetricV31?.[0];
+
+                      const referenceKey = `${groupIndex}-${vIndex}`;
+
+                      return (
+                        <div
+                          key={vIndex}
+                          className={`p-4 mb-4 rounded-lg ${severityColor} text-white`}
+                        >
+                          {/* Improve text readability */}
+                          <div className="text-black">
+                            <h3 className="text-xl font-semibold">
+                              {vulnerability.cve?.id || 'No CVE ID Available'}
+                            </h3>
+                            <p className="mt-2">
+                              <strong>Source Identifier:</strong>{' '}
+                              {vulnerability.cve?.sourceIdentifier ?? 'N/A'}
                             </p>
-
-                            <div className="mt-2 text-sm">
-                              <h6 className="font-semibold">Descriptions:</h6>
-                              {vulnerability.cve?.descriptions?.length > 0 ? (
-                                vulnerability.cve.descriptions.map((desc, descIndex) => (
-                                  <p key={`${vIndex}-desc-${descIndex}`}>
-                                    {desc.lang === "en" && desc.value}
-                                  </p>
-                                ))
-                              ) : (
-                                <p>No descriptions available</p>
-                              )}
+                            <div className="mt-2">
+                              <strong>Description:</strong>{' '}
+                              {vulnerability.cve?.descriptions?.find(
+                                (desc) => desc.lang === 'en'
+                              )?.value || 'No description available'}
                             </div>
+                            {/* CVSS Metrics V2 */}
+                            {cvssMetricsV2 && (
+                              <div className="mt-2">
+                                <strong>CVSS Metrics V2:</strong>
+                                <ul className="list-disc pl-5">
+                                  <li>
+                                    <strong>Base Score:</strong>{' '}
+                                    {cvssMetricsV2.cvssData?.baseScore ?? 'N/A'}
+                                  </li>
+                                  <li>
+                                    <strong>Base Severity:</strong>{' '}
+                                    {cvssMetricsV2.baseSeverity ?? 'N/A'}
+                                  </li>
+                                  <li>
+                                    <strong>Exploitability Score:</strong>{' '}
+                                    {cvssMetricsV2.exploitabilityScore ?? 'N/A'}
+                                  </li>
+                                  <li>
+                                    <strong>Impact Score:</strong>{' '}
+                                    {cvssMetricsV2.impactScore ?? 'N/A'}
+                                  </li>
+                                </ul>
+                              </div>
+                            )}
+                          {/* CVSS Metrics V3.1 */}
+                            {cvssMetricsV31 && (
+                              <div className="mt-2">
+                                <strong>CVSS Metrics V3.1:</strong>
+                                <ul className="list-disc pl-5">
+                                  <li>
+                                    <strong>Base Score:</strong>{' '}
+                                    {cvssMetricsV31.cvssData?.baseScore ?? 'N/A'}
+                                  </li>
+                                  <li>
+                                    <strong>Base Severity:</strong>{' '}
+                                    {cvssMetricsV31.cvssData?.baseSeverity ?? 'N/A'}
+                                  </li>
+                                  <li>
+                                    <strong>Exploitability Score:</strong>{' '}
+                                    {cvssMetricsV31.cvssData?.exploitabilityScore ?? 'N/A'}
+                                  </li>
+                                  <li>
+                                    <strong>Impact Score:</strong>{' '}
+                                    {cvssMetricsV31.cvssData?.impactScore ?? 'N/A'}
+                                  </li>
+                                </ul>
+                              </div>
+                              )}
 
-                            <div className="mt-2 text-sm">
-                              <h6 className="font-semibold">
-                                References:{" "}
-                                <button
-                                  onClick={() =>
-                                    setReferencesVisible((prev) => ({
-                                      ...prev,
-                                      [`${groupIndex}-${vIndex}`]: !prev[`${groupIndex}-${vIndex}`],
-                                    }))
-                                  }
-                                  className="text-blue-500 underline"
-                                >
-                                  {referencesVisible[`${groupIndex}-${vIndex}`] ? "Hide" : "Show"}
-                                </button>
-                              </h6>
-                              {referencesVisible[`${groupIndex}-${vIndex}`] &&
+                            {/* References with Dropdown */}
+                            <div className="mt-2">
+                              <button
+                                onClick={() =>
+                                  setReferencesVisible((prev) => ({
+                                    ...prev,
+                                    [referenceKey]: !prev[referenceKey],
+                                  }))
+                                }
+                                className="text-blue-500 underline"
+                              >
+                                {referencesVisible[referenceKey] ? 'Hide References' : 'Show References'}
+                              </button>
+                              {referencesVisible[referenceKey] &&
                                 (vulnerability.cve?.references?.length > 0 ? (
-                                  vulnerability.cve.references.map((ref, refIndex) => (
-                                    <p key={`${vIndex}-ref-${refIndex}`} className="text-blue-400 underline">
-                                      <a href={ref.url} target="_blank" rel="noopener noreferrer">
-                                        {ref.source ?? ref.url}
-                                      </a>
-                                    </p>
-                                  ))
+                                  <div className="mt-2">
+                                    <strong>References:</strong>
+                                    <ul className="list-disc pl-5">
+                                      {vulnerability.cve.references.map((ref, refIndex) => (
+                                        <li key={refIndex}>
+                                          <a
+                                            href={ref.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="underline text-blue-600"
+                                          >
+                                            {ref.source || ref.url}
+                                          </a>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
                                 ) : (
                                   <p>No references available</p>
                                 ))}
                             </div>
-
-                            <div className="mt-2 text-sm">
-                  <h6 className="font-semibold">CVSS Metrics V2:</h6>
-                  {cvssMetricsV2 ? (
-                    <>
-                      <p>
-                        <strong>Base Score:</strong> {cvssMetricsV2.baseScore ?? "N/A"}
-                      </p>
-                      <p>
-                        <strong>Base Severity:</strong> {vulnerability.cve?.metrics?.cvssMetricV2?.[0]?.baseSeverity ?? "N/A"}
-                      </p>
-                      <p>
-                        <strong>Exploitability Score:</strong> {vulnerability.cve?.metrics?.cvssMetricV2?.[0]?.exploitabilityScore ?? "N/A"}
-                      </p>
-                      <p>
-                        <strong>Impact Score:</strong> {vulnerability.cve?.metrics?.cvssMetricV2?.[0]?.impactScore ?? "N/A"}
-                      </p>
-                    </>
-                  ) : (
-                    <p>No CVSS metrics V2 available</p>
-                  )}
-                </div>
-
-                <div className="mt-2 text-sm">
-                  <h6 className="font-semibold">CVSS Metrics V3.1:</h6>
-                  {cvssMetricsV31 ? (
-                    <>
-                      <p>
-                        <strong>Base Score:</strong> {cvssMetricsV31.baseScore ?? "N/A"}
-                      </p>
-                      <p>
-                        <strong>Base Severity:</strong> {vulnerability.cve?.metrics?.cvssMetricV31?.[0]?.cvssData?.baseSeverity ?? "N/A"}
-                      </p>
-                      <p>
-                        <strong>Exploitability Score:</strong> {vulnerability.cve?.metrics?.cvssMetricV31?.[0]?.exploitabilityScore ?? "N/A"}
-                      </p>
-                      <p>
-                        <strong>Impact Score:</strong> {vulnerability.cve?.metrics?.cvssMetricV31?.[0]?.impactScore ?? "N/A"}
-                      </p>
-                    </>
-                  ) : (
-                    <p>No CVSS metrics V3.1 available</p>
-                  )}
-                </div>
                           </div>
-                        );
-                      })
-                    ) : (
-                      <p>No vulnerabilities available for this source file</p>
-                    )}
-                  </div>
-                )}
-              </div>
-            );
-          })
-        ) : (
-          <p>No vulnerabilities available for this sensor</p>
-        )}
-      </div>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <p className="text-gray-700 dark:text-gray-300">
+                      No vulnerabilities available for this product.
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })
+      ) : (
+        <p className="text-gray-700 dark:text-gray-300">
+          No vulnerabilities available for this sensor.
+        </p>
+      )}
     </div>
   );
 };

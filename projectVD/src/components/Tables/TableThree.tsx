@@ -1,9 +1,11 @@
-import { FC } from "react";
+// TableThree.tsx
+
+import React, { FC } from 'react';
 
 interface Sensor {
-  _id: string; // Sensor ID
-  deviceName?: string; // Optional device name
-  active: boolean; // Indicator for active/inactive status
+  _id: string;
+  deviceName?: string;
+  active: boolean;
 }
 
 interface TableThreeProps {
@@ -12,33 +14,27 @@ interface TableThreeProps {
 
 const TableThree: FC<TableThreeProps> = ({ sensors }) => {
   return (
-    <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-      <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
-        Devices
-      </h4>
-
-      {/* Devices List with Status Indicators */}
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+      <h2 className="text-2xl font-semibold mb-4 dark:text-white">Devices</h2>
       {sensors && sensors.length > 0 ? (
-        <div className="flex flex-col gap-4">
+        <div className="divide-y divide-gray-200 dark:divide-gray-700">
           {sensors.map((sensor, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-4 mb-4"
-            >
-              <h6 className="text-md font-bold text-gray-700 dark:text-gray-300">
-                {sensor.deviceName || `Sensor ID: ${sensor._id}`} {/* Use deviceName or fallback to sensor ID */}
-              </h6>
+            <div key={index} className="py-4 flex items-center justify-between">
+              <span className="dark:text-white">
+                {sensor.deviceName || `Sensor ID: ${sensor._id}`}
+              </span>
               <span
-                className={`h-4 w-4 rounded-full ${
-                  sensor.active ? "bg-green-500" : "bg-red-500"
+                className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                  sensor.active ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'
                 }`}
-                title={sensor.active ? "Active" : "Inactive"}
-              ></span>
+              >
+                {sensor.active ? 'Active' : 'Inactive'}
+              </span>
             </div>
           ))}
         </div>
       ) : (
-        <p>No devices available</p>
+        <p className="text-gray-700 dark:text-gray-300">No devices available.</p>
       )}
     </div>
   );

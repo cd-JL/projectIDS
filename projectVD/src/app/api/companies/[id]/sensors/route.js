@@ -19,54 +19,56 @@ export async function GET(request, { params }) {
     const client = await clientPromise;
     const db = client.db("projectv");
 
-    // Step 1: Find all sensors for the given company
-    const sensors = await db.collection("sensors").find({ companyId: new ObjectId(id) }).toArray();
-    console.log("Sensors found for company:", sensors);
+    // Step: Use aggregation to combine sensors, vulnerabilities, programs, and services in a single query
+    const sensorsWithDetails = await db.collection("sensors").aggregate([
+      { $match: { companyId: new ObjectId(id) } },
+      {
+        $lookup: {
+          from: "vulnerabilities",
+          localField: "sensorId",
+          foreignField: "sensorId",
+          as: "vulnerabilities"
+        }
+      },
+      {
+        $lookup: {
+          from: "programs",
+          localField: "sensorId",
+          foreignField: "sensorId",
+          as: "programsData"
+        }
+      },
+      {
+        $lookup: {
+          from: "ports",
+          localField: "sensorId",
+          foreignField: "sensorId",
+          as: "services"
+        }
+      },
+      {
+        $addFields: {
+          programs: { $ifNull: [{ $arrayElemAt: ["$programsData.programs", 0] }, []] },
+          all_open_ports: { $ifNull: ["$all_open_ports", []] }
+        }
+      },
+      {
+        $project: {
+          programsData: 0 // Exclude intermediate lookup results if not needed
+        }
+      }
+    ]).toArray();
 
-    if (sensors.length === 0) {
-      console.log("No sensors found for the given company ID:", id);
-    }
-
-    // Step 2: For each sensor, find its vulnerabilities and programs
-    const sensorsWithDetails = await Promise.all(
-      sensors.map(async (sensor) => {
-        console.log("Fetching vulnerabilities and programs for device:", sensor.deviceName);
-
-        // Fetch vulnerabilities for the sensor
-        const vulnerabilities = await db
-          .collection("vulnerabilities")
-          .find({ sensorId: sensor.sensorId })
-          .toArray();
-
-        // Fetch programs for the sensor
-        const programsData = await db
-          .collection("programs")
-          .findOne({ sensorId: sensor.sensorId });
-
-        const programs = programsData ? programsData.programs : [];
-
-        console.log(`Vulnerabilities found for device ${sensor.deviceName}:`, vulnerabilities);
-        console.log(`Programs found for device ${sensor.deviceName}:`, programs);
-
-        // Attach both vulnerabilities and programs to the sensor object
-        return {
-          ...sensor,
-          vulnerabilities,
-          programs,
-        };
-      })
-    );
-
-    console.log("Final sensors with vulnerabilities and programs:", sensorsWithDetails);
+    //console.log("Final sensors with vulnerabilities, programs, services, and open ports:", sensorsWithDetails);
 
     return new Response(JSON.stringify(sensorsWithDetails), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (e) {
-    console.error("Error fetching sensors, vulnerabilities, and programs:", e);
+    console.error("Error fetching sensors, vulnerabilities, programs, services, and open ports:", e);
     return new Response(
-      JSON.stringify({ error: "Unable to fetch sensors, vulnerabilities, and programs" }),
+      JSON.stringify({ error: "Unable to fetch sensors, vulnerabilities, programs, services, and open ports" }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }

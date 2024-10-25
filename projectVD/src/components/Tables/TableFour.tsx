@@ -1,124 +1,150 @@
-import { BRAND } from "@/types/brand";
-import Image from "next/image";
-import DropdownDefault from "../Dropdowns/DropdownDefault";
+import React, { FC, useState, useMemo, useCallback } from 'react';
+import debounce from 'lodash.debounce';
 
-const brandData: BRAND[] = [
-  {
-    logo: "/images/brand/brand-01.svg",
-    name: "Google",
-    visitors: 3.5,
-    revenues: "5,768",
-    sales: 590,
-    conversion: 4.8,
-  },
-  {
-    logo: "/images/brand/brand-02.svg",
-    name: "Twitter",
-    visitors: 2.2,
-    revenues: "4,635",
-    sales: 467,
-    conversion: 4.3,
-  },
-  {
-    logo: "/images/brand/brand-06.svg",
-    name: "Youtube",
-    visitors: 2.1,
-    revenues: "4,290",
-    sales: 420,
-    conversion: 3.7,
-  },
-  {
-    logo: "/images/brand/brand-04.svg",
-    name: "Vimeo",
-    visitors: 1.5,
-    revenues: "3,580",
-    sales: 389,
-    conversion: 2.5,
-  },
-  {
-    logo: "/images/brand/brand-05.svg",
-    name: "Facebook",
-    visitors: 3.5,
-    revenues: "6,768",
-    sales: 390,
-    conversion: 4.2,
-  },
-];
+interface Service {
+  name: string;
+  port: number;
+  status: string;
+  dangerous: boolean;
+}
 
-const TableFour: React.FC = () => {
+interface Sensor {
+  sensorId: string;
+  deviceName: string;
+  all_open_ports?: number[];
+  services?: { services: Service[] }[];
+}
+
+interface TableFourProps {
+  sensor: Sensor;
+}
+
+const TableFour: FC<TableFourProps> = ({ sensor }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [portSearchTerm, setPortSearchTerm] = useState('');
+  const [showDangerousOnly, setShowDangerousOnly] = useState(false);
+
+  // Extract services from nested structure
+  const services = useMemo(
+    () => sensor.services?.flatMap((serviceObj) => serviceObj.services) || [],
+    [sensor.services]
+  );
+
+  // Extract all_open_ports from nested services array
+  const allOpenPorts = useMemo(
+    () => sensor.services?.flatMap((serviceObj) => serviceObj.all_open_ports || []).filter(Boolean) || [],
+    [sensor.services]
+  );
+
+  const handleSearchChange = useCallback(
+    debounce((event: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchTerm(event.target.value);
+    }, 300),
+    []
+  );
+
+  const handlePortSearchChange = useCallback(
+    debounce((event: React.ChangeEvent<HTMLInputElement>) => {
+      setPortSearchTerm(event.target.value);
+    }, 300),
+    []
+  );
+
+  const toggleFilter = () => {
+    setShowDangerousOnly((prev) => !prev);
+  };
+
+  // Filter services based on search term and danger status
+  const filteredServices = useMemo(() => {
+    return services
+      .filter(
+        (service) =>
+          (!showDangerousOnly || service.dangerous) &&
+          (service.name?.toLowerCase().includes(searchTerm.toLowerCase()) || '')
+      )
+      .sort((a, b) => a.name?.localeCompare(b.name || '') || 0);
+  }, [services, showDangerousOnly, searchTerm]);
+
+  // Filter ports based on search term
+  const filteredPorts = useMemo(() => {
+    return allOpenPorts.filter((port) => port.toString().includes(portSearchTerm));
+  }, [allOpenPorts, portSearchTerm]);
+
   return (
-    <div className="col-span-12 xl:col-span-7">
-      <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-        <div className="mb-6 flex justify-between">
-          <div>
-            <h4 className="text-title-sm2 font-bold text-black dark:text-white">
-              Top Channels
-            </h4>
-          </div>
-          <DropdownDefault />
-        </div>
-
-        <div className="flex flex-col">
-          <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-4">
-            <div className="p-2.5 xl:p-4">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Source
-              </h5>
-            </div>
-            <div className="p-2.5 text-center xl:p-4">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Visitors
-              </h5>
-            </div>
-            <div className="p-2.5 text-center xl:p-4">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Revenues
-              </h5>
-            </div>
-            <div className="hidden p-2.5 text-center sm:block xl:p-4">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Conversion
-              </h5>
-            </div>
-          </div>
-
-          {brandData.map((brand, key) => (
-            <div
-              className={`grid grid-cols-3 sm:grid-cols-4 ${
-                key === brandData.length - 1
-                  ? ""
-                  : "border-b border-stroke dark:border-strokedark"
-              }`}
-              key={key}
-            >
-              <div className="flex items-center gap-3 p-2.5 xl:p-5">
-                <div className="h-9 w-full max-w-9 flex-shrink-0">
-                  <Image src={brand.logo} width={60} height={50} alt="Brand" />
-                </div>
-                <p className="hidden font-medium text-black dark:text-white sm:block">
-                  {brand.name}
-                </p>
-              </div>
-
-              <div className="flex items-center justify-center p-2.5 xl:p-5">
-                <p className="font-medium text-black dark:text-white">
-                  {brand.visitors}K
-                </p>
-              </div>
-
-              <div className="flex items-center justify-center p-2.5 xl:p-5">
-                <p className="font-medium text-meta-3">${brand.revenues}</p>
-              </div>
-
-              <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                <p className="font-medium text-meta-5">{brand.conversion}%</p>
-              </div>
-            </div>
-          ))}
-        </div>
+    <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 mb-6">
+      <h2 className="text-2xl font-semibold mb-4 dark:text-white">{sensor.deviceName}</h2>
+      <div className="flex flex-wrap items-center mb-4">
+        <button
+          className="mb-2 mr-4 p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          onClick={toggleFilter}
+        >
+          {showDangerousOnly ? 'Show All Services' : 'Show Dangerous Services Only'}
+        </button>
+        <input
+          type="text"
+          placeholder="Search services..."
+          onChange={handleSearchChange}
+          className="mb-2 p-2 border rounded dark:bg-gray-700 dark:text-white"
+        />
       </div>
+      <div className="mb-6">
+        <table className="min-w-full bg-white dark:bg-gray-800 shadow-md rounded-lg">
+          <thead>
+            <tr>
+              <th className="py-2 px-4 border-b bg-gray-200 dark:bg-gray-700 text-left">Service Name</th>
+              <th className="py-2 px-4 border-b bg-gray-200 dark:bg-gray-700 text-left">Port</th>
+              <th className="py-2 px-4 border-b bg-gray-200 dark:bg-gray-700 text-left">Status</th>
+              <th className="py-2 px-4 border-b bg-gray-200 dark:bg-gray-700 text-left">Dangerous</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredServices.length > 0 ? (
+              filteredServices.map((service, index) => (
+                <tr key={index}>
+                  <td className="py-2 px-4 border-b dark:border-gray-600">{service.name}</td>
+                  <td className="py-2 px-4 border-b dark:border-gray-600">{service.port}</td>
+                  <td className="py-2 px-4 border-b dark:border-gray-600">{service.status}</td>
+                  <td className="py-2 px-4 border-b dark:border-gray-600">
+                    {service.dangerous ? (
+                      <span className="text-red-500 font-semibold">Yes</span>
+                    ) : (
+                      'No'
+                    )}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={4} className="py-2 px-4 text-center">
+                  No services found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+      <details className="mt-4">
+        <summary className="cursor-pointer dark:text-white font-semibold">Show All Ports</summary>
+        <input
+          type="text"
+          placeholder="Search ports..."
+          onChange={handlePortSearchChange}
+          className="my-2 p-2 border rounded dark:bg-gray-700 dark:text-white"
+        />
+        <ul className="list-disc pl-5">
+          {filteredPorts.length > 0 ? (
+            filteredPorts.map((port, index) => (
+              <li key={index} className="py-1 dark:text-white">
+                {port}
+              </li>
+            ))
+          ) : (
+            <li className="py-1 dark:text-white">No ports found.</li>
+          )}
+        </ul>
+      </details>
     </div>
   );
 };
 
-export default TableFour;
+export default React.memo(TableFour);

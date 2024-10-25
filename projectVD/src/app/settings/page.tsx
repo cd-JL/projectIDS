@@ -20,7 +20,7 @@ const Settings = () => {
         if (response.ok) {
           const userData = await response.json();
           setUser(userData);
-          console.log("USER", userData);
+          //console.log("USER", userData);
         } else {
           console.error("Failed to fetch user data");
         }
