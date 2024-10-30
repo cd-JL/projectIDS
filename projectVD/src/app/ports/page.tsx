@@ -22,10 +22,11 @@ interface Sensor {
   services?: { services: Service[]; all_open_ports?: number[] }[];
 }
 
-const fetchSensorData = async (companyId: string): Promise<Sensor[]> => {
+// Fetch port data for the specific company ID
+const fetchPortData = async (companyId: string): Promise<Sensor[]> => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/companies/${companyId}/sensors`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/companies/${companyId}/ports`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -35,14 +36,14 @@ const fetchSensorData = async (companyId: string): Promise<Sensor[]> => {
     );
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch sensor data: ${response.status}`);
+      throw new Error(`Failed to fetch port data: ${response.status}`);
     }
 
     const data = await response.json();
-    //console.log("Sensors Data (Client-Side):", data);
+    console.log("Fetched Port Data:", data); // Debug log
     return data;
   } catch (error) {
-    console.error("Error fetching sensor data:", error);
+    console.error("Error fetching port data:", error);
     return [];
   }
 };
@@ -51,46 +52,28 @@ const TablesPage = () => {
   const [sensorData, setSensorData] = useState<Sensor[]>([]);
   const [selectedSensorId, setSelectedSensorId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
-  const [initialLoad, setInitialLoad] = useState<boolean>(true);
 
   useEffect(() => {
-    const updateSensorData = async () => {
+    const updatePortData = async () => {
       setLoading(true);
       try {
-        const data = await fetchSensorData("670300d49e3775f3873461fd");
-
+        const data = await fetchPortData("670300d49e3775f3873461fd");
         setSensorData(data);
 
         // Set the selected sensor to the first one if not set
-        if (
-          !selectedSensorId ||
-          !data.some((sensor) => sensor.sensorId === selectedSensorId)
-        ) {
-          if (data.length > 0) {
-            const firstSensorId = data[0].sensorId;
-            setSelectedSensorId(firstSensorId);
-            localStorage.setItem("selectedSensorId", firstSensorId);
-          }
+        if (!selectedSensorId && data.length > 0) {
+          const firstSensorId = data[0].sensorId;
+          setSelectedSensorId(firstSensorId);
         }
       } catch (error) {
-        console.error("Error updating sensor data:", error);
+        console.error("Error updating port data:", error);
       } finally {
         setLoading(false);
-        setInitialLoad(false);
       }
     };
 
-    // Fetch data only once on mount
-    updateSensorData();
-  }, []);
-
-  // Restore selected sensor from localStorage on mount
-  useEffect(() => {
-    const storedSensorId = localStorage.getItem("selectedSensorId");
-    if (storedSensorId) {
-      setSelectedSensorId(storedSensorId);
-    }
-  }, []);
+    updatePortData();
+  }, [selectedSensorId]);
 
   const selectedSensor = useMemo(
     () => sensorData.find((sensor) => sensor.sensorId === selectedSensorId),
@@ -137,7 +120,6 @@ const TablesPage = () => {
     (event: React.ChangeEvent<HTMLSelectElement>) => {
       const sensorId = event.target.value;
       setSelectedSensorId(sensorId);
-      localStorage.setItem("selectedSensorId", sensorId);
     },
     []
   );

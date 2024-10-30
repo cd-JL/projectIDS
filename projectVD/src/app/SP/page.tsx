@@ -1,36 +1,42 @@
-"use client"; // Add this line to make it a client component
+"use client";
 
 import { useEffect, useState } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import TableTwo from "@/components/Tables/TableTwo";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 
-const fetchSensorData = async (id: string) => {
+// Fetch program data for the specific company ID
+const fetchProgramData = async (id: string) => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/companies/${id}/sensors`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/companies/${id}/programs`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-cache",
+    });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch sensor data: ${response.status}`);
+      throw new Error(`Failed to fetch program data: ${response.status}`);
     }
 
     const data = await response.json();
-    //console.log("Sensors Data (Client-Side):", data);
+    console.log("Fetched Program Data:", data); // Debug
     return data;
   } catch (error) {
-    console.error("Error fetching sensor data:", error);
+    console.error("Error fetching program data:", error);
     return [];
   }
 };
 
 const TablesPage = () => {
-  const [sensorData, setSensorData] = useState([]);
+  const [programData, setProgramData] = useState([]);
   const [selectedSensor, setSelectedSensor] = useState("");
   const [searchQuery, setSearchQuery] = useState(""); // State to track the search input
   const [filteredPrograms, setFilteredPrograms] = useState([]); // State to track filtered programs
   const [lastFetchedData, setLastFetchedData] = useState([]); // To track the last fetched data
   const [loading, setLoading] = useState(true); // Loading state for the first load
 
-  // Function to compare two arrays of sensor data
+  // Function to compare two arrays of program data
   const isDataChanged = (newData, oldData) => {
     return JSON.stringify(newData) !== JSON.stringify(oldData);
   };
@@ -40,10 +46,10 @@ const TablesPage = () => {
       setLoading(true); // Show spinner only on initial load
     }
 
-    const data = await fetchSensorData("670300d49e3775f3873461fd"); // Replace with the actual company ID
+    const data = await fetchProgramData("670300d49e3775f3873461fd"); // Replace with the actual company ID
 
     if (isDataChanged(data, lastFetchedData)) {
-      setSensorData(data);
+      setProgramData(data);
       setLastFetchedData(data); // Store the new data as the last fetched data
       if (data.length > 0) {
         setSelectedSensor(data[0]._id); // Set the first sensor as the default selection
@@ -68,7 +74,7 @@ const TablesPage = () => {
   // Effect to update the filtered programs when selected sensor or search query changes
   useEffect(() => {
     if (selectedSensor) {
-      const selected = sensorData.find((sensor) => sensor._id === selectedSensor);
+      const selected = programData.find((sensor) => sensor._id === selectedSensor);
       if (selected && selected.programs) {
         const filtered = selected.programs.filter((program) => {
           const name = program.Name ? program.Name.toLowerCase() : "";
@@ -79,7 +85,7 @@ const TablesPage = () => {
         setFilteredPrograms(filtered);
       }
     }
-  }, [selectedSensor, searchQuery, sensorData]);
+  }, [selectedSensor, searchQuery, programData]);
 
   return (
     <DefaultLayout>
@@ -103,7 +109,7 @@ const TablesPage = () => {
                 onChange={(e) => setSelectedSensor(e.target.value)}
                 className="border rounded px-3 py-2"
               >
-                {sensorData.map((sensor) => (
+                {programData.map((sensor) => (
                   <option key={sensor._id} value={sensor._id}>
                     {sensor.deviceName || `Sensor ${sensor._id}`}
                   </option>
@@ -127,8 +133,8 @@ const TablesPage = () => {
             </div>
 
             {/* Display the table for the selected sensor */}
-            {sensorData.length > 0 ? (
-              <TableTwo sensor={sensorData.find((sensor) => sensor._id === selectedSensor)} programs={filteredPrograms} />
+            {programData.length > 0 ? (
+              <TableTwo sensor={programData.find((sensor) => sensor._id === selectedSensor)} programs={filteredPrograms} />
             ) : (
               <p>No sensors available</p>
             )}
