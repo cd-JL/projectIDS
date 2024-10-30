@@ -38,6 +38,7 @@ const Admin = () => {
             <th className="py-2 px-4 border-b">No.</th>
             <th className="py-2 px-4 border-b">Username</th>
             <th className="py-2 px-4 border-b">Email</th>
+            <th className="py-2 px-4 border-b">Company</th>
             <th className="py-2 px-4 border-b">Status</th>
             <th className="py-2 px-4 border-b">Edit</th>
           </tr>
@@ -50,6 +51,7 @@ const Admin = () => {
                   <td className="py-2 px-4 border-b">{index}</td> {/* Display index + 1 for user number */}
                   <td className="py-2 px-4 border-b">{user.username}</td>
                   <td className="py-2 px-4 border-b">{user.email}</td>
+                  <td className="py-2 px-4 border-b">{user.company}</td>
                   <td className="py-2 px-4 border-b">{user.status}</td>
                   <ThreeDotMenu email={user.email} username={user.username}/> {/* Render the three dot menu */}
                 </tr>
