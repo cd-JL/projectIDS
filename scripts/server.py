@@ -134,6 +134,51 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                 response = {'message': str(e)}
 
             self.wfile.write(json.dumps(response).encode())
+        
+        # Adding a new company
+        elif self.path == '/newCompany':
+            # Referenced ChatGPT for CORS headers and response handling for POST requests
+            self.send_response(200)
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.send_header('Access-Control-Allow-Methods', 'POST')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+            self.end_headers()
+
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+
+            try:
+                company = json.loads(post_data)
+            except json.JSONDecodeError:
+                self.send_response(400)
+                response = {'message': 'Invalid JSON format.'}
+                self.wfile.write(json.dumps(response).encode())
+                return
+
+            # Check if the company already exists
+            if db.companies.find_one({"name": company['name']}):
+                self.send_response(409)
+                response = {'message': "Company already exists."}
+                self.wfile.write(json.dumps(response).encode())
+                print("Company already exists.")
+                return
+            
+            try:
+                db.companies.insert_one({
+                    "name": company['name'],
+                    "users": [],
+                    "sensors": []
+                })
+                response = {'message': f'Company added successfully.'}
+
+
+            except Exception as e:
+                print(f"Error inserting into MongoDB: {e}")
+                self.send_response(500) 
+                response = {'message': str(e)}
+            
+            self.wfile.write(json.dumps(response).encode())
+
 
         else:
             self.send_response(404)
