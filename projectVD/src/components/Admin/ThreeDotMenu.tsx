@@ -1,51 +1,48 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
 import ClickOutside from "@/components/ClickOutside"; // Ensure you have a ClickOutside component to handle outside clicks
-import { useRouter } from "next/router";
+
 
 const ThreeDotMenu = ({ email, username }) => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const menuRef = useRef(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false); // State to manage dropdown visibility
+  const menuRef = useRef(null); // Ref to handle click outside the dropdown
 
   // Function to handle outside click
   const handleClickOutside = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
-      setDropdownOpen(false);
+      setDropdownOpen(false); // Close the dropdown if the click is outside
     }
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside); // Event listener for outside click
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside); // Cleanup on unmount
     };
   }, []);
 
   const handleMakeAdmin = async () => {
-    const isConfirm = confirm(`Make ${username} active.`)
-    if(isConfirm){
+    const isConfirm = confirm(`Make ${username} active.`);
+    if (isConfirm) {
       await fetch(`http://localhost:8000/makeAsAdmin?email=${email}`);
-      // window.location.href = '/profile'
     }
-    return
+    return;
   };
 
   const handleDismissAdmin = async () => {
-    const isConfirm = confirm(`Make ${username} deactive.`)
-    if(isConfirm){
+    const isConfirm = confirm(`Make ${username} deactive.`);
+    if (isConfirm) {
       await fetch(`http://localhost:8000/dismissAsAdmin?email=${email}`);
-      // window.location.href = '/profile'
     }
-    return
+    return;
   };
 
   const handleDeleteUser = async () => {
-    const isConfirm = confirm(`Delete ${username}`)
-    if(isConfirm){
+    const isConfirm = confirm(`Delete ${username}`);
+    if (isConfirm) {
       await fetch(`http://localhost:8000/deleteUser?email=${email}`);
-      // window.location.href = '/profile'
     }
-    return
+    return;
   };
 
   return (
