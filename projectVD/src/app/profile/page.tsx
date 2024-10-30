@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import Admin from "@/components/Admin/Admin";
+import NewCompany from "@/components/Admin/NewCompany";
 
 function ProfilePage() {
   const [user, setUser] = useState(null); // State to hold user data
@@ -67,6 +68,7 @@ function ProfilePage() {
           </div>
         </div>
       </div>
+      {user?.role == "admin" && <NewCompany/>} {/* Render Admin component if user is an admin */}
       {user?.role == "admin" && <Admin/>} {/* Render Admin component if user is an admin */}
     </DefaultLayout>
   );

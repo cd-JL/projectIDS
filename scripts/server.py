@@ -169,6 +169,7 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                     "users": [],
                     "sensors": []
                 })
+                self.send_response(200)
                 response = {'message': f'Company added successfully.'}
 
 
