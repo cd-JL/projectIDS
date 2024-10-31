@@ -1,74 +1,81 @@
-"use client"; // Add this line to make it a client component
+"use client";
 
 import { useEffect, useState } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import TableThree from "@/components/Tables/TableThree"; // Import the new TableThree component
-import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import DefaultLayout from "@/components/Layouts/DefaultLayout";  // Ensure path is correct
+import TableThree from "@/components/Tables/TableThree";
 
-const fetchSensorData = async (id: string) => {
+interface Sensor {
+  _id: string;
+  deviceName?: string;
+  active: boolean;
+}
+
+// Fetch device data for the specific company ID
+const fetchDeviceData = async (id: string): Promise<Sensor[]> => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/companies/${id}/sensors`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/companies/${id}/devices`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-cache",
+    });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch sensor data: ${response.status}`);
+      throw new Error(`Failed to fetch device data: ${response.status}`);
     }
 
     const data = await response.json();
-    //console.log("Sensors Data (Client-Side):", data);
+    console.log("Fetched Device Data:", data); // Debug log
     return data;
   } catch (error) {
-    console.error("Error fetching sensor data:", error);
+    console.error("Error fetching device data:", error);
     return [];
   }
 };
 
 const TablesPage = () => {
-  const [sensorData, setSensorData] = useState([]);
-  const [loading, setLoading] = useState(true); // Loading state for the first load
+  const [deviceData, setDeviceData] = useState<Sensor[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Function to fetch sensor data and update the state
-  const updateSensorData = async (isInitialLoad = false) => {
+  const updateDeviceData = async (isInitialLoad = false) => {
     if (isInitialLoad) {
-      setLoading(true); // Show spinner only on initial load
+      setLoading(true);
     }
 
-    const data = await fetchSensorData("670300d49e3775f3873461fd"); // Replace with the actual company ID
-    setSensorData(data);
+    const data = await fetchDeviceData("670300d49e3775f3873461fd");
+    setDeviceData(data);
 
     if (isInitialLoad) {
-      setLoading(false); // Hide spinner after first load
+      setLoading(false);
     }
   };
 
-  // Fetch data on initial render and set interval to update every 5 seconds
   useEffect(() => {
-    updateSensorData(true); // Fetch initial data with spinner
+    updateDeviceData(true);
 
     const interval = setInterval(() => {
-      updateSensorData(); // Fetch updated data every 5 seconds without showing spinner
+      updateDeviceData();
     }, 5000);
 
-    // Cleanup interval on component unmount
     return () => clearInterval(interval);
   }, []);
 
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Device Status" />
-
       <div className="flex flex-col gap-10">
         {loading ? (
           <div className="flex justify-center items-center">
             <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
           </div>
-        ) : sensorData.length > 0 ? (
-          <TableThree sensors={sensorData} />
+        ) : deviceData.length > 0 ? (
+          <TableThree sensors={deviceData} />
         ) : (
           <p>No devices available</p>
         )}
       </div>
-
-      {/* Loader Spinner Styling */}
+      
       <style jsx>{`
         .loader {
           border-top-color: #3498db;
