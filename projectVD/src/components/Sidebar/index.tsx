@@ -46,8 +46,8 @@ const menuGroups = [
             />
           </svg>
         ),
-        label: "Home",
-        route: "/",
+        label: "Dashboard",
+        route: "/chart/670300d49e3775f3873461fd/",
       },
       {
         icon: (
@@ -350,7 +350,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     "Sensor Vulnerabilities",
     "Settings",
     "Chart",
-    "Port Data"
+    "Port Data",
+    "Dashboard"
   ];
 
   return (
