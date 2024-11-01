@@ -276,7 +276,7 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                 response = {'message': 'Internal server error.'}
                 self.wfile.write(json.dumps(response).encode())
         
-        # Update user role to admin
+        # Update user status to active
         elif self.path.startswith('/makeAsAdmin'):
             email = self.path.split('=')[-1] 
             db.user.update_one({'email': email}, {"$set": {'status': "active"}})
@@ -285,7 +285,7 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
             response = {'message': 'User role updated to admin.'}
             self.wfile.write(json.dumps(response).encode())
 
-        # Revert user role to view-only
+        # Revert user status to deactive
         elif self.path.startswith('/dismissAsAdmin'):
             email = self.path.split("=")[-1]
             db.user.update_one({'email': email}, {"$set": {'status': "deactive"}})
@@ -324,6 +324,32 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
             else:
                 self.send_response(404)
                 response = {'message': "No companies found."}
+                self.wfile.write(json.dumps(response).encode())
+
+        # FETCHING USERS LIST FOR MESSAGING FUNCTION FOR REGULAR USER
+        # Referenced ChatGPT for CORS headers and response handling for GET requests
+        elif self.path.startswith('/usersListForUser'):
+            self.send_response(200)
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.send_header('Access-Control-Allow-Methods', 'GET')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+            self.end_headers()
+
+            email = self.path.split('=')[-1] 
+            user_company = db.user.find_one({"email": email}, {"company": 1}) 
+
+            if user_company:
+                users_list = list(db.user.find({"company": user_company["company"], "email": {"$ne": email}}, {"username": 1, "email": 1}))
+                admin_data = db.user.find({"email":"Admin123@321.com"}, {"username": 1, "email": 1 })
+
+                users_list.extend(admin_data)
+                print(users_list)
+                self.send_response(200)
+                self.wfile.write(json.dumps(users_list).encode)
+
+            else:
+                self.send_response(404)
+                response = {'message': "User not found."}
                 self.wfile.write(json.dumps(response).encode())
 
         else:

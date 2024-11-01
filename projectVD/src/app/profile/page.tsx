@@ -20,6 +20,10 @@ function ProfilePage() {
         const userData = await response.json(); // Parse JSON response
         setUser(userData); // Set user data in state
         console.log(userData);
+        if (userData.role == "admin"){
+          localStorage.setItem("Role", "admin")
+          console.log("admin")
+        }
       } else {
         console.error("Failed to fetch user data"); // Log error if response is not ok
       }
