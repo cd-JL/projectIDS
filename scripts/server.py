@@ -111,20 +111,24 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                 hashed_password = bcrypt.hashpw(user_data['password'].encode('utf-8'), bcrypt.gensalt())
                 user_data['password'] = hashed_password
                 collection.insert_one(user_data)
+
+                new_user_data = collection.find_one({'email': user_data['email']}, {'_id': 1})
+
                 db.user.insert_one({
+                    "user_id": new_user_data["_id"],
                     "username": user_data['name'],
                     "email": user_data['email'],
                     "role": "view-only",
                     "company": user_data['company'],
                     "status": "active"
                 })
-                user_doc = db.user.find_one({'email': user_data['email']}, {'_id': 1})
+                user_doc = db.user.find_one({'email': user_data['email']}, {'user_id': 1})
                 response = {'message': f'User registered successfully.'}
 
                 db.companies.update_one(
                     {'name': user_data['company']},
                     {
-                        '$push': {'users': user_doc['_id']}
+                        '$push': {'users': user_doc['user_id']}
                     }
                 )
 
