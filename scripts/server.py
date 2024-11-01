@@ -243,7 +243,7 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
 
             email = self.path.split('=')[-1] 
-            user = db.user.find_one({"email": email}, {"_id": 0}) 
+            user = db.user.find_one({"email": email}, {"_id": 0, "user_id": 0}) 
 
             if user:
                 self.wfile.write(json.dumps(user).encode())
@@ -261,7 +261,7 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
 
             try:
-                users = list(db.user.find({}, {"_id": 0}))
+                users = list(db.user.find({}, {"_id": 0, "user_id": 0}))
                 if users:
                     json_data = dumps(users)
                     self.wfile.write(json_data.encode())
