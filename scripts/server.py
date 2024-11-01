@@ -183,6 +183,45 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                 response = {'message': str(e)}
             
             self.wfile.write(json.dumps(response).encode())
+        
+         # Deleting a company
+        elif self.path == '/deleteCompany':
+            # Referenced ChatGPT for CORS headers and response handling for POST requests
+            self.send_response(200)
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.send_header('Access-Control-Allow-Methods', 'POST')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+            self.end_headers()
+
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+
+            try:
+                company = json.loads(post_data)
+            except json.JSONDecodeError:
+                self.send_response(400)
+                response = {'message': 'Invalid JSON format.'}
+                self.wfile.write(json.dumps(response).encode())
+                return
+
+            # Check if the company exist or not
+            if db.companies.find_one({"name": company['name']}):
+                db.user.delete_many({"company": company['name']})
+                collection.delete_many({"company": company['name']})
+                self.send_response(200)
+                response = {'message': 'Company deleted successfully.'}
+
+
+
+            else:
+                self.send_response(404)
+                response = {'message': "Company doesn't exist."}
+                self.wfile.write(json.dumps(response).encode())
+                print("Company doesn't exist.")
+                return
+
+            
+            self.wfile.write(json.dumps(response).encode())
 
 
         else:
