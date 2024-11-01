@@ -3,6 +3,7 @@ import DarkModeSwitcher from "./DarkModeSwitcher";
 import DropdownUser from "./DropdownUser";
 import Image from "next/image";
 import { useState } from "react";
+import Message from "@/app/message/page";
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -88,6 +89,11 @@ const Header = (props: {
             <DarkModeSwitcher />
             {/* <!-- Dark Mode Toggler --> */}
           </ul>
+          {/* <!-- Message Section --> */}
+          {userEmail && <a href="/message">
+            Message
+            </a>}
+          {/* <!-- Message Section --> */}
           {/* <!-- User Area --> */}
           {userEmail && <DropdownUser />}
           {/* <!-- User Area --> */}
