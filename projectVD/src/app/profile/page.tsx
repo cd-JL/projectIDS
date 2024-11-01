@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import Admin from "@/components/Admin/Admin";
 import NewCompany from "@/components/Admin/NewCompany";
+import DeleteCompany from "@/components/Admin/DeleteCompany";
 
 function ProfilePage() {
   const [user, setUser] = useState(null); // State to hold user data
@@ -68,7 +69,10 @@ function ProfilePage() {
           </div>
         </div>
       </div>
-      {user?.role == "admin" && <NewCompany/>} {/* Render Admin component if user is an admin */}
+      <div className=" flex justify-around">
+        <div>{user?.role == "admin" && <NewCompany/>} {/* Render Admin component if user is an admin */}</div>
+        <div>{user?.role == "admin" && <DeleteCompany/>} {/* Render Admin component if user is an admin */}</div>
+      </div>
       {user?.role == "admin" && <Admin/>} {/* Render Admin component if user is an admin */}
     </DefaultLayout>
   );

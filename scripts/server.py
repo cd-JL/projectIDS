@@ -208,6 +208,7 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
             if db.companies.find_one({"name": company['name']}):
                 db.user.delete_many({"company": company['name']})
                 collection.delete_many({"company": company['name']})
+                db.companies.delete_one({"name": company['name']})
                 self.send_response(200)
                 response = {'message': 'Company deleted successfully.'}
 
