@@ -1,5 +1,5 @@
 import React from 'react'
-
+// Refernced chatGPT in creting this component
 function MessageWindow() {
   return (
     <>
@@ -16,7 +16,7 @@ function MessageWindow() {
                 className="p-2 rounded-lg w-full "
               >
                 <p className="text-lg text-gray-300 mb-1">received message</p>
-                <p className="text-lg text-gray-300 mb-1 self-end text-right">sended messages2</p>
+                <p className="text-lg text-gray-300 mb-1 self-end text-right">sent messages2</p>
               </div>
           </div>
 

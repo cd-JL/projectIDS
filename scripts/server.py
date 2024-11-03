@@ -328,7 +328,7 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
 
         # FETCHING USERS LIST FOR MESSAGING FUNCTION FOR REGULAR USER
         # Referenced ChatGPT for CORS headers and response handling for GET requests
-        elif self.path.startswith('/usersListForUser'):
+        elif self.path.startswith('/usersListForMessage'):
             self.send_response(200)
             self.send_header('Access-Control-Allow-Origin', '*')
             self.send_header('Access-Control-Allow-Methods', 'GET')
@@ -336,21 +336,35 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
 
             email = self.path.split('=')[-1] 
-            user_company = db.user.find_one({"email": email}, {"company": 1}) 
+            role = db.user.find_one({"email": email}, {"role": 1})
 
-            if user_company:
-                users_list = list(db.user.find({"company": user_company["company"], "email": {"$ne": email}}, {"username": 1, "email": 1}))
-                admin_data = db.user.find({"email":"Admin123@321.com"}, {"username": 1, "email": 1 })
+            if (role["role"] != "admin"):
+                 user_company = db.user.find_one({"email": email}, {"company": 1}) 
 
-                users_list.extend(admin_data)
+                 if user_company:
+                     users_list = list(db.user.find({"company": user_company["company"], "email": {"$ne": email}}, {"username": 1, "email": 1}))
+                     admin_data = list(db.user.find({"email":"Admin123@321.com"}, {"username": 1, "email": 1 }))
+     
+                     users_list.extend(admin_data)
+                     print("Users list for regular user")
+                     print(users_list)
+                     self.send_response(200)
+                     self.wfile.write(json.dumps(users_list).encode())
+     
+                 else:
+                     self.send_response(404)
+                     response = {'message': "User not found."}
+                     self.wfile.write(json.dumps(response).encode())
+            
+            else:
+                users_list = list(db.user.find({"email": {"$ne": email}}, {"username": 1, "email": 1}))
+                print("users list for admin user")
                 print(users_list)
                 self.send_response(200)
-                self.wfile.write(json.dumps(users_list).encode)
-
-            else:
-                self.send_response(404)
-                response = {'message': "User not found."}
-                self.wfile.write(json.dumps(response).encode())
+                self.wfile(json.dumps(users_list).encode())
+     
+           
+                
 
         else:
             self.send_response(404)
