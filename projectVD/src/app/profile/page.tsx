@@ -15,15 +15,15 @@ function ProfilePage() {
   // Refernced chatGPT in creting this function
   const fetchUserData = async (email) => {
     try {
-      const response = await fetch(`http://localhost:8000/getUser?email=${email}`); // Fetch user data
+      const response = await fetch(`http://localhost:8000/getUser email=${email}`); // Fetch user data
       if (response.ok) {
         const userData = await response.json(); // Parse JSON response
         setUser(userData); // Set user data in state
         console.log(userData);
-        if (userData.role == "admin"){
-          localStorage.setItem("Role", "admin")
-          console.log("admin")
-        }
+        // if (userData.role == "admin"){
+        //   localStorage.setItem("Role", "admin")
+        //   console.log("admin")
+        // }
       } else {
         console.error("Failed to fetch user data"); // Log error if response is not ok
       }

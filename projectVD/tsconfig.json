@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -18,10 +22,25 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@lib/*": ["./lib/*"] // Added the alias for `lib`
-    }
+      "@/*": [
+        "./src/*"
+      ],
+      "@lib/*": [
+        "./lib/*"
+      ] // Added the alias for `lib`
+    },
+    "target": "ES2017"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/Charts/page.js", "src/app/chart/[companyID]/page.tsx", "src/components/Charts/expl.js"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/components/Charts/page.js",
+    "src/app/chart/[companyID]/page.tsx",
+    "src/components/Charts/expl.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
