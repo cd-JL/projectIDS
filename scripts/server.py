@@ -342,8 +342,8 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                  user_company = db.user.find_one({"email": email}, {"company": 1}) 
 
                  if user_company:
-                     users_list = list(db.user.find({"company": user_company["company"], "email": {"$ne": email}}, {"username": 1, "email": 1, "_id": 0}))
-                     admin_data = list(db.user.find({"email":"Admin123@321.com"}, {"username": 1, "email": 1, "_id": 0 }))
+                     users_list = list(db.user.find({"company": user_company["company"], "email": {"$ne": email}}, {"username": 1, "email": 1, "role": 1, "_id": 0}))
+                     admin_data = list(db.user.find({"email":"Admin123@321.com"}, {"username": 1, "email": 1, "role": 1, "_id": 0 }))
      
                      users_list.extend(admin_data)
                      print("Users list for regular user")
@@ -357,7 +357,7 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                      self.wfile.write(json.dumps(response).encode())
             
             else:
-                users_list = list(db.user.find({"email": {"$ne": email}}, {"username": 1, "email": 1, "_id": 0}))
+                users_list = list(db.user.find({"email": {"$ne": email}}, {"username": 1, "email": 1, "role": 1, "_id": 0}))
                 print("users list for admin user")
                 print(users_list)
                 self.send_response(200)

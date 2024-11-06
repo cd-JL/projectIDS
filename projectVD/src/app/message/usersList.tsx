@@ -38,15 +38,20 @@ function UsersList() {
         <h1 className="text-2xl font-semibold mb-4">People</h1>
           <div className="flex-1 overflow-y-auto">
             {/* Users list */}
-              <div
+            {
+              (usersList)?(usersList.map((user, index) =>(
+                <div
                 className="flex items-center p-3 hover:bg-gray-700 rounded-lg cursor-pointer"
               >
-                <img alt='Profile' src='image_source' className="rounded-full w-12 h-12"/>
+                {/* <img alt='Profile' src='image_source' className="rounded-full w-12 h-12"/> */}
+                {user?.role == "admin" && <img alt='Profile' src='/images/user/admin.png' className="rounded-full w-12 h-12"/> }
+                {user?.role == "view-only" && <img alt='Profile' src='/images/user/user.png' className="rounded-full w-12 h-12"/> }
                 <div className="flex flex-col">
-                  <p className="text-lg font-medium">Username</p>
-                  <p></p>
+                  <p className="text-lg font-medium">{user.username}</p>
                 </div>
               </div>
+              ))) : null
+            }
           </div>
     </div>
   )
