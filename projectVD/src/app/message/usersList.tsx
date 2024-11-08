@@ -32,6 +32,7 @@ function UsersList() {
   }, [userEmail]);
 
 
+
   return (
     <div>
         {/* Sidebar */}
@@ -41,7 +42,12 @@ function UsersList() {
             {
               (usersList)?(usersList.map((user, index) =>(
                 <div
-                className="flex items-center p-3 hover:bg-gray-700 rounded-lg cursor-pointer"
+                className="flex items-center p-3 hover:bg-gray-700 rounded-lg cursor-pointer border-2 border-whiten m-2"
+                onClick={()=>{
+                  localStorage.setItem("selectedUsername", user.username)
+                  localStorage.setItem("selectedEmail", user.email)
+                  window.location.href = "/message"
+                }}
               >
                 {/* <img alt='Profile' src='image_source' className="rounded-full w-12 h-12"/> */}
                 {user?.role == "admin" && <img alt='Profile' src='/images/user/admin.png' className="rounded-full w-12 h-12"/> }
