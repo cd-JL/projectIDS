@@ -35,6 +35,7 @@ const DropdownUser = () => {
 
   function logOut() {
     localStorage.removeItem("userEmail");
+    localStorage.removeItem("selectedUsername")
     router.push('/auth/signin')
   }
 

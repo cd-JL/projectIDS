@@ -224,6 +224,17 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
             
             self.wfile.write(json.dumps(response).encode())
 
+        
+        if self.path == '/sendMessage':
+            # CORS headers for POST
+            self.send_response(200)
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.send_header('Access-Control-Allow-Methods', 'POST')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+            self.end_headers()
+
+            print("message send")
+
 
         else:
             self.send_response(404)
@@ -362,6 +373,7 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                 print(users_list)
                 self.send_response(200)
                 self.wfile.write(json.dumps(users_list).encode())
+
      
            
                 

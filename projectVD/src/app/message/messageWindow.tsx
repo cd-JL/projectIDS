@@ -1,8 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 // Refernced chatGPT in creting this component
 function MessageWindow() {
   const selectedUsername = localStorage.getItem("selectedUsername");
+  const selectedEmail = localStorage.getItem("selectedEmail");
+  const userEmail = localStorage.getItem("userEmail")
+  const [message, setMesssage] = useState();
 
+  const sendMessage = async (e: React.FormEvent)=>{
+    e.preventDefault();
+    const messageData = {userEmail, selectedEmail, message}
+    try {
+      const response = await fetch("http://localhost:8000/sendMessage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(messageData)
+      })
+      if(response.ok){
+        console.log("Message send successfully.")
+      } 
+    } catch{
+      console.log("Unable to send the message")
+    }
+  }
   
 
   return (
@@ -25,16 +44,19 @@ function MessageWindow() {
             </div>
 
             {/* Input */}
-            <div className="p-4 bg-gray-800 flex items-center space-x-3">
-              <input
-                type="text"
-                placeholder="Type a message..."
-                className="flex-1 p-2 bg-gray-700 text-white rounded-lg placeholder-gray-400"
-              />
-              <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
-                Send
-              </button>
-            </div>
+              <form onSubmit={sendMessage}>
+              <div className="p-4 bg-gray-800 flex items-center space-x-3">
+                <input
+                  type="text"
+                  placeholder="Type a message..."
+                  className="flex-1 p-2 bg-gray-700 text-white rounded-lg placeholder-gray-400"
+                  onChange={(e)=> setMesssage(e.target.value)}
+                />
+                <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600" type='submit'>
+                  Send
+                </button>
+                </div>
+              </form>
           </>
         )}
       </div>

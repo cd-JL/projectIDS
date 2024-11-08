@@ -17,8 +17,8 @@ function UsersList() {
         console.log("Faild to fetch the users data")
       }
     }
-    catch (error){
-      console.error("ERROR FETCHING THE USERS LIST: ", error)
+    catch{
+      console.log("ERROR FETCHING THE USERS LIST")
     }
   }
 
@@ -42,7 +42,7 @@ function UsersList() {
             {
               (usersList)?(usersList.map((user, index) =>(
                 <div
-                className="flex items-center p-3 hover:bg-gray-700 rounded-lg cursor-pointer border-2 border-whiten m-2"
+                className="flex items-center p-3 hover:bg-gray-700 rounded-lg cursor-pointer border-2 border-whiten my-2"
                 onClick={()=>{
                   localStorage.setItem("selectedUsername", user.username)
                   localStorage.setItem("selectedEmail", user.email)
