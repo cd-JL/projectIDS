@@ -7,6 +7,7 @@ from pymongo import MongoClient
 import bcrypt
 import bson
 from bson.json_util import dumps
+from datetime import datetime
 
 # Load environment variables from the .env.local file
 # Referenced ChatGPT for directory structure and usage of dotenv for secure environment variables handling
@@ -224,16 +225,36 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
             
             self.wfile.write(json.dumps(response).encode())
 
-        
-        if self.path == '/sendMessage':
-            # CORS headers for POST
+        # Send Message Endpoint
+        elif self.path == '/sendMessage':
+            # Referenced ChatGPT for CORS headers and response handling for POST requests
             self.send_response(200)
             self.send_header('Access-Control-Allow-Origin', '*')
             self.send_header('Access-Control-Allow-Methods', 'POST')
             self.send_header('Access-Control-Allow-Headers', 'Content-Type')
             self.end_headers()
 
-            print("message send")
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+
+            try:
+                message_data = json.loads(post_data)
+            except json.JSONDecodeError:
+                self.send_response(400)
+                response = {'message': 'Invalid JSON format.'}
+                self.wfile.write(json.dumps(response).encode())
+                return
+            
+            if message_data:
+                message = {
+                    "sender": message_data['userEmail'],
+                    "receiver": message_data["selectedEmail"],
+                    "message": message_data["message"],
+                    "timestamp": datetime.now()
+                }
+
+                db.message.insert_one(message)
+                print(message, "inserted.")
 
 
         else:

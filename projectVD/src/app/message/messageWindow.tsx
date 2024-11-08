@@ -17,6 +17,7 @@ function MessageWindow() {
       })
       if(response.ok){
         console.log("Message send successfully.")
+        setMesssage("")
       } 
     } catch{
       console.log("Unable to send the message")
@@ -49,6 +50,7 @@ function MessageWindow() {
                 <input
                   type="text"
                   placeholder="Type a message..."
+                  value={message}
                   className="flex-1 p-2 bg-gray-700 text-white rounded-lg placeholder-gray-400"
                   onChange={(e)=> setMesssage(e.target.value)}
                 />
