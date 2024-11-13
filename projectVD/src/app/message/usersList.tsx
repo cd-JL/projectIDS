@@ -17,8 +17,8 @@ function UsersList() {
         console.log("Faild to fetch the users data")
       }
     }
-    catch{
-      console.log("ERROR FETCHING THE USERS LIST")
+    catch(error){
+      console.error("ERROR FETCHING THE USERS LIST", error)
     }
   }
 

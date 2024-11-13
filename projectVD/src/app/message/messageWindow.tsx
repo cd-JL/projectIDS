@@ -1,30 +1,50 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // Refernced chatGPT in creting this component
 function MessageWindow() {
   const selectedUsername = localStorage.getItem("selectedUsername");
   const selectedEmail = localStorage.getItem("selectedEmail");
   const userEmail = localStorage.getItem("userEmail")
   const [message, setMesssage] = useState();
+  const [send, addSend] = useState(0);
 
   const sendMessage = async (e: React.FormEvent)=>{
     e.preventDefault();
     const messageData = {userEmail, selectedEmail, message}
+      try {
+        const response = await fetch("http://localhost:8000/sendMessage", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(messageData)
+        })
+        if(response.ok){
+          console.log("Message send successfully.")
+          setMesssage("")
+          console.log(send)
+          addSend(send + 1)
+        } 
+      } catch{
+        console.log("Unable to send the message")
+      }
+  }
+
+  const getMessages = async ()=>{
+    const messageData = {userEmail, selectedEmail}
     try {
-      const response = await fetch("http://localhost:8000/sendMessage", {
+      const response = await fetch("http://localhost:8000/getMessages",{
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(messageData)
       })
-      if(response.ok){
-        console.log("Message send successfully.")
-        setMesssage("")
-      } 
-    } catch{
-      console.log("Unable to send the message")
+    } catch (error) {
+      console.error("Error fetching data", error)
     }
   }
-  
 
+  useEffect(() => {
+    getMessages()
+  },[])
+  
+  
   return (
     <>
       {/* Chat Window */}
@@ -48,11 +68,12 @@ function MessageWindow() {
               <form onSubmit={sendMessage}>
               <div className="p-4 bg-gray-800 flex items-center space-x-3">
                 <input
+                  required
                   type="text"
-                  placeholder="Type a message..."
+                  placeholder="Enter your message"
                   value={message}
                   className="flex-1 p-2 bg-gray-700 text-white rounded-lg placeholder-gray-400"
-                  onChange={(e)=> setMesssage(e.target.value)}
+                  onChange={(e)=> setMesssage(e.target.value.replace(/^\s+/, ''))}
                 />
                 <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600" type='submit'>
                   Send
