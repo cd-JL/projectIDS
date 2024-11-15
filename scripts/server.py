@@ -274,8 +274,24 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                 response = {'message': 'Invalid JSON format.'}
                 self.wfile.write(json.dumps(response).encode())
                 return
-            
-            print("api called")
+            print(message_data['userEmail'])
+
+            if message_data:
+                messages = list(db.message.find({
+                    "$or":[
+                        {"sender": message_data['userEmail'], "receiver": message_data['selectedEmail']},
+                        {"sender": message_data['selectedEmail'], "receiver": message_data['userEmail']}
+                    ]
+                }, {'_id': 0, 'timestamp': 0}).sort("timestamp", 1))
+                print("Messages: ", messages)
+                if messages:
+                    self.send_response(200)
+                    self.wfile.write(json.dumps(messages).encode())
+                else:
+                    self.send_response(204)
+            else:
+                print("Error accessign the data.")
+
         
 
 
