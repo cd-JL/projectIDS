@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ThreeDotMenu from './ThreeDotMenu';
-
+// Refernced chatGPT in creting this component
 function MessageWindow() {
   const selectedUsername = localStorage.getItem("selectedUsername");
   const selectedEmail = localStorage.getItem("selectedEmail");
@@ -65,21 +65,19 @@ function MessageWindow() {
           <div className="p-4 bg-gray-800 flex items-center justify-between">
             <h2 className="text-lg font-semibold">{selectedUsername}</h2>
           </div>
-          {loading ? (
-            <div className="p-4 text-gray-300">Loading messages...</div>
-          ) : noMessage ? (
+          {noMessage ? (
             <div className="flex-1 p-4 bg-gray-900 overflow-y-auto">
               <p className="text-lg text-gray-300">No Messages Yet</p>
             </div>
           ) : (
             <div className="flex-1 p-4 bg-gray-900 overflow-y-auto space-y-4">
               {fetchedMessages.map((msg, index) => (
-                <div key={index} className="p-2 rounded-lg bg-gray-800 w-full flex justify-between">
+                <div key={index} className={`p-2 rounded-lg bg-gray-800 flex justify-between w-1/2 mx-2 ${msg.sender === userEmail ? "float-right": "float-left"}`}>
                   <div >
-                  <p className="text-lg text-gray-300 mb-1">
+                  <p className="text-xs text-gray-300 mb-1">
                     {msg.sender === userEmail ? "You" : "Received"}
                   </p>
-                  <p className="text-lg text-gray-300">{msg.message}</p>
+                  <p className={` text-lg text-gray-300 w-full`}>{msg.message}</p>
                   </div>
                   <div className=" p-2">
                     <ThreeDotMenu/>

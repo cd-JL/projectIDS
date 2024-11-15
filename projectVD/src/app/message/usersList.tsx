@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-// Refernced chatGPT in creting this component
+  // Refernced chatGPT in creting this component                          
 function UsersList() {
   const [usersList, setUsersList] = useState();
   const userEmail = localStorage.getItem("userEmail");
