@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ThreeDotMenu from './ThreeDotMenu';
 
 function MessageWindow() {
   const selectedUsername = localStorage.getItem("selectedUsername");
@@ -73,11 +74,16 @@ function MessageWindow() {
           ) : (
             <div className="flex-1 p-4 bg-gray-900 overflow-y-auto space-y-4">
               {fetchedMessages.map((msg, index) => (
-                <div key={index} className="p-2 rounded-lg bg-gray-800 w-full">
+                <div key={index} className="p-2 rounded-lg bg-gray-800 w-full flex justify-between">
+                  <div >
                   <p className="text-lg text-gray-300 mb-1">
                     {msg.sender === userEmail ? "You" : "Received"}
                   </p>
                   <p className="text-lg text-gray-300">{msg.message}</p>
+                  </div>
+                  <div className=" p-2">
+                    <ThreeDotMenu/>
+                  </div>
                 </div>
               ))}
             </div>
