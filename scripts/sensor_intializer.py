@@ -34,6 +34,7 @@ PORT_SCAN_FILE = os.path.join(CACHE_DIR, "open_ports_configs.json")
 # Assuming sensor.py and portScanner.py are in the same folder as the current script
 SENSOR_SCRIPT = os.path.join(script_dir, "sensor.py")
 PORT_SCANNER_SCRIPT = os.path.join(script_dir, "portScanner.py")
+PORT_CHANGE= os.path.join(script_dir, "changePorts.py")
 
 SCAN_INTERVAL = 10  # Time interval in seconds between scans
 
@@ -348,6 +349,17 @@ def run_port_scanner():
     except FileNotFoundError:
         print(f"{PORT_SCANNER_SCRIPT} not found. Please ensure that {PORT_SCANNER_SCRIPT} is in the correct directory.")
 
+def run_port_change():
+    """Runs the changePorts.py script and waits for it to complete."""
+    try:
+        print(f"Running port change from path: {PORT_CHANGE}")
+        subprocess.run(["python", PORT_CHANGE], check=True)
+        print("portchange completed successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error running {PORT_CHANGE}: {e}")
+    except FileNotFoundError:
+        print(f"{PORT_CHANGE} not found. Please ensure that {PORT_CHANGE} is in the correct directory.")
+
 def cleanup(sensor_id):
     """Ensure sensor is marked as inactive when the program exits."""
     update_sensor_status(sensor_id, False)
@@ -368,6 +380,7 @@ def main():
                 run_sensor_script()
             upload_programs(sensor_id)
             upload_vulnerabilities(sensor_id)
+            #run_port_change()
 
             # Run port scanner and upload data
             run_port_scanner()
