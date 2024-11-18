@@ -67,7 +67,7 @@ function ProfilePage() {
             />}
 
             <h2 className="text-2xl font-semibold text-gray-800">{user?.username || "Username"}</h2> {/* Display username */}
-            <h3 className="text-xl font-semibold text-gray-800">Company XYZ</h3> {/* Static company name; consider dynamic value */}
+            <h3 className="text-xl font-semibold text-gray-800">{user?.company || ""}</h3> {/* Static company name; consider dynamic value */}
             <p className="text-gray-600">{user?.email || "Email"}</p> {/* Display user email */}
             <p className="text-gray-600">{user?.role || "role"}</p> {/* Display user role */}
           </div>
