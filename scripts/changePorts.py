@@ -1,11 +1,9 @@
 import json
-import time
+import subprocess
 import os
+import time
 from pymongo import MongoClient
 from dotenv import load_dotenv
-import subprocess
-import ctypes
-import re
 
 # MongoDB connection setup
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -21,164 +19,181 @@ client = MongoClient(MONGODB_URI)
 db = client['projectv']
 sensors_collection = db['sensors']
 
-CACHE_FILE_PATH = r"C:\Users\Jmast\OneDrive\Desktop\Scool\SAIT\Course Work\Capstone\projectIDS\scripts\cache\open_ports_configs.json"
-CHECK_INTERVAL = 60  # Interval for monitoring database changes in seconds
+CACHE_FILE_PATH = os.path.join(script_dir, "cache", "open_ports_configs.json")
 
 
-def is_user_admin():
+def debug(message):
+    """Print debug messages with a prefix."""
+    print(f"DEBUG: {message}")
+
+
+def load_cache():
+    """Load the local cache file."""
     try:
-        return ctypes.windll.shell32.IsUserAnAdmin()
-    except:
-        return False
+        with open(CACHE_FILE_PATH, 'r') as f:
+            cache = json.load(f)
+        debug(f"Cache content loaded successfully: {cache}")
+        return cache
+    except FileNotFoundError:
+        debug("Cache file not found. Returning empty cache.")
+        return {}
+    except json.JSONDecodeError as e:
+        debug(f"JSON decode error in cache file: {e}")
+        return {}
+    except Exception as e:
+        debug(f"Error loading cache: {e}")
+        return {}
 
 
-def add_firewall_rule(rule_name, port, protocol='TCP', direction='in', action='allow'):
+def get_db_services():
+    debug("Retrieving services from MongoDB.")
     try:
-        check_command = [
-            'netsh', 'advfirewall', 'firewall', 'show', 'rule',
-            f'name="{rule_name}"'
-        ]
+        sensor = sensors_collection.find_one({})
+        if not sensor:
+            debug("No sensor data found in the database.")
+            return {}
+
+        # Print raw document
+        debug(f"Raw MongoDB document: {sensor}")
+
+        services = sensor.get("services", [])
+        if not isinstance(services, list):
+            debug("Services field is not a list. Returning empty.")
+            return {}
+
+        # Process services
+        db_services = {service['name']: service for service in services if 'name' in service and 'port' in service}
+        debug(f"Processed db_services: {db_services}")
+        return db_services
+    except Exception as e:
+        debug(f"Error retrieving services from MongoDB: {e}")
+        return {}
+
+
+
+def add_firewall_rule(rule_name, port, protocol='TCP', direction='in', action='allow', profile='any'):
+    """Add a firewall rule."""
+    try:
+        check_command = ['netsh', 'advfirewall', 'firewall', 'show', 'rule', f'name="{rule_name}"']
         result = subprocess.run(check_command, capture_output=True, text=True)
         if 'No rules match the specified criteria' not in result.stdout:
-            print(f"DEBUG: Firewall rule '{rule_name}' already exists.")
+            debug(f"Firewall rule '{rule_name}' already exists.")
             return False
-
         add_command = [
             'netsh', 'advfirewall', 'firewall', 'add', 'rule',
             f'name="{rule_name}"',
-            f'dir={direction}',
-            f'action={action}',
-            f'protocol={protocol}',
-            f'localport={port}'
+            f'dir={direction}', f'action={action}',
+            f'protocol={protocol}', f'localport={port}', f'profile={profile}'
         ]
         subprocess.check_call(add_command)
-        print(f"DEBUG: Firewall rule '{rule_name}' added successfully.")
+        debug(f"Firewall rule '{rule_name}' added successfully.")
         return True
     except subprocess.CalledProcessError as e:
-        print(f"DEBUG: Failed to add firewall rule '{rule_name}': {e}")
+        debug(f"Failed to add firewall rule '{rule_name}': {e}")
         return False
 
 
 def delete_firewall_rule(rule_name):
+    """Delete the specified firewall rule."""
     try:
-        delete_command = [
-            'netsh', 'advfirewall', 'firewall', 'delete', 'rule',
-            f'name="{rule_name}"'
-        ]
+        delete_command = ['netsh', 'advfirewall', 'firewall', 'delete', 'rule', f'name="{rule_name}"']
         subprocess.check_call(delete_command)
-        print(f"DEBUG: Firewall rule '{rule_name}' deleted successfully.")
+        debug(f"Firewall rule '{rule_name}' deleted successfully.")
         return True
     except subprocess.CalledProcessError as e:
-        print(f"DEBUG: Failed to delete firewall rule '{rule_name}': {e}")
+        debug(f"Failed to delete firewall rule '{rule_name}': {e}")
+        return False
+
+
+def delete_all_rules_for_port(port):
+    """Delete all firewall rules for a specific port."""
+    try:
+        list_command = ['netsh', 'advfirewall', 'firewall', 'show', 'rule', 'name=all']
+        result = subprocess.run(list_command, capture_output=True, text=True)
+        rules_to_delete = [
+            line.split(':', 1)[1].strip().strip('"')
+            for line in result.stdout.splitlines() if line.startswith("Rule Name:")
+        ]
+        for rule in rules_to_delete:
+            delete_firewall_rule(rule)
+        debug(f"Deleted all rules for port {port}.")
+        return True
+    except Exception as e:
+        debug(f"Error deleting rules for port {port}: {e}")
         return False
 
 
 def open_port(port):
-    protocols = ['TCP', 'UDP']
-    for proto in protocols:
-        add_firewall_rule(f"Allow_Port_{port}_{proto}_Inbound", port, proto, 'in', 'allow')
-        add_firewall_rule(f"Allow_Port_{port}_{proto}_Outbound", port, proto, 'out', 'allow')
-    print(f"DEBUG: Opened port {port}.")
+    """Open the specified port."""
+    debug(f"Opening port: {port}")
+    delete_all_rules_for_port(port)
+    add_firewall_rule(f"Allow_Port_{port}_TCP", port, protocol='TCP', direction='in', action='allow')
+    add_firewall_rule(f"Allow_Port_{port}_UDP", port, protocol='UDP', direction='in', action='allow')
 
 
 def close_port(port):
-    protocols = ['TCP', 'UDP']
-    for proto in protocols:
-        delete_firewall_rule(f"Allow_Port_{port}_{proto}_Inbound")
-        delete_firewall_rule(f"Allow_Port_{port}_{proto}_Outbound")
-    print(f"DEBUG: Closed port {port}.")
+    """Close the specified port."""
+    debug(f"Closing port: {port}")
+    delete_all_rules_for_port(port)
+    add_firewall_rule(f"Block_Port_{port}_TCP", port, protocol='TCP', direction='in', action='block')
+    add_firewall_rule(f"Block_Port_{port}_UDP", port, protocol='UDP', direction='in', action='block')
 
 
-def load_cache():
-    try:
-        with open(CACHE_FILE_PATH, 'r') as f:
-            cache = json.load(f)
-        print("DEBUG: Loaded cache successfully.")
-        return cache
-    except FileNotFoundError:
-        print("DEBUG: Cache file not found. Initializing with empty cache.")
-        return {"services": {}}
-    except json.JSONDecodeError as e:
-        print(f"DEBUG: JSON decode error in cache file: {e}")
-        return {"services": {}}
+def sync_services(db_services, cache_services):
+    """
+    Sync services between the database and cache, focusing only on services.
+    """
+    debug("Syncing services between database and cache.")
+    services_to_update = {}
+    ports_to_open = []
+    ports_to_close = []
 
+    # Compare database and cache services
+    for name, cache_service in cache_services.items():
+        if name == "all_open_ports" or "port" not in cache_service:
+            continue  # Skip unrelated entries
+        db_service = db_services.get(name)
+        if db_service:
+            # Compare statuses to decide actions
+            if cache_service['status'] != db_service['status']:
+                services_to_update[name] = cache_service
+                if cache_service['status'] == "Port is open":
+                    ports_to_open.append(cache_service['port'])
+                else:
+                    ports_to_close.append(cache_service['port'])
+        else:
+            # Add missing service to open ports
+            ports_to_open.append(cache_service['port'])
 
-def save_cache(cache_data):
-    try:
-        with open(CACHE_FILE_PATH, 'w') as f:
-            json.dump(cache_data, f, indent=4)
-        print("DEBUG: Cache updated successfully.")
-    except Exception as e:
-        print(f"DEBUG: Exception occurred while saving cache: {e}")
-
-
-def get_db_services():
-    try:
-        sensor = sensors_collection.find_one({})
-        if not sensor:
-            print("DEBUG: No sensor data found in the database.")
-            return {}
-
-        return {service['name']: service for service in sensor.get("services", [])}
-    except Exception as e:
-        print(f"DEBUG: Exception occurred while fetching data from MongoDB: {e}")
-        return {}
-
-
-def compare_and_apply_changes(db_services, cache_services):
-    services_to_open = []
-    services_to_close = []
-
-    for name, service in db_services.items():
-        if name not in cache_services or cache_services[name]['status'] != service['status']:
-            if service['status'].startswith('Port') and 'open' in service['status']:
-                services_to_open.append(service['port'])
-            elif service['status'].startswith('Port') and 'closed' in service['status']:
-                services_to_close.append(service['port'])
-
-    for name, service in cache_services.items():
-        if name not in db_services:
-            services_to_close.append(service['port'])
-
-    # Apply changes
-    for port in services_to_open:
+    # Apply port updates
+    for port in ports_to_close:
+        close_port(port)
+    for port in ports_to_open:
         open_port(port)
 
-    for port in services_to_close:
-        close_port(port)
+    debug(f"Services to update: {services_to_update}")
+    debug(f"Ports to open: {ports_to_open}")
+    debug(f"Ports to close: {ports_to_close}")
 
-    return db_services
 
 
 def main_loop():
-    if not is_user_admin():
-        print("DEBUG: This script requires administrative privileges.")
-        sys.exit(1)
-
-    cache = load_cache()
-    cache_services = cache.get("services", {})
-
+    """Main loop to monitor and sync services."""
+    debug("Starting main loop.")
     while True:
-        print("DEBUG: Checking database for changes...")
-        db_services = get_db_services()
-
-        if not db_services:
-            print("DEBUG: No services retrieved. Skipping this cycle.")
-        else:
-            updated_services = compare_and_apply_changes(db_services, cache_services)
-            cache["services"] = updated_services
-            save_cache(cache)
-
-        print(f"DEBUG: Sleeping for {CHECK_INTERVAL} seconds...\n")
-        time.sleep(CHECK_INTERVAL)
+        try:
+            db_services = get_db_services()
+            cache = load_cache()
+            cache_services = {name: service for name, service in cache.items() if isinstance(service, dict) and "port" in service}
+            sync_services(db_services, cache_services)
+            debug("Sleeping for 5 seconds.")
+            time.sleep(5)
+        except KeyboardInterrupt:
+            debug("Main loop terminated by user.")
+            break
+        except Exception as e:
+            debug(f"Error in main loop: {e}")
 
 
 if __name__ == '__main__':
-    try:
-        main_loop()
-    except KeyboardInterrupt:
-        print("\nDEBUG: Script terminated by user.")
-        sys.exit(0)
-    except Exception as e:
-        print(f"DEBUG: Unexpected exception: {e}")
-        sys.exit(1)
+    main_loop()

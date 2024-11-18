@@ -20,7 +20,7 @@ if not MONGODB_URI:
 
 client = MongoClient(MONGODB_URI)
 db = client['projectv']
-sensors_collection = db['sensors']
+sensors_collection = db['ports']
 
 @app.route('/api/update_port', methods=['POST'])
 def update_port():
@@ -40,73 +40,59 @@ def update_port():
     except ValueError:
         return jsonify({'error': 'Port must be an integer.'}), 400
 
-    # Retrieve sensor from the database
+    # Retrieve the sensor document
     sensor = sensors_collection.find_one({"sensorId": sensor_id})
     if not sensor:
-        print(f"DEBUG: Sensor with ID {sensor_id} not found.")
+        print(f"[Error]: Sensor with ID {sensor_id} not found.")
         return jsonify({'error': 'Sensor not found.'}), 404
 
-    print(f"DEBUG: Sensor retrieved: {sensor}")
+    print(f"[Sensor Retrieved]: {sensor_id} -> Device Name: {sensor.get('deviceName')}")
+    
+    # Query the specific service with the provided port
+    service_entry = next((s for s in sensor.get('services', []) if s['port'] == port), None)
+    print(f"[Service Entry for Port {port}]: {service_entry}")
 
-    services = sensor.get('services', [])
+    # Determine the new status and dangerous flag
+    new_status = f"Port {port} is open" if action == 'open' else f"Port {port} is closed"
+    new_dangerous = action == 'open'
 
-    # Find the service entry for the specified port
-    service_entry = next((service for service in services if service['port'] == port), None)
-    print(f"DEBUG: Service entry for port {port}: {service_entry}")
-
-    # Validate action
-    if action not in ['open', 'close']:
-        print(f"DEBUG: Invalid action received: {action}")
-        return jsonify({'error': 'Invalid action. Must be "open" or "close".'}), 400
-
-    if action == 'open':
-        if service_entry and service_entry.get('status', '').startswith(f"Port {port} is open"):
-            print(f"DEBUG: Port {port} is already open for sensor {sensor_id}.")
-            return jsonify({'error': f'Port {port} is already open for sensor {sensor_id}.'}), 400
-    elif action == 'close':
-        if service_entry and service_entry.get('status', '').startswith(f"Port {port} is closed"):
-            print(f"DEBUG: Port {port} is already closed for sensor {sensor_id}.")
-            return jsonify({'message': f'Port {port} is already closed for sensor {sensor_id}.'}), 200
-        elif not service_entry:
-            print(f"DEBUG: Port {port} is not currently open for sensor {sensor_id}. Closing anyway.")
-        else:
-            print(f"DEBUG: Closing port {port} for sensor {sensor_id}.")
-
-    # Perform the requested action on the 'services' array
     if service_entry:
-        # Update existing service entry
-        new_status = f"Port {port} is open" if action == 'open' else f"Port {port} is closed"
-        new_dangerous = True if action == 'open' else False
-
-        print(f"DEBUG: Updating sensor {sensor_id}, port {port} with status: {new_status}, dangerous: {new_dangerous}")
+        # Update the matching service entry
         result = sensors_collection.update_one(
-            {"sensorId": sensor_id, "services.port": port},  # Match sensor and port
-            {"$set": {
-                "services.$[elem].status": new_status,
-                "services.$[elem].dangerous": new_dangerous
-            }},
-            array_filters=[{"elem.port": port}]  # Specify the target array element
+            {"sensorId": sensor_id, "services.port": port},
+            {
+                "$set": {
+                    "services.$.status": new_status,
+                    "services.$.dangerous": new_dangerous
+                }
+            }
         )
-        print(f"DEBUG: Update existing service entry result: {result.raw_result}")
+        print(f"[MongoDB Update Result]: {result.raw_result}")
     else:
-        # Create a new service entry
-        new_status = f"Port {port} is open" if action == 'open' else f"Port {port} is closed"
-        new_dangerous = True if action == 'open' else False
-        print(f"DEBUG: Adding new service entry for sensor {sensor_id}, port {port}")
-        result = sensors_collection.update_one(
+        # Add a new service entry
+        sensors_collection.update_one(
             {"sensorId": sensor_id},
-            {"$push": {"services": {
-                "name": f"Port {port}",
-                "port": port,
-                "status": new_status,
-                "dangerous": new_dangerous
-            }}}
+            {
+                "$push": {
+                    "services": {
+                        "name": f"Port {port}",
+                        "port": port,
+                        "status": new_status,
+                        "dangerous": new_dangerous
+                    }
+                }
+            }
         )
-        print(f"DEBUG: Add new service entry result: {result.raw_result}")
+        print(f"[New Entry Added]: Port {port} -> Status: '{new_status}', Dangerous: {new_dangerous}")
 
-    print(f"DEBUG: Successfully {action}ed port {port} for sensor {sensor_id}.")
+    # Fetch the updated service entry for the port
+    updated_service_entry = sensors_collection.find_one(
+        {"sensorId": sensor_id},
+        {"services": {"$elemMatch": {"port": port}}}
+    )
+    print(f"[Updated Service Entry for Port {port}]: {updated_service_entry}")
+
     return jsonify({'message': f'Port {port} {action}ed for sensor {sensor_id}.'}), 200
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
