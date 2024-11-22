@@ -1,132 +1,82 @@
-// The ChartTwo component shows a bar chart of total vulnerabilities for each device using the react-apexcharts library in a Next.js application. 
-// It takes a prop that includes an array of device names and their total vulnerabilities. The component loads the ReactApexChart dynamically, 
-// sets up the chart options (like axis titles and type), and prepares the data for the chart. 
-// Finally, it displays the chart in a div with a heading that explains what the chart is about.
+import React, { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import { ApexOptions } from "apexcharts";
 
-// "use client"; // Indicating that this file should be treated as a client component in a Next.js app
-
-// import React from "react"; // Importing the React library to use its features
-// import dynamic from "next/dynamic"; // Importing the dynamic function from Next.js for dynamic component loading
-// import { ApexOptions } from "apexcharts"; // Importing the ApexOptions type for defining chart options
-
-// // Dynamically importing the ReactApexChart component from the react-apexcharts library, disabling server-side rendering
-// const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
-
-// // Defining the props type for the ChartTwo component
-// interface ChartTwoProps {
-//   data: { deviceName: string; totalVulnerabilities: number }[]; // The data prop should be an array of objects, each containing a device name and its total vulnerabilities
-// }
-
-// // Defining the ChartTwo functional component
-// const ChartTwo: React.FC<ChartTwoProps> = ({ data }) => {
-//   // Creating the series data for the chart by mapping the total vulnerabilities from the data prop
-//   const series = [
-//     {
-//       name: "Total Vulnerabilities", // Name for the data series
-//       data: data.map(d => d.totalVulnerabilities), // Extracting the total vulnerabilities values from the data
-//     },
-//   ];
-
-//   // Defining the options for the chart, including chart type and axis titles
-//   const options: ApexOptions = {
-    
-//     chart: {
-//       type: "bar", // Specifying the chart type as a bar chart
-//       height: 350, // Setting the height of the chart
-//     },
-//     title: {
-//       text: "Total Vulnerabilities by Device", // Title of the chart
-//       // style: {
-//       //   color: "white", // Set the title text color to white
-//       // },
-//     },
-//     xaxis: {
-//       categories: data.map(d => d.deviceName), // Setting the x-axis categories to the device names from the data
-//       title: {
-//         text: "Devices", // Title for the x-axis
-//       },
-//     },
-//     yaxis: {
-//       title: {
-//         text: "Total Vulnerabilities", // Title for the y-axis
-//       },
-//     },
-//   };
-
-//   // Rendering the chart within a div, along with a heading
-//   return (
-//     <div>
-//       <ReactApexChart options={options} series={series} type="bar" height={350} /> 
-//     </div>
-//     // Rendering the ReactApexChart with the defined options and series
-//   );
-// };
-
-// // Exporting the ChartTwo component for use in other parts of the application
-// export default ChartTwo;
-
-"use client"; // Indicating that this file should be treated as a client component in a Next.js app
-
-import React from "react"; // Importing the React library to use its features
-import dynamic from "next/dynamic"; // Importing the dynamic function from Next.js for dynamic component loading
-import { ApexOptions } from "apexcharts"; // Importing the ApexOptions type for defining chart options
-
-// Dynamically importing the ReactApexChart component from the react-apexcharts library, disabling server-side rendering
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-// Defining the props type for the ChartTwo component
 interface ChartTwoProps {
-  data: { deviceName: string; totalVulnerabilities: number }[]; // The data prop should be an array of objects, each containing a device name and its total vulnerabilities
+  data: { deviceName: string; totalVulnerabilities: number }[];
 }
 
-// Defining the ChartTwo functional component
 const ChartTwo: React.FC<ChartTwoProps> = ({ data }) => {
-  // Creating the series data for the chart by mapping the total vulnerabilities from the data prop
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    const body = document.body;
+    setIsDarkMode(body.classList.contains("dark"));
+
+    // Optional: Listen for class changes if dark mode can be toggled dynamically
+    const observer = new MutationObserver(() => {
+      setIsDarkMode(body.classList.contains("dark"));
+    });
+
+    observer.observe(body, { attributes: true, attributeFilter: ["class"] });
+
+    return () => observer.disconnect();
+  }, []);
+
   const series = [
     {
-      name: "Total Vulnerabilities", // Name for the data series
-      data: data.map(d => d.totalVulnerabilities), // Extracting the total vulnerabilities values from the data
+      name: "Total Vulnerabilities",
+      data: data.map(d => d.totalVulnerabilities),
     },
   ];
 
-  // Defining the options for the chart, including chart type and axis titles
   const options: ApexOptions = {
     chart: {
-      type: "bar", // Specifying the chart type as a bar chart
-      height: 350, // Setting the height of the chart
+      type: "bar",
+      height: 350,
       toolbar: {
         show: true,
       },
+      // Adjust chart background based on dark mode
+      background: isDarkMode ? "#1e1e1e" : "#ffffff",
     },
     plotOptions: {
       bar: {
-        horizontal: true, // Setting the bars to be horizontal
+        horizontal: true,
+        colors: {
+          backgroundBarColors: isDarkMode ? ["#333"] : ["#f3f4f6"],
+          // You can customize bar colors further if needed
+        },
       },
     },
     title: {
-      text: "Total Vulnerabilities by Device", // Title of the chart
+      text: "Total Vulnerabilities by Device",
+      style: {
+        color: isDarkMode ? "#ffffff" : "#000000",
+      },
     },
     xaxis: {
-      categories: data.map(d => d.deviceName), // Setting the x-axis categories to the device names from the data
+      categories: data.map(d => d.deviceName),
       title: {
-        text: "Total Vulnerabilities", // Title for the x-axis (now horizontal axis)
+        text: "Total Vulnerabilities",
       },
     },
     yaxis: {
       title: {
-        text: "Devices", // Title for the y-axis (now vertical axis)
+        text: "Devices",
       },
     },
+
   };
 
-  // Rendering the chart within a div, along with a heading
   return (
-    <div>
-      <ReactApexChart options={options} series={series} type="bar" height={350} /> 
+    <div className={isDarkMode ? "dark-mode-wrapper" : "light-mode-wrapper"}>
+      <ReactApexChart options={options} series={series} type="bar" height={350} />
+      {/* Wrap other text elements similarly */}
     </div>
-    // Rendering the ReactApexChart with the defined options and series
   );
 };
 
-// Exporting the ChartTwo component for use in other parts of the application
 export default ChartTwo;

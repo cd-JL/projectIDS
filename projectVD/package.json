@@ -3,7 +3,7 @@
   "version": "1.3.5",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently \"next dev\" \"python ../scripts/api_server.py\" \"python ../scripts/server.py\" \"python ../scripts/changePorts.py\" \"python ../scripts/sensor_intializer.py\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -33,6 +33,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "concurrently": "^9.1.0",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "postcss": "^8",

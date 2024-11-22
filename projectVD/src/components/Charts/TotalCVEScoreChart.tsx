@@ -1,116 +1,186 @@
+"use client";
 
+import React, { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import { ApexOptions } from "apexcharts";
 
-// "use client"; // Indicating that this file should be treated as a client component in a Next.js app
-
-// import React from "react"; // Importing the React library to use its features
-// import dynamic from "next/dynamic"; // Importing the dynamic function from Next.js for dynamic component loading
-// import { ApexOptions } from "apexcharts"; // Importing the ApexOptions type for defining chart options
-
-// // Dynamically importing the ReactApexChart component from the react-apexcharts library, disabling server-side rendering
-// const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
-
-// // Defining the props type for the TotalCVEScoreChart component
-// interface TotalCVEScoreChartProps {
-//   data: { deviceName: string; totalCveScore: number }[]; // The data prop should be an array of objects, each containing a device name and its total CVE score
-// }
-
-// // Defining the TotalCVEScoreChart functional component
-// const TotalCVEScoreChart: React.FC<TotalCVEScoreChartProps> = ({ data }) => {
-//   // Creating the series data for the chart by mapping the total CVE score values from the data prop
-//   const series = [
-//     {
-//       name: "Total CVE Score", // Name for the data series
-//       data: data.map(d => d.totalCveScore), // Extracting the total CVE score values from the data
-//     },
-//   ];
-
-//   // Defining the options for the chart, including chart type and axis titles
-//   const options: ApexOptions = {
-//     chart: {
-//       type: "bar", // Specifying the chart type as a bar chart
-//       height: 350, // Setting the height of the chart
-//     },
-//     xaxis: {
-//       categories: data.map(d => d.deviceName), // Setting the x-axis categories to the device names from the data
-//       title: {
-//         text: "Sensors", // Title for the x-axis
-//       },
-//     },
-//     yaxis: {
-//       title: {
-//         text: "Total CVE Score", // Title for the y-axis
-//       },
-//     },
-//   };
-
-//   // Rendering the chart within a div, along with a heading
-//   return (
-//     <div>
-//       <h3>Total CVE Score by Sensor</h3> // Heading for the chart
-//       <ReactApexChart options={options} series={series} type="bar" height={350} /> // Rendering the ReactApexChart with the defined options and series
-//     </div>
-//   );
-// };
-
-// // Exporting the TotalCVEScoreChart component for use in other parts of the application
-// export default TotalCVEScoreChart;
-
-"use client"; // Indicating that this file should be treated as a client component in a Next.js app
-
-import React from "react"; // Importing the React library to use its features
-import dynamic from "next/dynamic"; // Importing the dynamic function from Next.js for dynamic component loading
-import { ApexOptions } from "apexcharts"; // Importing the ApexOptions type for defining chart options
-
-// Dynamically importing the ReactApexChart component from the react-apexcharts library, disabling server-side rendering
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-// Defining the props type for the TotalCVEScoreChart component
 interface TotalCVEScoreChartProps {
-  data: { deviceName: string; totalCveScore: number }[]; // The data prop should be an array of objects, each containing a device name and its total CVE score
+  data: { deviceName: string; totalCveScore: number }[];
 }
 
-// Defining the TotalCVEScoreChart functional component
 const TotalCVEScoreChart: React.FC<TotalCVEScoreChartProps> = ({ data }) => {
-  // Creating the series data for the chart by mapping the total CVE score values from the data prop
-  const series = [
-    {
-      name: "Total CVE Score", // Name for the data series
-      data: data.map(d => d.totalCveScore), // Extracting the total CVE score values from the data
-    },
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [chartOptions, setChartOptions] = useState<ApexOptions>({});
+  const [series, setSeries] = useState<any[]>([]);
+
+  // Professional color palette
+  const colorPalette = [
+    "#2563eb", // Primary Blue
+    "#3b82f6", // Secondary Blue
+    "#60a5fa", // Accent Blue
   ];
 
-  // Defining the options for the chart, including chart type and axis titles
-  const options: ApexOptions = {
-    chart: {
-      type: "line", // Changed the chart type to 'line'
-      height: 350, // Setting the height of the chart
-    },
-    title: {
-      text: "Total CVE Score by Sensor", // Title of the chart
-    },
-    xaxis: {
-      categories: data.map(d => d.deviceName), // Setting the x-axis categories to the device names from the data
-      title: {
-        text: "Sensors", // Title for the x-axis
-      },
-    },
-    yaxis: {
-      title: {
-        text: "Total CVE Score", // Title for the y-axis
-      },
-    },
-    stroke: {
-      curve: 'smooth', // Optional: Makes the line smooth
-    },
-  };
+  useEffect(() => {
+    const body = document.body;
+    const updateDarkMode = () => {
+      const darkModeEnabled = body.classList.contains("dark");
+      setIsDarkMode(darkModeEnabled);
+    };
 
-  // Rendering the chart within a div, along with a heading
+    updateDarkMode();
+    const observer = new MutationObserver(updateDarkMode);
+    observer.observe(body, { attributes: true, attributeFilter: ["class"] });
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!data || !Array.isArray(data) || data.length === 0) return;
+
+    setSeries([
+      {
+        name: "Total CVE Score",
+        data: data.map(d => d.totalCveScore),
+      },
+    ]);
+
+    setChartOptions({
+      chart: {
+        type: "line",
+        height: 350,
+        background: isDarkMode ? "#1e1e1e" : "#ffffff",
+        foreColor: isDarkMode ? "#e5e7eb" : "#374151",
+        toolbar: {
+          show: true,
+          tools: {
+            download: true,
+            selection: true,
+            zoom: true,
+            zoomin: true,
+            zoomout: true,
+            pan: true,
+            reset: true,
+          },
+        },
+      },
+      colors: colorPalette,
+      title: {
+        text: "Total CVE Score by Sensor",
+        align: "left",
+        style: {
+          fontSize: "18px",
+          fontWeight: "600",
+          color: isDarkMode ? "#e5e7eb" : "#111827",
+        },
+      },
+      stroke: {
+        curve: "smooth",
+        width: 3,
+      },
+      markers: {
+        size: 6,
+        strokeWidth: 0,
+        hover: {
+          size: 8,
+        },
+      },
+      grid: {
+        show: true,
+        borderColor: isDarkMode ? "#374151" : "#e5e7eb",
+        strokeDashArray: 2,
+        position: "back",
+      },
+      xaxis: {
+        categories: data.map(d => d.deviceName),
+        title: {
+          text: "Sensors",
+          style: {
+            fontSize: "14px",
+            fontWeight: "500",
+            color: isDarkMode ? "#e5e7eb" : "#374151",
+          },
+        },
+        labels: {
+          style: {
+            colors: isDarkMode ? "#e5e7eb" : "#374151",
+          },
+        },
+        axisBorder: {
+          color: isDarkMode ? "#374151" : "#e5e7eb",
+        },
+        axisTicks: {
+          color: isDarkMode ? "#374151" : "#e5e7eb",
+        },
+      },
+      yaxis: {
+        title: {
+          text: "Total CVE Score",
+          style: {
+            fontSize: "14px",
+            fontWeight: "500",
+            color: isDarkMode ? "#e5e7eb" : "#374151",
+          },
+        },
+        labels: {
+          style: {
+            colors: isDarkMode ? "#e5e7eb" : "#374151",
+          },
+          formatter: (value) => value.toFixed(1),
+        },
+      },
+      tooltip: {
+        theme: isDarkMode ? "dark" : "light",
+        y: {
+          formatter: (value) => value.toFixed(2),
+        },
+        style: {
+          fontSize: "14px",
+        },
+      },
+      legend: {
+        position: "top",
+        horizontalAlign: "right",
+        fontSize: "14px",
+        fontWeight: "500",
+        labels: {
+          colors: isDarkMode ? "#e5e7eb" : "#374151",
+        },
+        markers: {
+          width: 12,
+          height: 12,
+          radius: 6,
+        },
+      },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            legend: {
+              position: "bottom",
+              offsetY: 7,
+            },
+          },
+        },
+      ],
+    });
+  }, [data, isDarkMode]);
+
+  if (!data || !Array.isArray(data) || data.length === 0) {
+    return <div>No data available.</div>;
+  }
+
   return (
-    <div>
-      <ReactApexChart options={options} series={series} type="line" height={350} />
+    <div className={isDarkMode ? "dark-mode-wrapper" : "light-mode-wrapper"}>
+      <ReactApexChart 
+        options={chartOptions} 
+        series={series} 
+        type="line" 
+        height={350} 
+      />
     </div>
   );
 };
 
-// Exporting the TotalCVEScoreChart component for use in other parts of the application
 export default TotalCVEScoreChart;

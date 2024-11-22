@@ -21,7 +21,6 @@ interface Sensor {
   services?: { services: Service[]; all_open_ports?: number[] }[];
 }
 
-// Fetch port data for the specific company ID
 const fetchPortData = async (companyId: string): Promise<Sensor[]> => {
   try {
     const response = await fetch(
@@ -39,7 +38,6 @@ const fetchPortData = async (companyId: string): Promise<Sensor[]> => {
     }
 
     const data = await response.json();
-    console.log("Fetched Port Data:", data);
     return data;
   } catch (error) {
     console.error("Error fetching port data:", error);
@@ -51,15 +49,15 @@ const TablesPage = () => {
   const [sensorData, setSensorData] = useState<Sensor[]>([]);
   const [selectedSensorId, setSelectedSensorId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   const updatePortData = useCallback(async () => {
     setLoading(true);
     try {
       const data = await fetchPortData("670300d49e3775f3873461fd");
-      console.log('Fetched sensor data:', data);
       setSensorData(data);
+      setLastUpdated(new Date());
 
-      // Set the selected sensor to the first one if not set
       if (!selectedSensorId && data.length > 0) {
         const firstSensorId = data[0].sensorId;
         setSelectedSensorId(firstSensorId);
@@ -73,6 +71,8 @@ const TablesPage = () => {
 
   useEffect(() => {
     updatePortData();
+    const interval = setInterval(updatePortData, 10000);
+    return () => clearInterval(interval);
   }, [updatePortData]);
 
   const selectedSensor = useMemo(
@@ -85,7 +85,6 @@ const TablesPage = () => {
       sensor.services?.flatMap((service) => service.all_open_ports || []) || [];
     const directOpenPorts = sensor.all_open_ports || [];
     const uniquePorts = new Set([...directOpenPorts, ...nestedOpenPorts]);
-
     return uniquePorts.size;
   }, []);
 
@@ -99,65 +98,118 @@ const TablesPage = () => {
   );
 
   const sensorOptions = useMemo(() => {
-    return sensorData.map((sensor) => {
-      const numberOfOpenPorts = calculateNumberOfOpenPorts(sensor);
-      const numberOfDangerousServices =
-        calculateNumberOfDangerousServices(sensor);
-
-      return (
-        <option key={sensor.sensorId} value={sensor.sensorId}>
-          {sensor.deviceName || sensor.sensorId} | Open Ports: {numberOfOpenPorts} | Dangerous
-          Services: {numberOfDangerousServices}
-        </option>
-      );
-    });
-  }, [
-    sensorData,
-    calculateNumberOfOpenPorts,
-    calculateNumberOfDangerousServices,
-  ]);
-
-  const handleSensorChange = useCallback(
-    (event: React.ChangeEvent<HTMLSelectElement>) => {
-      const sensorId = event.target.value;
-      setSelectedSensorId(sensorId);
-    },
-    []
-  );
+    return sensorData.map((sensor) => ({
+      id: sensor.sensorId,
+      name: sensor.deviceName || sensor.sensorId,
+      openPorts: calculateNumberOfOpenPorts(sensor),
+      dangerousServices: calculateNumberOfDangerousServices(sensor),
+    }));
+  }, [sensorData, calculateNumberOfOpenPorts, calculateNumberOfDangerousServices]);
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Device Status" />
+      <Breadcrumb pageName="Port Monitoring" />
 
-      <div className="flex flex-col gap-10 bg-white dark:bg-gray-900 p-6">
+      <div className="flex flex-col gap-6">
         {loading ? (
-          <LoadingSpinner />
-        ) : sensorData.length > 0 ? (
-          <>
-            <div className="flex justify-between mb-4">
-              <select
-                value={selectedSensorId}
-                onChange={handleSensorChange}
-                className="p-2 border rounded dark:bg-gray-700 dark:text-white"
-              >
-                {sensorOptions}
-              </select>
-              <button
-                onClick={updatePortData}
-                className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-              >
-                Refresh Data
-              </button>
-            </div>
-            {selectedSensor && (
-              <TableFour
-                sensor={selectedSensor}
-                onPortChange={updatePortData}
-              />
-            )}
-          </>
+          <div className="flex justify-center items-center min-h-[400px]">
+            <LoadingSpinner />
+          </div>
         ) : (
-          <p className="text-center dark:text-white">No devices available</p>
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+            {sensorData.length > 0 ? (
+              <>
+                {/* Header Section */}
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                  <div className="flex-1">
+                    <label className="block text-sm font-medium mb-2 dark:text-gray-300">
+                      Select Device
+                    </label>
+                    <div className="relative">
+                      <select
+                        value={selectedSensorId}
+                        onChange={(e) => setSelectedSensorId(e.target.value)}
+                        className="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                      >
+                        {sensorOptions.map((option) => (
+                          <option key={option.id} value={option.id}>
+                            {option.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <button
+                    onClick={updatePortData}
+                    className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Refresh
+                  </button>
+                </div>
+
+                {/* Last Updated */}
+                {lastUpdated && (
+                  <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                    Last updated: {lastUpdated.toLocaleTimeString()}
+                  </div>
+                )}
+
+                {/* Stats Cards */}
+                {selectedSensor && (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                      <div className="text-blue-600 dark:text-blue-400 text-sm font-medium">
+                        Open Ports
+                      </div>
+                      <div className="text-2xl font-bold text-blue-700 dark:text-blue-300">
+                        {calculateNumberOfOpenPorts(selectedSensor)}
+                      </div>
+                    </div>
+                    <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg">
+                      <div className="text-red-600 dark:text-red-400 text-sm font-medium">
+                        Dangerous Services
+                      </div>
+                      <div className="text-2xl font-bold text-red-700 dark:text-red-300">
+                        {calculateNumberOfDangerousServices(selectedSensor)}
+                      </div>
+                    </div>
+                    <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
+                      <div className="text-green-600 dark:text-green-400 text-sm font-medium">
+                        Total Services
+                      </div>
+                      <div className="text-2xl font-bold text-green-700 dark:text-green-300">
+                        {selectedSensor.services?.reduce(
+                          (acc, service) => acc + (service.services?.length || 0),
+                          0
+                        ) || 0}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Port Table */}
+                {selectedSensor && (
+                  <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
+                    <TableFour
+                      sensor={selectedSensor}
+                      onPortChange={updatePortData}
+                    />
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                <svg className="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <p className="mt-2 text-sm">No devices available</p>
+              </div>
+            )}
+          </div>
         )}
       </div>
     </DefaultLayout>
