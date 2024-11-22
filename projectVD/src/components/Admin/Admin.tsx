@@ -29,42 +29,45 @@ const Admin = () => {
 
   return (
     <div className="p-6">
-      <div className="text-lg font-semibold mb-4">Admin Panel</div>
+  <div className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">Admin Panel</div>
 
-      {/* Users Table */}
-      <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-lg">
-        <thead>
-          <tr className="bg-gray-100 text-gray-700">
-            <th className="py-2 px-4 border-b">No.</th>
-            <th className="py-2 px-4 border-b">Username</th>
-            <th className="py-2 px-4 border-b">Email</th>
-            <th className="py-2 px-4 border-b">Company</th>
-            <th className="py-2 px-4 border-b">Status</th>
-            <th className="py-2 px-4 border-b">Edit</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Array.isArray(users) ? (
-            users.map((user, index) => (
-              user.email !== userEmail && user.role !== 'owner' ? (
-                <tr key={index} className="hover:bg-gray-50">
-                  <td className="py-2 px-4 border-b">{index}</td> {/* Display index + 1 for user number */}
-                  <td className="py-2 px-4 border-b">{user.username}</td>
-                  <td className="py-2 px-4 border-b">{user.email}</td>
-                  <td className="py-2 px-4 border-b">{user.company}</td>
-                  <td className="py-2 px-4 border-b">{user.status}</td>
-                  <ThreeDotMenu email={user.email} username={user.username}/> {/* Render the three dot menu */}
-                </tr>
-              ) : null
-            ))
-          ) : (
-            <tr>
-              <td colSpan="5" className="py-2 px-4 border-b text-center">No users found.</td> {/* Fallback if no users */}
+  {/* Users Table */}
+  <table className="min-w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg w-full">
+    <thead>
+      <tr className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+        <th className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">No.</th>
+        <th className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">Username</th>
+        <th className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">Email</th>
+        <th className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">Company</th>
+        <th className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">Status</th>
+        <th className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {Array.isArray(users) ? (
+        users.map((user, index) => (
+          user.email !== userEmail && user.role !== 'owner' ? (
+            <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+              <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200">{index + 1}</td> {/* Display index + 1 for user number */}
+              <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200">{user.username}</td>
+              <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200">{user.email}</td>
+              <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200">{user.company}</td>
+              <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200">{user.status}</td>
+              <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+                <ThreeDotMenu email={user.email} username={user.username} />
+              </td> {/* Render the three dot menu */}
             </tr>
-          )}
-        </tbody>
-      </table>
-    </div>
+          ) : null
+        ))
+      ) : (
+        <tr>
+          <td colSpan="6" className="py-2 px-4 border-b border-gray-200 dark:border-gray-700 text-center text-gray-800 dark:text-gray-200">No users found.</td> {/* Fallback if no users */}
+        </tr>
+      )}
+    </tbody>
+  </table>
+</div>
+
   );
 };
 

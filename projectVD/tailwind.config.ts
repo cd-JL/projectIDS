@@ -1,6 +1,8 @@
+// tailwind.config.js
 import type { Config } from "tailwindcss";
 import defaultTheme from "tailwindcss/defaultTheme";
 const colors = require("tailwindcss/colors");
+const plugin = require("tailwindcss/plugin");
 
 const config: Config = {
   content: [
@@ -25,7 +27,6 @@ const config: Config = {
         transparent: "transparent",
         white: "#FFFFFF",
         black: {
-          // ...colors.black,
           DEFAULT: "#1C2434",
           2: "#010101",
         },
@@ -342,6 +343,18 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addBase }) {
+      addBase({
+        'html, body': {
+          transition: 'background-color 0.5s ease, color 0.5s ease',
+        },
+        'body *': {
+          '@apply transition-colors duration-500': {},
+        },
+      });
+    }),
+  ],
 };
+
 export default config;

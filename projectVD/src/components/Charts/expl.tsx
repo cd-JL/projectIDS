@@ -1,8 +1,7 @@
-
 "use client";
 
-import React from "react";
 import dynamic from "next/dynamic";
+import React, { useEffect, useState } from "react";
 import { ApexOptions } from "apexcharts";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
@@ -12,51 +11,147 @@ interface ChartExploitabilityProps {
 }
 
 const ChartExploitability: React.FC<ChartExploitabilityProps> = ({ data }) => {
-  // Debugging: Log data to verify it's being passed correctly
-  console.log("ChartExploitability Data:", data);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [chartOptions, setChartOptions] = useState<ApexOptions>({});
+  const [series, setSeries] = useState<number[]>([]);
 
-  // Ensure data is defined and is an array
-  if (!data || !Array.isArray(data) || data.length === 0) {
-    return <div>No data available.</div>; // Render a message if data is not defined, not an array, or empty
-  }
+  // Professional color palette that works well in both modes
+  const colorPalette = [
+    "#2563eb", // Blue
+    "#3b82f6", // Lighter Blue
+    "#0284c7", // Sky Blue
+    "#0891b2", // Cyan
+    "#0d9488", // Teal
+    "#059669", // Green
+    "#4f46e5", // Indigo
+    "#6366f1", // Purple
+    "#7c3aed", // Violet
+    "#9333ea"  // Deep Purple
+  ];
 
-  // For a donut chart, the series should be the array of values (exploitability scores)
-  const series = data.map(d => d.exploitabilityScore); // Array of exploitability scores for the donut chart
+  useEffect(() => {
+    const body = document.body;
+    const updateDarkMode = () => {
+      const darkModeEnabled = body.classList.contains("dark");
+      setIsDarkMode(darkModeEnabled);
+    };
 
-  // Defining the options for the donut chart
-  const options: ApexOptions = {
-    chart: {
-      type: "donut", // Changed the chart type to 'donut'
-      height: 350,
-    },
-    labels: data.map(d => d.deviceName), // Labels will be the device names
-    title: {
-      text: "Exploitability Score by Device Percentage", // Title of the chart
-      // style: {
-      //   color: "white", // Set the title text color to white
-      // },
-    },
-    legend: {
-      position: 'bottom', // Position of the legend
-    },
-    responsive: [
-      {
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: 300, // Responsive width for small screens
-          },
-          legend: {
-            position: 'bottom', // Legend position for small screens
+    updateDarkMode();
+    const observer = new MutationObserver(updateDarkMode);
+    observer.observe(body, { attributes: true, attributeFilter: ["class"] });
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!data || !Array.isArray(data) || data.length === 0) return;
+
+    setSeries(data.map(d => d.exploitabilityScore));
+
+    setChartOptions({
+      chart: {
+        type: "donut",
+        height: 350,
+        background: isDarkMode ? "#1e1e1e" : "#ffffff",
+        foreColor: isDarkMode ? "#e5e7eb" : "#374151", // Text color
+      },
+      colors: colorPalette,
+      labels: data.map(d => d.deviceName),
+      title: {
+        text: "Exploitability Score by Device",
+        align: "left",
+        style: {
+          fontSize: "18px",
+          fontWeight: "600",
+          color: isDarkMode ? "#e5e7eb" : "#111827",
+        },
+      },
+      theme: {
+        mode: isDarkMode ? "dark" : "light",
+      },
+      legend: {
+        position: "bottom",
+        fontSize: "14px",
+        labels: {
+          colors: isDarkMode ? "#e5e7eb" : "#374151",
+        },
+        markers: {
+          width: 12,
+          height: 12,
+          radius: 6,
+        },
+      },
+      stroke: {
+        width: 2,
+        colors: [isDarkMode ? "#1e1e1e" : "#ffffff"],
+      },
+      plotOptions: {
+        pie: {
+          donut: {
+            size: "60%",
+            labels: {
+              show: true,
+              total: {
+                show: true,
+                fontSize: "16px",
+                fontWeight: "600",
+                color: isDarkMode ? "#e5e7eb" : "#111827",
+              },
+              value: {
+                fontSize: "16px",
+                fontWeight: "500",
+                color: isDarkMode ? "#e5e7eb" : "#374151",
+              },
+            },
           },
         },
       },
-    ],
-  };
+      dataLabels: {
+        enabled: true,
+        style: {
+          fontSize: "14px",
+          fontWeight: "500",
+          colors: [isDarkMode ? "#e5e7eb" : "#374151"],
+        },
+        dropShadow: {
+          enabled: false,
+        },
+      },
+      tooltip: {
+        enabled: true,
+        theme: isDarkMode ? "dark" : "light",
+        style: {
+          fontSize: "14px",
+        },
+      },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 300,
+            },
+            legend: {
+              position: "bottom",
+            },
+          },
+        },
+      ],
+    });
+  }, [data, isDarkMode]);
+
+  if (!data || !Array.isArray(data) || data.length === 0) {
+    return <div>No data available.</div>;
+  }
 
   return (
-    <div>
-      <ReactApexChart options={options} series={series} type="donut" height={350} />
+    <div className={isDarkMode ? "dark-mode-wrapper" : "light-mode-wrapper"}>
+      <ReactApexChart 
+        options={chartOptions} 
+        series={series} 
+        type="donut" 
+        height={350} 
+      />
     </div>
   );
 };
