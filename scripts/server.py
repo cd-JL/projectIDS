@@ -2,6 +2,7 @@ import http.server
 import os
 import socketserver
 import json
+from urllib.parse import parse_qs, urlparse
 from dotenv import load_dotenv
 from pymongo import MongoClient
 import bcrypt
@@ -250,7 +251,8 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                     "sender": message_data['userEmail'],
                     "receiver": message_data["selectedEmail"],
                     "message": message_data["message"],
-                    "timestamp": datetime.now()
+                    "timestamp": datetime.now(),
+                    "status": False
                 }
 
                 db.message.insert_one(message)
@@ -284,6 +286,7 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                     ]
                 }, {'_id': 0, 'timestamp': 0}).sort("timestamp", 1))
                 print("Messages: ", messages)
+
                 if messages:
                     self.send_response(200)
                     self.wfile.write(json.dumps(messages).encode())
@@ -413,8 +416,8 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                  user_company = db.user.find_one({"email": email}, {"company": 1}) 
 
                  if user_company:
-                     users_list = list(db.user.find({"company": user_company["company"], "email": {"$ne": email}}, {"username": 1, "email": 1, "role": 1, "_id": 0}))
-                     admin_data = list(db.user.find({"email":"Admin123@321.com"}, {"username": 1, "email": 1, "role": 1, "_id": 0 }))
+                     users_list = list(db.user.find({"company": user_company["company"], "email": {"$ne": email}}, {"username": 1, "email": 1, "role": 1, "_id": 0, "company": 1}))
+                     admin_data = list(db.user.find({"email":"Admin123@321.com"}, {"username": 1, "email": 1, "role": 1, "_id": 0, "company": "Admin" }))
      
                      users_list.extend(admin_data)
                      print("Users list for regular user")
@@ -428,12 +431,51 @@ class ServerHandler(http.server.BaseHTTPRequestHandler):
                      self.wfile.write(json.dumps(response).encode())
             
             else:
-                users_list = list(db.user.find({"email": {"$ne": email}}, {"username": 1, "email": 1, "role": 1, "_id": 0}))
+                users_list = list(db.user.find({"email": {"$ne": email}}, {"username": 1, "email": 1, "role": 1, "_id": 0, "company": 1}))
                 print("users list for admin user")
                 print(users_list)
                 self.send_response(200)
                 self.wfile.write(json.dumps(users_list).encode())
-            
+
+        
+        elif self.path.startswith('/unreadMessages'):
+            self.send_response(200)
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.send_header('Access-Control-Allow-Methods', 'GET')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+            self.end_headers()
+
+            email = self.path.split('=')[-1] 
+
+            unread_messages = list(db.message.find({"status": False, "receiver": email}, {"sender": 1, "_id": 0}))
+
+            print(len(unread_messages),"total unread messages")
+
+            self.send_response(200)
+            self.wfile.write(json.dumps(unread_messages).encode())
+
+        elif self.path.startswith('/makeMessageRead'):
+            self.send_response(200)
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.send_header('Access-Control-Allow-Methods', 'GET')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+            self.end_headers()
+        
+            try:
+                query_components = parse_qs(urlparse(self.path).query)
+                sender = query_components.get('sender', [None])[0]
+                receiver = query_components.get('receiver', [None])[0]
+        
+                if sender and receiver:
+                    db.message.update_many({"sender": sender, "receiver": receiver}, {"$set": {"status": True}})
+                else:
+                    self.send_response(400)  # Bad Request
+                    self.wfile.write(b'Missing sender or receiver parameter')
+            except Exception as e:
+                self.send_response(500)  # Internal Server Error
+                self.wfile.write(f"Error: {str(e)}".encode())
+        
+        
             
 
      

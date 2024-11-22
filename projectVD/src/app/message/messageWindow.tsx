@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ThreeDotMenu from './ThreeDotMenu';
-// Refernced chatGPT in creting this component
+// Refernced chatGPT in creating this component
 function MessageWindow() {
   const selectedUsername = localStorage.getItem("selectedUsername");
   const selectedEmail = localStorage.getItem("selectedEmail");
@@ -11,6 +11,8 @@ function MessageWindow() {
   const [fetchedMessages, setFetchedMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sendError, setSendError] = useState(false);
+  const [cound, setCound] = useState(0)
+  const [unreadCound, setUnreadCound] = useState(true)
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -46,6 +48,9 @@ function MessageWindow() {
         const messages = await response.json();
         setFetchedMessages(messages);
         setNoMessage(messages.length === 0);
+        setCound(cound+1)
+        console.log(cound)
+        localStorage.setItem("refresh", !unreadCound)
       }
     } catch (error) {
       console.error("Error fetching data", error);
@@ -55,7 +60,11 @@ function MessageWindow() {
   };
 
   useEffect(() => {
-    getMessages();
+    getMessages(); // Run once on mount
+    const intervalId = setInterval(getMessages, 1000); // Run getMessages every 2 seconds
+
+    // Cleanup interval on unmount
+    return () => clearInterval(intervalId);
   }, [send]);
 
   return (
@@ -72,15 +81,15 @@ function MessageWindow() {
           ) : (
             <div className="flex-1 p-4 bg-gray-900 overflow-y-auto space-y-4">
               {fetchedMessages.map((msg, index) => (
-                <div key={index} className={`p-2 rounded-lg bg-gray-800 flex justify-between w-1/2 mx-2 ${msg.sender === userEmail ? "float-right": "float-left"}`}>
-                  <div >
-                  <p className="text-xs text-gray-300 mb-1">
-                    {msg.sender === userEmail ? "You" : "Received"}
-                  </p>
-                  <p className={` text-lg text-gray-300 w-full`}>{msg.message}</p>
+                <div key={index} className={`p-2 rounded-lg bg-gray-800 flex justify-between w-1/2 mx-2 ${msg.sender === userEmail ? "float-right" : "float-left"}`}>
+                  <div>
+                    <p className="text-xs text-gray-300 mb-1">
+                      {msg.sender === userEmail ? "You" : "Received"}
+                    </p>
+                    <p className={` text-lg text-gray-300 w-full`}>{msg.message}</p>
                   </div>
-                  <div className=" p-2">
-                    <ThreeDotMenu/>
+                  <div className="p-2">
+                    {/* <ThreeDotMenu /> */}
                   </div>
                 </div>
               ))}
