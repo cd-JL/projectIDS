@@ -5,5 +5,7 @@
 # Ignore entire directories
 /projectVD/node_modules
 /scripts/cache
+/scripts/security_monitor.log
+/scripts/network_monitor.log
 /scripts/cache/mongoDB/mongodump.py
 /cache

@@ -1,5 +1,3 @@
-// TableOne.tsx
-
 import React, { FC, useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 
@@ -13,16 +11,21 @@ interface Vulnerability {
       cvssMetricV2?: Array<{
         cvssData?: {
           baseScore?: number;
+          vectorString?: string;
         };
         baseSeverity?: string;
         exploitabilityScore?: number;
         impactScore?: number;
       }>;
       cvssMetricV31?: Array<{
+        source?: string;
+        type?: string;
         cvssData?: {
+          version?: string;
+          vectorString?: string;
           baseScore?: number;
+          baseSeverity?: string;
         };
-        baseSeverity?: string;
         exploitabilityScore?: number;
         impactScore?: number;
       }>;
@@ -30,6 +33,7 @@ interface Vulnerability {
   };
 }
 
+// Rest of the interfaces remain the same
 interface VulnerabilityData {
   vulnerabilities: Vulnerability[];
 }
@@ -100,15 +104,10 @@ const TableOne: FC<TableOneProps> = ({ sensor }) => {
       {sensor.vulnerabilities.length > 0 ? (
         sensor.vulnerabilities.map((vulnGroup, groupIndex) => {
           const vulnerabilities = vulnGroup.vulnerabilityData.vulnerabilities || [];
-
-          // Calculate total severity score and number of vulnerabilities
           const totalSeverityScore = vulnerabilities.reduce((total, vuln) => {
             return total + getHighestBaseScore(vuln);
           }, 0);
-
           const numOfVulnerabilities = vulnerabilities.length;
-
-          // Sort vulnerabilities based on severity
           const sortedVulns = sortedVulnerabilities(vulnerabilities);
 
           return (
@@ -145,10 +144,8 @@ const TableOne: FC<TableOneProps> = ({ sensor }) => {
                     sortedVulns.map((vulnerability, vIndex) => {
                       const score = getHighestBaseScore(vulnerability);
                       const severityColor = getSeverityColor(score);
-
                       const cvssMetricsV2 = vulnerability.cve?.metrics?.cvssMetricV2?.[0];
                       const cvssMetricsV31 = vulnerability.cve?.metrics?.cvssMetricV31?.[0];
-
                       const referenceKey = `${groupIndex}-${vIndex}`;
 
                       return (
@@ -156,7 +153,6 @@ const TableOne: FC<TableOneProps> = ({ sensor }) => {
                           key={vIndex}
                           className={`p-4 mb-4 rounded-lg ${severityColor} text-white`}
                         >
-                          {/* Improve text readability */}
                           <div className="text-black">
                             <h3 className="text-xl font-semibold">
                               {vulnerability.cve?.id || 'No CVE ID Available'}
@@ -185,6 +181,10 @@ const TableOne: FC<TableOneProps> = ({ sensor }) => {
                                     {cvssMetricsV2.baseSeverity ?? 'N/A'}
                                   </li>
                                   <li>
+                                    <strong>Vector String:</strong>{' '}
+                                    {cvssMetricsV2.cvssData?.vectorString ?? 'N/A'}
+                                  </li>
+                                  <li>
                                     <strong>Exploitability Score:</strong>{' '}
                                     {cvssMetricsV2.exploitabilityScore ?? 'N/A'}
                                   </li>
@@ -195,7 +195,7 @@ const TableOne: FC<TableOneProps> = ({ sensor }) => {
                                 </ul>
                               </div>
                             )}
-                          {/* CVSS Metrics V3.1 */}
+                            {/* CVSS Metrics V3.1 */}
                             {cvssMetricsV31 && (
                               <div className="mt-2">
                                 <strong>CVSS Metrics V3.1:</strong>
@@ -209,16 +209,20 @@ const TableOne: FC<TableOneProps> = ({ sensor }) => {
                                     {cvssMetricsV31.cvssData?.baseSeverity ?? 'N/A'}
                                   </li>
                                   <li>
+                                    <strong>Vector String:</strong>{' '}
+                                    {cvssMetricsV31.cvssData?.vectorString ?? 'N/A'}
+                                  </li>
+                                  <li>
                                     <strong>Exploitability Score:</strong>{' '}
-                                    {cvssMetricsV31.cvssData?.exploitabilityScore ?? 'N/A'}
+                                    {cvssMetricsV31.exploitabilityScore ?? 'N/A'}
                                   </li>
                                   <li>
                                     <strong>Impact Score:</strong>{' '}
-                                    {cvssMetricsV31.cvssData?.impactScore ?? 'N/A'}
+                                    {cvssMetricsV31.impactScore ?? 'N/A'}
                                   </li>
                                 </ul>
                               </div>
-                              )}
+                            )}
 
                             {/* References with Dropdown */}
                             <div className="mt-2">

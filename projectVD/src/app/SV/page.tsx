@@ -6,16 +6,50 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import TableOne from "@/components/Tables/TableOne";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 
+interface CVSSMetric {
+  cvssData?: {
+    baseScore?: number;
+    baseSeverity?: string;
+  };
+}
+
 interface Vulnerability {
-  severity: 'high' | 'medium' | 'low';
-  status: string;
+  cve?: {
+    metrics?: {
+      cvssMetricV2?: Array<CVSSMetric>;
+      cvssMetricV31?: Array<CVSSMetric>;
+    };
+  };
+}
+
+interface VulnerabilityGroup {
+  product: string;
+  vendor: string;
+  version: string;
+  vulnerabilityData: {
+    vulnerabilities: Vulnerability[];
+  };
+  sourceFile: string;
 }
 
 interface Sensor {
   _id: string;
+  sensorId: string;
   deviceName?: string;
-  vulnerabilities?: Vulnerability[];
+  vulnerabilities: VulnerabilityGroup[];
 }
+
+const getSeverityFromScore = (score: number): 'high' | 'medium' | 'low' => {
+  if (score >= 7) return 'high';
+  if (score >= 4) return 'medium';
+  return 'low';
+};
+
+const getHighestBaseScore = (vulnerability: Vulnerability): number => {
+  const scoreV2 = vulnerability?.cve?.metrics?.cvssMetricV2?.[0]?.cvssData?.baseScore || 0;
+  const scoreV3 = vulnerability?.cve?.metrics?.cvssMetricV31?.[0]?.cvssData?.baseScore || 0;
+  return Math.max(scoreV2, scoreV3);
+};
 
 const fetchVulnerabilityData = async (id: string) => {
   try {
@@ -75,16 +109,25 @@ const TablesPage = () => {
   );
 
   const vulnerabilityStats = useMemo(() => {
-    if (!selectedSensorData?.vulnerabilities) return { high: 0, medium: 0, low: 0, total: 0 };
+    const stats = { high: 0, medium: 0, low: 0, total: 0 };
     
-    return selectedSensorData.vulnerabilities.reduce(
-      (acc, vuln) => {
-        acc[vuln.severity]++;
-        acc.total++;
-        return acc;
-      },
-      { high: 0, medium: 0, low: 0, total: 0 }
-    );
+    if (!selectedSensorData?.vulnerabilities) {
+      return stats;
+    }
+
+    // Iterate through all vulnerability groups
+    selectedSensorData.vulnerabilities.forEach(vulnGroup => {
+      // Iterate through each vulnerability in the group
+      vulnGroup.vulnerabilityData.vulnerabilities.forEach(vulnerability => {
+        const baseScore = getHighestBaseScore(vulnerability);
+        const severity = getSeverityFromScore(baseScore);
+        
+        stats[severity]++;
+        stats.total++;
+      });
+    });
+
+    return stats;
   }, [selectedSensorData]);
 
   return (
@@ -113,22 +156,12 @@ const TablesPage = () => {
                       >
                         {vulnerabilityData.map((sensor) => (
                           <option key={sensor._id} value={sensor._id}>
-                            {sensor.deviceName || `Sensor ${sensor._id}`}
+                            {sensor.deviceName || `Sensor ${sensor.sensorId}`}
                           </option>
                         ))}
                       </select>
                     </div>
                   </div>
-
-                  <button
-                    onClick={() => fetchData()}
-                    className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors flex items-center gap-2"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                    </svg>
-                    Scan Now
-                  </button>
                 </div>
 
                 {lastUpdated && (
