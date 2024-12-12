@@ -13,7 +13,7 @@ MONGODB_URI = os.getenv('MONGODB_URI')
 if not MONGODB_URI:
     raise Exception("MONGODB_URI not found in environment variables.")
 
-client = MongoClient(MONGODB_URI)
+client = MongoClient(MONGODB_URI) 
 db = client['projectv']
 sensors_collection = db['sensors']
 

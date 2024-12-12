@@ -108,6 +108,146 @@ vulnerability_schema = {
     }
 }
 
+ db.create_collection('network_traffic', validator={
+        '$jsonSchema': {
+            'bsonType': 'object',
+            'required': ['sensorId', 'timestamp', 'trafficStats'],
+            'properties': {
+                'sensorId': {'bsonType': 'string'},
+                'timestamp': {'bsonType': 'date'},
+                'trafficStats': {
+                    'bsonType': 'object',
+                    'required': ['hourly'],
+                    'properties': {
+                        'hourly': {
+                            'bsonType': 'object',
+                            'patternProperties': {
+                                '^[0-9]{1,2}$': {  # Hour keys (0-23)
+                                    'bsonType': 'object',
+                                    'properties': {
+                                        'bytesIn': {'bsonType': 'long'},
+                                        'bytesOut': {'bsonType': 'long'},
+                                        'packetsIn': {'bsonType': 'long'},
+                                        'packetsOut': {'bsonType': 'long'},
+                                        'uniqueIPs': {'bsonType': 'array'},
+                                        'protocols': {
+                                            'bsonType': 'object',
+                                            'properties': {
+                                                'TCP': {'bsonType': 'int'},
+                                                'UDP': {'bsonType': 'int'},
+                                                'ICMP': {'bsonType': 'int'},
+                                                'OTHER': {'bsonType': 'int'}
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        'daily': {
+                            'bsonType': 'object',
+                            'properties': {
+                                'totalBytes': {'bsonType': 'long'},
+                                'totalPackets': {'bsonType': 'long'},
+                                'avgBytesPerSecond': {'bsonType': 'double'},
+                                'avgPacketsPerSecond': {'bsonType': 'double'}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    })
+
+    # Create network_threats collection for storing detected threats
+    db.create_collection('network_traffic', validator={
+        '$jsonSchema': {
+            'bsonType': 'object',
+            'required': ['sensorId', 'timestamp', 'trafficStats'],
+            'properties': {
+                'sensorId': {'bsonType': 'string'},
+                'timestamp': {'bsonType': 'date'},
+                'trafficStats': {
+                    'bsonType': 'object',
+                    'required': ['hourly'],
+                    'properties': {
+                        'hourly': {
+                            'bsonType': 'object',
+                            'patternProperties': {
+                                '^[0-9]{1,2}$': {  # Hour keys (0-23)
+                                    'bsonType': 'object',
+                                    'properties': {
+                                        'bytesIn': {'bsonType': 'long'},
+                                        'bytesOut': {'bsonType': 'long'},
+                                        'packetsIn': {'bsonType': 'long'},
+                                        'packetsOut': {'bsonType': 'long'},
+                                        'uniqueIPs': {'bsonType': 'array'},
+                                        'protocols': {
+                                            'bsonType': 'object',
+                                            'properties': {
+                                                'TCP': {'bsonType': 'int'},
+                                                'UDP': {'bsonType': 'int'},
+                                                'ICMP': {'bsonType': 'int'},
+                                                'OTHER': {'bsonType': 'int'}
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        'daily': {
+                            'bsonType': 'object',
+                            'properties': {
+                                'totalBytes': {'bsonType': 'long'},
+                                'totalPackets': {'bsonType': 'long'},
+                                'avgBytesPerSecond': {'bsonType': 'double'},
+                                'avgPacketsPerSecond': {'bsonType': 'double'}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    })
+
+    # Create network_threats collection for storing detected threats
+    db.create_collection('network_threats', validator={
+        '$jsonSchema': {
+            'bsonType': 'object',
+            'required': ['sensorId', 'timestamp', 'threatType'],
+            'properties': {
+                'sensorId': {'bsonType': 'string'},
+                'timestamp': {'bsonType': 'date'},
+                'threatType': {'bsonType': 'string'},
+                'sourceIP': {'bsonType': 'string'},
+                'destinationIP': {'bsonType': 'string'},
+                'protocol': {'bsonType': 'string'},
+                'port': {'bsonType': 'int'},
+                'severity': {'bsonType': 'string'},
+                'details': {
+                    'bsonType': 'object',
+                    'properties': {
+                        'packetSize': {'bsonType': 'int'},
+                        'flags': {'bsonType': 'string'},
+                        'payload': {'bsonType': 'string'},
+                        'matchedSignature': {'bsonType': 'string'}
+                    }
+                },
+                'resolved': {'bsonType': 'bool'},
+                'resolutionTime': {'bsonType': 'date'}
+            }
+        }
+    })
+
+    # Create indexes for efficient querying
+    db.network_traffic.create_index([('sensorId', 1), ('timestamp', -1)])
+    db.network_traffic.create_index([('timestamp', -1)])
+    
+    db.network_threats.create_index([('sensorId', 1), ('timestamp', -1)])
+    db.network_threats.create_index([('threatType', 1)])
+    db.network_threats.create_index([('sourceIP', 1)])
+    db.network_threats.create_index([('severity', 1)])
+    db.network_threats.create_index([('resolved', 1)])
+
 programs_schema = {
     "bsonType": "object",
     "required": ["sensorId", "programs"],
