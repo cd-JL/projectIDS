@@ -5,7 +5,6 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import TableTwo from "@/components/Tables/TableTwo";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 
-// Fetch program data for the specific company ID
 const fetchProgramData = async (id: string) => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/companies/${id}/programs`, {
@@ -146,7 +145,7 @@ const TablesPage = () => {
               )}
 
               {/* Stats */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
                   <div className="text-blue-600 dark:text-blue-400 text-sm font-medium">Total Sensors</div>
                   <div className="text-2xl font-bold text-blue-700 dark:text-blue-300">{programData.length}</div>
@@ -154,12 +153,6 @@ const TablesPage = () => {
                 <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
                   <div className="text-green-600 dark:text-green-400 text-sm font-medium">Programs Found</div>
                   <div className="text-2xl font-bold text-green-700 dark:text-green-300">{filteredPrograms.length}</div>
-                </div>
-                <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg">
-                  <div className="text-purple-600 dark:text-purple-400 text-sm font-medium">Active Programs</div>
-                  <div className="text-2xl font-bold text-purple-700 dark:text-purple-300">
-                    {filteredPrograms.filter(p => p.Status === 'Active').length}
-                  </div>
                 </div>
               </div>
 

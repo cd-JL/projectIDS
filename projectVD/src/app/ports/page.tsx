@@ -160,7 +160,7 @@ const TablesPage = () => {
 
                 {/* Stats Cards */}
                 {selectedSensor && (
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
                       <div className="text-blue-600 dark:text-blue-400 text-sm font-medium">
                         Open Ports
@@ -175,17 +175,6 @@ const TablesPage = () => {
                       </div>
                       <div className="text-2xl font-bold text-red-700 dark:text-red-300">
                         {calculateNumberOfDangerousServices(selectedSensor)}
-                      </div>
-                    </div>
-                    <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
-                      <div className="text-green-600 dark:text-green-400 text-sm font-medium">
-                        Total Services
-                      </div>
-                      <div className="text-2xl font-bold text-green-700 dark:text-green-300">
-                        {selectedSensor.services?.reduce(
-                          (acc, service) => acc + (service.services?.length || 0),
-                          0
-                        ) || 0}
                       </div>
                     </div>
                   </div>
